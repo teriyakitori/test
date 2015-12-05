@@ -58,8 +58,8 @@ function sorceget(){
 	var detail_data_tettai = null;
 	
 	if (request.readyState == 4 && request.status == 200){
-		console.log("準備完了");
-		batdom = dom_parser.parseFromString(request.responseText.toString(), "text/html");
+		console.log("準備完了：" + request.responseText.toString());
+		batdom = dom_parser.parseFromString(request.responseText, "text/html");
 		
 		// 変数にデータを入れていく
 		detail_store = batdom.getElementsByClassName("mtc_detail_store");

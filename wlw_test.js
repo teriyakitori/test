@@ -33,7 +33,7 @@ if(urlchk()){
 			console.log("処理終了：" + urlstr);
 		}
 	} 
-	alert("対象試合数：" + batcnt + "\nドロー平均使用回数：" + parseInt(drs_avg / batcnt, 10) );
+	// alert("対象試合数：" + batcnt + "\nドロー平均使用回数：" + parseInt(drs_avg / batcnt, 10) );
 } else {
 	alert("ﾅﾝﾃﾞｯ!!");
 }

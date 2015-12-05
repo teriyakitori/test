@@ -52,7 +52,6 @@ function urlchk(){
 // 対戦履歴詳細のデータを取得
 function sorceget(){
 	// 店舗名
-	var test_txt = null;
 	var detail_store = null;
 	var detail_data_heishi = null;
 	var detail_data_cast = null;
@@ -60,8 +59,7 @@ function sorceget(){
 	
 	if (request.readyState == 4 && request.status == 200){
 		console.log("準備完了");
-		test_txt = request.responseText;
-		batdom = dom_parser.parseFromString(test_txt, "text/html");
+		batdom = dom_parser.parseFromString(request.responseText.toString(), "text/html");
 		
 		// 変数にデータを入れていく
 		detail_store = batdom.getElementsByClassName("mtc_detail_store");

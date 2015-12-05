@@ -59,7 +59,7 @@ function sorceget(){
 	
 	if (request.readyState == 4 && request.status == 200){
 		console.log("準備完了1");
-		batdom = dom_parser.parseFromString(request.responseText, "text/xml");
+		batdom = dom_parser.parseFromString(request.responseText , "text/html");
 		console.log("準備完了2");
 		
 		// 変数にデータを入れていく

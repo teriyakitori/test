@@ -9,7 +9,7 @@ var batdom = null;
 var dom_parser = new DOMParser();
 request= new XMLHttpRequest();
 
-var detail_data_drs;
+var detail_data_drs = null;
 var drs_avg = 0;
 
 //本処理
@@ -57,8 +57,8 @@ function sorceget(){
 	var detail_data_cast = null;
 	var detail_data_tettai = null;
 	
-	console.log("state:" + request.readyState + "status:" + request.status);
 	if (request.readyState == 4 && request.status == 200){
+		console.log("準備完了");
 		batdom = dom_parser.parseFromString(request.responseText , "text/html");
 		
 		// 変数にデータを入れていく

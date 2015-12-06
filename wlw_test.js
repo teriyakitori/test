@@ -12,7 +12,7 @@ if (request.readyState == 4 && request.status == 200){
 	var batdom = request.responseText;
 	console.log("test:" + batdom);
 	jQuery(function ($) {
-		var teststr = $(batdom).(".mtc_detail_store").text();
+		var teststr = $(batdom).$(".mtc_detail_store").text();
 	});
 	console.log("てすと１：" + teststr);
 }

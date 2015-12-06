@@ -11,9 +11,11 @@ request.send(null);
 function sorceget(){
 	if (request.readyState == 4 && request.status == 200){
 		var batdom = request.responseText;
-		console.log("test:" + batdom);
+		
 		jQuery(function ($) {
-			var teststr = $(batdom).$(".mtc_detail_store").text();
+			$.get( batdom, function(getstr){
+			var teststr = $(".mtc_detail_map").text()
+			});
 		});
 		console.log("てすと１：" + teststr);
 	} else {

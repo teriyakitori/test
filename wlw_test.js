@@ -12,7 +12,7 @@ function sorceget(){
 	if (request.readyState == 4 && request.status == 200){
 		var batdom = request.responseText;
 		$(function() {
-			console.log($('#list mtc_detail_map').text());
+			console.log($(".mtc_detail_map").text());
 		});
 		console.log( batdom.match(/マリン/i) );
 	}

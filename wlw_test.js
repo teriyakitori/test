@@ -14,5 +14,5 @@ if (request.readyState == 4 && request.status == 200){
 	jQuery(function ($) {
 		var teststr = $(batdom).(".mtc_detail_store").text();
 	});
-	console.log("てすと１：" + teststr)
+	console.log("てすと１：" + teststr);
 }

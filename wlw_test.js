@@ -13,7 +13,7 @@ function sorceget(){
 		var batdom = request.responseText;
 		$(function() {
 			console.log($('#list mtc_detail_map').text());
-		}
+		});
 		console.log( batdom.match(/マリン/i) );
 	}
 	else{

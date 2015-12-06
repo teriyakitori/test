@@ -11,8 +11,8 @@ request.send(null);
 function sorceget(){
 	if (request.readyState == 4 && request.status == 200){
 		var batdom = request.responseText;
-		$(function() {
-			console.log("テスト１：" + $(".mtc_detail_map").text());
+		$.get( batdom, function(tmpdata){
+			console.log("てすと１：" + $(".mtc_detail_store").text() );
 		});
 		console.log( batdom.match(/マリン/i) );
 	}

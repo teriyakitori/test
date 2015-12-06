@@ -13,8 +13,9 @@ function sorceget(){
 		var teststr = null;
 		var batdom = request.responseText;
 		
+		console.log("テスト" + batdom[0].innerHTML);
 		jQuery(function ($) {
-			$(teststr).load(batdom, ".mtc_detail_map");
+			$(teststr).load(batdom[0].innerHTML, ".mtc_detail_map");
 		});
 		console.log("てすと１：" + teststr);
 	} else {

@@ -4,7 +4,7 @@ var dom_parser = new DOMParser();
 request= new XMLHttpRequest();
 var urlstr = "https://wonderland-wars.net/matchlogdetail.html?id=16918436";
 
-request.open("GET", urlstr, true);
+request.open("GET", urlstr, false);
 request.onreadystatechange=sorceget;
 request.send(null);
 

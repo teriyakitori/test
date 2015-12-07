@@ -11,7 +11,7 @@ function sorceget(){
 	if (request.readyState == 4 && request.status == 200){
 		var batdom = request.responseText;
 		jQuery(function ($) {
-			var myHTML = $.parseHTML(urlstr);
+			var myHTML = $.parseHTML(batdom);
 		});
 		var batdel = myHTML.getElementsByClassName("mtc_detail_data_heishi");
 		console.log("兵士撃破数：" + batdel[0].innerHTML);

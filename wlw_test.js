@@ -13,6 +13,7 @@ function sorceget(){
 		var batdom = request.responseText;
 		jQuery(function ($) {
 			myHTML = $.parseHTML(batdom.toString());
+			alert("testes:" + myHTML.length);
 		});
 		console.log("test1:" + myHTML);
 		var batdel = myHTML.getElementsByClassName("mtc_detail_data_heishi");

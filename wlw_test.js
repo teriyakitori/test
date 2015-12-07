@@ -12,7 +12,7 @@ function sorceget(){
 	if (request.readyState == 4 && request.status == 200){
 		var batdom = request.responseText;
 		jQuery(function ($) {
-			myHTML = $.parseHTML(batdom);
+			myHTML = $.parseHTML(batdom.toString());
 		});
 		console.log("test1:" + myHTML);
 		var batdel = myHTML.getElementsByClassName("mtc_detail_data_heishi");

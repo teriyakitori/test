@@ -168,8 +168,8 @@ if( urlchk() ){
 		innerNode = document.createElement("div");
 		innerNode.className = "frame_inner";
 		
-		addNode("勝利数（合計）", win_cnt);
-		addNode("敗北数（合計）", lose_cnt);
+		addNode("勝利数(合計)", win_cnt);
+		addNode("敗北数(合計)", lose_cnt);
 		addNode("勝率", (win_cnt*100/battle_cnt).toFixed(2));
 		addNode("兵士撃破数", (data_heishi/battle_cnt).toFixed());
 		addNode("キャスト撃破数", (data_cast/battle_cnt).toFixed(2));

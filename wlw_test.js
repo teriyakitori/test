@@ -170,34 +170,24 @@ if( urlchk() ){
 		
 		addNode("勝利数(合計)", win_cnt);
 		addNode("敗北数(合計)", lose_cnt);
-		addNode("勝率", (win_cnt*100/battle_cnt).toFixed(2));
+		addNode("勝率", (win_cnt*100/battle_cnt).toFixed());
 		addNode("兵士撃破数", (data_heishi/battle_cnt).toFixed());
-		addNode("キャスト撃破数", (data_cast/battle_cnt).toFixed(2));
-		addNode("撤退数", data_tettai/battle_cnt);
-		addNode("キルレ", (data_cast/data_tettai).toFixed(2));
-		addNode("SS使用回数", data_sts/battle_cnt);
-		addNode("SSキャストヒット数", data_stshit/battle_cnt);
-		addNode("DS使用数", data_drs/battle_cnt);
-		addNode("DSヒット数", data_drshit/battle_cnt);
-		addNode("帰城数", data_backhome/battle_cnt);
-		addNode("SS被弾数", data_sts2hit/battle_cnt);
-		addNode("DS被弾数", data_drs2hit/battle_cnt);
+		addNode("キャスト撃破数", (Math.floor((data_cast/battle_cnt)*100))/100 );
+		addNode("撤退数", (Math.floor((data_tettai/battle_cnt)*100))/100);
+		addNode("キルレ", (Math.floor((data_cast/data_tettai)*100))/100);
+		addNode("SS使用回数", (Math.floor((data_sts/battle_cnt)*100))/100);
+		addNode("SSキャストヒット数", (Math.floor((data_stshit/battle_cnt)*100))/100);
+		addNode("DS使用数", (Math.floor((data_drs/battle_cnt)*100))/100);
+		addNode("DSヒット数", (Math.floor((data_drshit/battle_cnt)*100))/100);
+		addNode("帰城数", (Math.floor((data_backhome/battle_cnt)*100))/100);
+		addNode("SS被弾数", (Math.floor((data_sts2hit/battle_cnt)*100))/100);
+		addNode("DS被弾数", (Math.floor((data_drs2hit/battle_cnt)*100))/100);
 		//addNode("", );
 		
 		// ページに追加
 		newNode.appendChild(titleNode);
 		newNode.appendChild(innerNode);
 		inspos.parentNode.insertBefore(newNode, inspos);
-		
-		/*
-		console.log("対象試合数＝" + battle_cnt + "　勝率＝" + win_cnt*100/battle_cnt + "％　（勝利数＝" + win_cnt + "　敗北数＝" + lose_cnt + "）");
-		console.log("兵士撃破総数＝" + data_heishi + "　平均兵士撃破数＝" + data_heishi/battle_cnt);
-		console.log("キャスト撃破総数＝" + data_cast + "　撤退総数＝" + data_tettai + "　キルレ＝" + data_cast/data_tettai);
-		console.log("平均ストレートショット数＝" + data_sts/battle_cnt + "　平均ストレートショットHIT数＝" + data_stshit/battle_cnt);
-		console.log("平均ドローショット数＝" + data_drs/battle_cnt + "　平均ドローショットHIT数" + data_drshit/battle_cnt);
-		console.log("平均帰城数＝" + data_backhome/battle_cnt);
-		console.log("平均ストレートショット被HIT数＝" + data_sts2hit/battle_cnt + "　平均ドローショット被HIT数＝" + data_drs2hit/battle_cnt);
-		*/
 	}
 	alert("処理終了　エラー番号:" + errnum);
 } else {
@@ -382,3 +372,4 @@ function addNode(titlestr, datastr){
 	fixNode.appendChild(tmpNode2);
 	innerNode.appendChild(fixNode);
 }
+

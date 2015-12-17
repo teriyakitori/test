@@ -2,7 +2,7 @@ javascript:
 
 // 実行するURL
 var starturl = "https://wonderland-wars.net/matchlog.html";
-var sum_img = "/common/img_cast/582e3423a336042b335de96584d116e2.png";
+var sum_img = "common/img_cast/582e3423a336042b335de96584d116e2.png";
 
 var request= new XMLHttpRequest();
 
@@ -29,13 +29,13 @@ var mtc_detail_enemygage = /<div class="mtc_detail_enemygage">.*<\/div>/;
 var mtc_detail_result = /<div class="mtc_detail_result">.*<\/div>/;
 
 // 使用スキル画像URL
-var mtc_detail_skill = /\/img_card_thum\/skill\/.+\.png/g;
+var mtc_detail_skill = /common\/img_card_thum\/skill\/.+\.png/g;
 // スキル使用回数
 var mtc_detail_skill_count = /<div class="mtc_detail_skill_count">.*<\/div>/g;
 // 使用アシスト画像URL
-var mtc_detail_assist = /\/img_card_thum\/assist\/.+\.png/g;
+var mtc_detail_assist = /common\/img_card_thum\/assist\/.+\.png/g;
 // 使用ソウル画像URL
-var mtc_detail_soul = /\/img_card_thum\/soul\/.+\.png/g;
+var mtc_detail_soul = /common\/img_card_thum\/soul\/.+\.png/g;
 
 // 自軍レベルアップ時間
 var levelup_my_lv = /<div class="levelup_my_lv".*<\/div>/g;
@@ -99,8 +99,8 @@ var node_ary = [];
 if( urlchk() ){
 	alert("OKを押すとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性があります。");
 	// 対戦履歴のページ数だけ処理する
-	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
-	//for(var linkcnt=0; linkcnt < 16; linkcnt++){
+	//for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
+	for(var linkcnt=0; linkcnt < 13; linkcnt++){
 		urlstr = document.links[linkcnt].toString();
 		// 対象外のURLも含まれるので、アドレスチェックを行う
 		if( urlstr.match(/matchlogdetail/i) ){
@@ -187,8 +187,6 @@ function sorceget(){
 		skill_use = src_ary[0].match(mtc_detail_skill_count);
 		player[3] = src_ary[0].match(mtc_detail_assist);
 		player[4] = src_ary[0].match(mtc_detail_soul);
-		
-		// console.log("skilluse:" + skill_use);
 		
 		// レベルアップ時間を取得
 		mylv_ary = src_ary[0].match(levelup_my_lv);
@@ -285,7 +283,6 @@ function sorceget(){
 
 // 表示処理
 function hyouji(){
-	//console.log("ながさ：" + result_battle[0].length + "けっか：" + result_battle[0]);
 	// 試合数だけ集計処理を行う
 	for(cnt = 0; cnt < battle_cnt; cnt++){
 		
@@ -317,7 +314,6 @@ function hyouji(){
 		}
 	}
 	
-	//console.log("キャスト種類：" + cast_cnt);
 	// 表示
 	// タイトルを表示
 	var inspos  = document.getElementById("page_title");
@@ -342,6 +338,7 @@ function hyouji(){
 		var imgNode = document.createElement("img");
 		imgNode.src = cast_result[cnt][0];
 		imgNode.width = 60;
+		imgNode.height = 70;
 		
 		var linkNode = document.createElement("a");
 		linkNode.href = "JavaScript:changesum(" + cnt.toString() + ")";

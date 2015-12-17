@@ -285,7 +285,7 @@ function sorceget(){
 
 // 表示処理
 function hyouji(){
-	console.log("ながさ：" + result_battle[0].length + "けっか：" + result_battle[0]);
+	//console.log("ながさ：" + result_battle[0].length + "けっか：" + result_battle[0]);
 	// 試合数だけ集計処理を行う
 	for(cnt = 0; cnt < battle_cnt; cnt++){
 		
@@ -317,7 +317,7 @@ function hyouji(){
 		}
 	}
 	
-	console.log("キャスト種類：" + cast_cnt);
+	//console.log("キャスト種類：" + cast_cnt);
 	// 表示
 	// タイトルを表示
 	var inspos  = document.getElementById("page_title");

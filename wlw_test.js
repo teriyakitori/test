@@ -1,7 +1,8 @@
 javascript:
 
 // 実行するURL
-var starturl = "https://wonderland-wars.net/matchlog.html";
+var starturl1 = "https://wonderland-wars.net/matchlog.html";
+var starturl2 = "https://wonderland-wars.net/matchlog.html?type=all";
 var sum_img = "common/img_cast/582e3423a336042b335de96584d116e2.png";
 
 var request= new XMLHttpRequest();
@@ -31,7 +32,7 @@ var mtc_detail_result = /<div class="mtc_detail_result">.*<\/div>/;
 // 使用スキル画像URL
 var mtc_detail_skill = /common\/img_card_thum\/skill\/.+\.png/g;
 // スキル使用回数
-var mtc_detail_skill_count = /<div class="mtc_detail_skill_count">.*<\/div>/g;
+var mtc_detail_skill_count = /<div class="mtc_detail_skill_count">.*\s*[0-9]*/g;
 // 使用アシスト画像URL
 var mtc_detail_assist = /common\/img_card_thum\/assist\/.+\.png/g;
 // 使用ソウル画像URL
@@ -89,19 +90,32 @@ var cast_result = [];
 // 表示用
 var innerNode = null;
 
-// エラー用変数
-var errnum = 0;
-
+// 表示ノード用配列
 var node_ary = [];
 
+// エラー用変数
+var errnum = 0;
+var errmsg = [
+"正常に処理されました。",
+"ブックマークレットが既に実行済みです。\n複数回起動した場合、読み込み処理に異常が発生します。\n再表示したい場合は、対戦履歴ページの更新を行ってから実行してください。"
+]
+
+
 // 本処理
+// 同じページで二度実行できないようにする
+
 // 開始URLをチェックし、対戦履歴ページなら処理を開始する
 if( urlchk() ){
-	alert("OKを押すとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性があります。");
+	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性があります。");
 	// 対戦履歴のページ数だけ処理する
-	//for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
-	for(var linkcnt=0; linkcnt < 13; linkcnt++){
+	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
+	//for(var linkcnt=0; linkcnt < 16; linkcnt++){
 		urlstr = document.links[linkcnt].toString();
+		// 起動済みでないかのチェック
+		if(urlstr.match(/changesum/)){
+			errnum = 1;
+			break;
+		}
 		// 対象外のURLも含まれるので、アドレスチェックを行う
 		if( urlstr.match(/matchlogdetail/i) ){
 			request.open("GET", urlstr, false);
@@ -116,7 +130,8 @@ if( urlchk() ){
 		hyouji();
 	}
 	
-	alert("処理終了　エラー番号:" + errnum);
+	// 終了メッセージ
+	alert("処理終了　エラー番号:" + errnum + "\n" + errmsg[errnum]);
 } else {
 	alert("ﾅﾝﾃﾞｯ!!");
 }
@@ -185,6 +200,11 @@ function sorceget(){
 		player[1] = src_ary[0].match(mtc_detail_cast);
 		player[2] = src_ary[0].match(mtc_detail_skill);
 		skill_use = src_ary[0].match(mtc_detail_skill_count);
+		// スキル使用回数特有のスペースやタブを除去
+		for(cnt = 0; cnt < skill_use.length; cnt++){
+			skill_use[cnt] = skill_use[cnt].replace(/\s+/g, "");
+			skill_use[cnt] = skill_use[cnt].replace(/<.*>/, "");
+		}
 		player[3] = src_ary[0].match(mtc_detail_assist);
 		player[4] = src_ary[0].match(mtc_detail_soul);
 		
@@ -594,7 +614,7 @@ function lvuptime(lvsec, batcnt){
 
 // URLが対戦履歴ページ以外の場合はメッセージを表示する
 function urlchk(){
-	if(location.href.toString() == starturl){
+	if(location.href.toString() == starturl1 || location.href.toString() == starturl2){
 		return true;
 	} else {
 	alert("実行するページのアドレスが一致しません。\n【WLW】対戦履歴(全国対戦):Wonder.NET ワンダーランドウォーズ\n「https://wonderland-wars.net/matchlog.html」\n上記のページで実行してください。");

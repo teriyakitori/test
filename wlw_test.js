@@ -89,8 +89,11 @@ var cast_result = [];
 
 // 表示用
 var innerNode = null;
+var skillNode = document.createElement("h2");
+var castNode = document.createElement("h2");
 
 // 表示ノード用配列
+var skill_ary = [];
 var node_ary = [];
 
 // エラー用変数
@@ -337,21 +340,24 @@ function hyouji(){
 	// 表示
 	// タイトルを表示
 	var inspos  = document.getElementById("page_title");
-	var newNode = document.createElement("h2");
+	var gameNode = document.createElement("h2");
+	//var skillNode = document.createElement("h2");
 	var textNode = document.createTextNode("本気でやっつけてやるんだから！");
-	newNode.appendChild(textNode);
-	newNode.id = "page_title";
-	inspos.parentNode.insertBefore(newNode, inspos);
 	
-	// 親ノードを生成
-	newNode = document.createElement("div");
-	newNode.className = "frame02_1";
+	gameNode.appendChild(textNode);
+	gameNode.id = "page_title";
+	inspos.parentNode.insertBefore(gameNode, inspos);
 	
-	// 結果領域のタイトルを作成
-	var titleNode = document.createElement("div");
-	titleNode.className = "frame02_1_title";
-	titleNode.innerHTML = "使用キャスト";
-	newNode.appendChild(titleNode);
+	// 試合結果表示
+	gameNode = document.createElement("div");
+	gameNode.className = "frame02_1";
+	gameNode.style.marginTop = "72px";
+	gameNode.style.marginBottom = "136px";
+	
+	nodetitle1 = document.createElement("div");
+	nodetitle1.className = "frame02_1_title";
+	nodetitle1.innerHTML = "試合結果";
+	gameNode.appendChild(nodetitle1);
 	
 	// 使用キャスト画像を表示
 	for(var cnt=0; cnt < cast_cnt; cnt++){
@@ -363,7 +369,7 @@ function hyouji(){
 		var linkNode = document.createElement("a");
 		linkNode.href = "JavaScript:changesum(" + cnt.toString() + ")";
 		linkNode.appendChild(imgNode);
-		newNode.appendChild(linkNode);
+		gameNode.appendChild(linkNode);
 	}
 	
 	// インナー定義
@@ -401,9 +407,156 @@ function hyouji(){
 	addNode("敵LV6残時間", lvuptime(cast_result[0][15], battle_cnt), 14);
 	addNode("敵LV7残時間", lvuptime(cast_result[0][16], battle_cnt), 15);
 	
+	// スキル使用回数のタイトルを作成
+	skillNode = document.createElement("div");
+	skillNode.className = "frame02_1"
+	skillNode.style.marginTop = "72px";
+	skillNode.style.marginBottom = "136px";
+	
+	nodetitle2 = document.createElement("div");
+	nodetitle2.className = "frame02_1_title";
+	nodetitle2.innerHTML = "スキル使用回数予定地";
+	skillNode.appendChild(nodetitle2);
+	
+	// 使用キャスト画像を表示
+	for(var cnt=0; cnt < cast_cnt; cnt++){
+		var imgNode = document.createElement("img");
+		imgNode.src = cast_result[cnt][0];
+		imgNode.width = 60;
+		imgNode.height = 70;
+		
+		var linkNode = document.createElement("a");
+		linkNode.href = "JavaScript:changesum(" + cnt.toString() + ")";
+		linkNode.appendChild(imgNode);
+		skillNode.appendChild(linkNode);
+	}
+	
+	addSkillNode("対象試合数", "キャストを選択してください", 0);
+	addSkillNode("DS使用数（平均）", "0" + "%", 1);
+	addSkillNode("↓スキル使用回数", "（平均）", 2);
+	
+	// 仮レイアウト
+	var testNode = document.createElement("div");
+	testNode.className = "mtc_detail_skill";
+	testNode.style.position = "static";
+	testNode.style.width = "100%";
+	//testNode.style.textAlign = "center";
+	
+	// 一枚目
+	var testNode1 = document.createElement("div");
+	testNode1.className = "mtc_detail_cardblock";
+	
+	var testimg = document.createElement("img");
+	testimg.src = "common/img_card_thum/skill/81e141dafb61ac9d88df69446184309e.png";
+	testNode1.appendChild(testimg);
+	
+	var testCnt1 = document.createElement("div");
+	testCnt1.className = "mtc_detail_skill_count";
+	testCnt1.innerHTML = "7回";
+	
+	testNode1.appendChild(testCnt1);
+	testNode.appendChild(testNode1);
+	
+	// 二枚目
+	var testNode1 = document.createElement("div");
+	testNode1.className = "mtc_detail_cardblock";
+	
+	var testimg = document.createElement("img");
+	testimg.src = "common/img_card_thum/skill/94193ecfdaf320a861da0084bc529ed0.png";
+	testNode1.appendChild(testimg);
+	
+	var testCnt1 = document.createElement("div");
+	testCnt1.className = "mtc_detail_skill_count";
+	testCnt1.innerHTML = "12回";
+	testNode1.appendChild(testCnt1);
+	
+	testNode1.appendChild(testCnt1);
+	testNode.appendChild(testNode1);
+	
+	// 三枚目
+	var testNode1 = document.createElement("div");
+	testNode1.className = "mtc_detail_cardblock";
+	
+	var testimg = document.createElement("img");
+	testimg.src = "common/img_card_thum/skill/94193ecfdaf320a861da0084bc529ed0.png";
+	testNode1.appendChild(testimg);
+	
+	var testCnt1 = document.createElement("div");
+	testCnt1.className = "mtc_detail_skill_count";
+	testCnt1.innerHTML = "10回";
+	testNode1.appendChild(testCnt1);
+	
+	testNode1.appendChild(testCnt1);
+	testNode.appendChild(testNode1);
+	
+	// 四枚目
+	var testNode1 = document.createElement("div");
+	testNode1.className = "mtc_detail_cardblock";
+	
+	var testimg = document.createElement("img");
+	testimg.src = "common/img_card_thum/skill/94193ecfdaf320a861da0084bc529ed0.png";
+	testNode1.appendChild(testimg);
+	
+	var testCnt1 = document.createElement("div");
+	testCnt1.className = "mtc_detail_skill_count";
+	testCnt1.innerHTML = "0回";
+	testNode1.appendChild(testCnt1);
+	
+	testNode1.appendChild(testCnt1);
+	testNode.appendChild(testNode1);
+	
+	// 五枚目
+	var testNode1 = document.createElement("div");
+	testNode1.className = "mtc_detail_cardblock";
+	
+	var testimg = document.createElement("img");
+	testimg.src = "common/img_card_thum/skill/94193ecfdaf320a861da0084bc529ed0.png";
+	testNode1.appendChild(testimg);
+	
+	var testCnt1 = document.createElement("div");
+	testCnt1.className = "mtc_detail_skill_count";
+	testCnt1.innerHTML = "2回";
+	testNode1.appendChild(testCnt1);
+	
+	testNode1.appendChild(testCnt1);
+	testNode.appendChild(testNode1);
+	
+	skillNode.appendChild(testNode);
+	
+	// マッチングキャストごと
+	castNode = document.createElement("div");
+	castNode.className = "frame02_1"
+	castNode.style.marginTop = "72px";
+	castNode.style.marginBottom = "136px";
+	
+	nodetitle3 = document.createElement("div");
+	nodetitle3.className = "frame02_1_title";
+	nodetitle3.innerHTML = "マッチングキャスト予定地";
+	castNode.appendChild(nodetitle3);
+	
+	// 使用キャスト画像を表示
+	for(var cnt=0; cnt < cast_cnt; cnt++){
+		var imgNode = document.createElement("img");
+		imgNode.src = cast_result[cnt][0];
+		imgNode.width = 60;
+		imgNode.height = 70;
+		
+		var linkNode = document.createElement("a");
+		linkNode.href = "JavaScript:changesum(" + cnt.toString() + ")";
+		linkNode.appendChild(imgNode);
+		castNode.appendChild(linkNode);
+	}
+	
+	// 項目情報
+	addCastNode("マッチング回数", "0" + "回", 0);
+	addCastNode("↓スキル採用率", "", 0);
+	
+	
 	// ページに追加
-	newNode.appendChild(innerNode);
-	inspos.parentNode.insertBefore(newNode, inspos);
+	gameNode.appendChild(innerNode);
+	inspos.parentNode.insertBefore(gameNode, inspos);
+	inspos.parentNode.insertBefore(skillNode, inspos);
+	inspos.parentNode.insertBefore(castNode, inspos);
 }
 
 // キャスト集計初期化処理
@@ -544,33 +697,32 @@ function changesum(getcast){
 	node_ary[1].innerHTML = cast_result[getcast][2];
 	node_ary[2].innerHTML = cast_result[getcast][3];
 	node_ary[3].innerHTML = (cast_result[getcast][2]*100/cast_result[getcast][1]).toFixed() + "%";
-	node_ary[4].innerHTML = lvuptime(cast_result[getcast][4], cast_result[getcast][1]);
+	//node_ary[4].innerHTML = lvuptime(cast_result[getcast][4], cast_result[getcast][1]);
 	node_ary[5].innerHTML = lvuptime(cast_result[getcast][5], cast_result[getcast][1]);
-	node_ary[6].innerHTML = lvuptime(cast_result[getcast][6], cast_result[getcast][1]);
+	//node_ary[6].innerHTML = lvuptime(cast_result[getcast][6], cast_result[getcast][1]);
 	node_ary[7].innerHTML = lvuptime(cast_result[getcast][7], cast_result[getcast][1]);
-	node_ary[8].innerHTML = lvuptime(cast_result[getcast][8], cast_result[getcast][1]);
+	//node_ary[8].innerHTML = lvuptime(cast_result[getcast][8], cast_result[getcast][1]);
 	node_ary[9].innerHTML = lvuptime(cast_result[getcast][9], cast_result[getcast][1]);
-	node_ary[10].innerHTML = lvuptime(cast_result[getcast][11], cast_result[getcast][1]);
+	//node_ary[10].innerHTML = lvuptime(cast_result[getcast][11], cast_result[getcast][1]);
 	node_ary[11].innerHTML = lvuptime(cast_result[getcast][12], cast_result[getcast][1]);
-	node_ary[12].innerHTML = lvuptime(cast_result[getcast][13], cast_result[getcast][1]);
+	//node_ary[12].innerHTML = lvuptime(cast_result[getcast][13], cast_result[getcast][1]);
 	node_ary[13].innerHTML = lvuptime(cast_result[getcast][14], cast_result[getcast][1]);
-	node_ary[14].innerHTML = lvuptime(cast_result[getcast][15], cast_result[getcast][1]);
+	//node_ary[14].innerHTML = lvuptime(cast_result[getcast][15], cast_result[getcast][1]);
 	node_ary[15].innerHTML = lvuptime(cast_result[getcast][16], cast_result[getcast][1]);
 	node_ary[16].innerHTML = Math.floor(cast_result[getcast][18]/cast_result[getcast][1]) + "体";
-	(Math.floor((cast_result[0][19]/battle_cnt)*100))/100
 	node_ary[17].innerHTML = (Math.floor((cast_result[getcast][19]/cast_result[getcast][1])*100))/100 + "体";
-	node_ary[18].innerHTML = (Math.floor((cast_result[getcast][20]/cast_result[getcast][1])*100))/100 + "体";
+	//node_ary[18].innerHTML = (Math.floor((cast_result[getcast][20]/cast_result[getcast][1])*100))/100 + "体";
 	node_ary[19].innerHTML = (Math.floor((cast_result[getcast][21]/cast_result[getcast][1])*100))/100 + "回";
-	node_ary[20].innerHTML = (Math.floor((cast_result[getcast][19]/cast_result[getcast][21])*100))/100;
+	//node_ary[20].innerHTML = (Math.floor((cast_result[getcast][19]/cast_result[getcast][21])*100))/100;
 	node_ary[21].innerHTML = (Math.floor((cast_result[getcast][22]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[22].innerHTML = (Math.floor((cast_result[getcast][23]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[23].innerHTML = (Math.floor((cast_result[getcast][24]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[24].innerHTML = (Math.floor((cast_result[getcast][25]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[25].innerHTML = (Math.floor((cast_result[getcast][26]/cast_result[getcast][1])*100))/100 + "回";
-	node_ary[26].innerHTML = (Math.floor((cast_result[getcast][27]/cast_result[getcast][1])*100))/100 + "回";
-	node_ary[27].innerHTML = (Math.floor((cast_result[getcast][28]/cast_result[getcast][1])*100))/100 + "回";
-	node_ary[28].innerHTML = (Math.floor((cast_result[getcast][29]/cast_result[getcast][1])*100))/100 + "個";
-	node_ary[29].innerHTML = (Math.floor((cast_result[getcast][30]/cast_result[getcast][1])*100))/100;
+	//node_ary[26].innerHTML = (Math.floor((cast_result[getcast][27]/cast_result[getcast][1])*100))/100 + "回";
+	//node_ary[27].innerHTML = (Math.floor((cast_result[getcast][28]/cast_result[getcast][1])*100))/100 + "回";
+	//node_ary[28].innerHTML = (Math.floor((cast_result[getcast][29]/cast_result[getcast][1])*100))/100 + "個";
+	//node_ary[29].innerHTML = (Math.floor((cast_result[getcast][30]/cast_result[getcast][1])*100))/100;
 }
 
 // 文字列からタグを除去
@@ -639,4 +791,42 @@ function addNode(titlestr, datastr, node_no){
 	fixNode.appendChild(tmpNode1);
 	fixNode.appendChild(tmpNode2);
 	innerNode.appendChild(fixNode);
+}
+
+// スキルノードの追加
+function addSkillNode(titlestr, datastr, node_no){
+	var fixNode = document.createElement("div");
+	fixNode.className = "block_playdata_01 clearfix";
+	
+	var tmpNode1 = document.createElement("div");
+	tmpNode1.className = "block_playdata_01_title";
+	tmpNode1.innerHTML = titlestr;
+	
+	var tmpNode2 = document.createElement("div");
+	tmpNode2.className = "block_playdata_01_text";
+	tmpNode2.innerHTML = datastr;
+	skill_ary[node_no] = tmpNode2;
+	
+	fixNode.appendChild(tmpNode1);
+	fixNode.appendChild(tmpNode2);
+	skillNode.appendChild(fixNode);
+}
+
+// スキルノードの追加
+function addCastNode(titlestr, datastr, node_no){
+	var fixNode = document.createElement("div");
+	fixNode.className = "block_playdata_01 clearfix";
+	
+	var tmpNode1 = document.createElement("div");
+	tmpNode1.className = "block_playdata_01_title";
+	tmpNode1.innerHTML = titlestr;
+	
+	var tmpNode2 = document.createElement("div");
+	tmpNode2.className = "block_playdata_01_text";
+	tmpNode2.innerHTML = datastr;
+	skill_ary[node_no] = tmpNode2;
+	
+	fixNode.appendChild(tmpNode1);
+	fixNode.appendChild(tmpNode2);
+	castNode.appendChild(fixNode);
 }

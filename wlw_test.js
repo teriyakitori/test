@@ -697,32 +697,32 @@ function changesum(getcast){
 	node_ary[1].innerHTML = cast_result[getcast][2];
 	node_ary[2].innerHTML = cast_result[getcast][3];
 	node_ary[3].innerHTML = (cast_result[getcast][2]*100/cast_result[getcast][1]).toFixed() + "%";
-	//node_ary[4].innerHTML = lvuptime(cast_result[getcast][4], cast_result[getcast][1]);
+	node_ary[4].innerHTML = lvuptime(cast_result[getcast][4], cast_result[getcast][1]);
 	node_ary[5].innerHTML = lvuptime(cast_result[getcast][5], cast_result[getcast][1]);
-	//node_ary[6].innerHTML = lvuptime(cast_result[getcast][6], cast_result[getcast][1]);
+	node_ary[6].innerHTML = lvuptime(cast_result[getcast][6], cast_result[getcast][1]);
 	node_ary[7].innerHTML = lvuptime(cast_result[getcast][7], cast_result[getcast][1]);
-	//node_ary[8].innerHTML = lvuptime(cast_result[getcast][8], cast_result[getcast][1]);
+	node_ary[8].innerHTML = lvuptime(cast_result[getcast][8], cast_result[getcast][1]);
 	node_ary[9].innerHTML = lvuptime(cast_result[getcast][9], cast_result[getcast][1]);
-	//node_ary[10].innerHTML = lvuptime(cast_result[getcast][11], cast_result[getcast][1]);
+	node_ary[10].innerHTML = lvuptime(cast_result[getcast][11], cast_result[getcast][1]);
 	node_ary[11].innerHTML = lvuptime(cast_result[getcast][12], cast_result[getcast][1]);
-	//node_ary[12].innerHTML = lvuptime(cast_result[getcast][13], cast_result[getcast][1]);
+	node_ary[12].innerHTML = lvuptime(cast_result[getcast][13], cast_result[getcast][1]);
 	node_ary[13].innerHTML = lvuptime(cast_result[getcast][14], cast_result[getcast][1]);
-	//node_ary[14].innerHTML = lvuptime(cast_result[getcast][15], cast_result[getcast][1]);
+	node_ary[14].innerHTML = lvuptime(cast_result[getcast][15], cast_result[getcast][1]);
 	node_ary[15].innerHTML = lvuptime(cast_result[getcast][16], cast_result[getcast][1]);
 	node_ary[16].innerHTML = Math.floor(cast_result[getcast][18]/cast_result[getcast][1]) + "体";
 	node_ary[17].innerHTML = (Math.floor((cast_result[getcast][19]/cast_result[getcast][1])*100))/100 + "体";
-	//node_ary[18].innerHTML = (Math.floor((cast_result[getcast][20]/cast_result[getcast][1])*100))/100 + "体";
+	node_ary[18].innerHTML = (Math.floor((cast_result[getcast][20]/cast_result[getcast][1])*100))/100 + "体";
 	node_ary[19].innerHTML = (Math.floor((cast_result[getcast][21]/cast_result[getcast][1])*100))/100 + "回";
-	//node_ary[20].innerHTML = (Math.floor((cast_result[getcast][19]/cast_result[getcast][21])*100))/100;
+	node_ary[20].innerHTML = (Math.floor((cast_result[getcast][19]/cast_result[getcast][21])*100))/100;
 	node_ary[21].innerHTML = (Math.floor((cast_result[getcast][22]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[22].innerHTML = (Math.floor((cast_result[getcast][23]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[23].innerHTML = (Math.floor((cast_result[getcast][24]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[24].innerHTML = (Math.floor((cast_result[getcast][25]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[25].innerHTML = (Math.floor((cast_result[getcast][26]/cast_result[getcast][1])*100))/100 + "回";
-	//node_ary[26].innerHTML = (Math.floor((cast_result[getcast][27]/cast_result[getcast][1])*100))/100 + "回";
-	//node_ary[27].innerHTML = (Math.floor((cast_result[getcast][28]/cast_result[getcast][1])*100))/100 + "回";
-	//node_ary[28].innerHTML = (Math.floor((cast_result[getcast][29]/cast_result[getcast][1])*100))/100 + "個";
-	//node_ary[29].innerHTML = (Math.floor((cast_result[getcast][30]/cast_result[getcast][1])*100))/100;
+	node_ary[26].innerHTML = (Math.floor((cast_result[getcast][27]/cast_result[getcast][1])*100))/100 + "回";
+	node_ary[27].innerHTML = (Math.floor((cast_result[getcast][28]/cast_result[getcast][1])*100))/100 + "回";
+	node_ary[28].innerHTML = (Math.floor((cast_result[getcast][29]/cast_result[getcast][1])*100))/100 + "個";
+	node_ary[29].innerHTML = (Math.floor((cast_result[getcast][30]/cast_result[getcast][1])*100))/100;
 }
 
 // 文字列からタグを除去

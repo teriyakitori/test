@@ -6,6 +6,7 @@ var starturl2 = "https://wonderland-wars.net/matchlog.html?type=all";
 
 // 空欄カード用URL
 var nocard_img = "common/img_card_thum/deck_nocard.png";
+var com_img = "common/img_cast/582e3423a336042b335de96584d116e2.png";
 
 // 集計表示用アイコンURL
 var sum_img = "common/img_cast/582e3423a336042b335de96584d116e2.png";
@@ -34,6 +35,14 @@ var mtc_detail_enemygage = /<div class="mtc_detail_enemygage">.*<\/div>/;
 // 勝敗
 var mtc_detail_result = /<div class="mtc_detail_result">.*<\/div>/;
 
+// セットしているカードのブロック取得
+var mtc_detail_cardblock = /<div class="mtc_detail_cardblock">/g;
+// セットしているカードのブロック取得（マッチング相手）
+var mtc_detail_m_cardblock = /<div class="mtc_detail_m_cardblock">/g;
+// カードのレベル取得
+var mtc_detail_cardblock_lv = /<div class="mtc_detail_cardblock_lv">.*<\/div>/;
+// カードのレベルMAX時
+var mtc_detail_cardblock_lv_max = /<div class="mtc_detail_cardblock_lv lv_max">.*<\/div>/;
 // 使用スキル画像URL
 var mtc_detail_skill = /common\/img_card_thum\/skill\/.+\.png/g;
 // スキル使用回数
@@ -86,11 +95,15 @@ var battle_cnt = 0;
 var cast_cnt = 0;
 // キャスト重複チェック
 var cast_chkflg = -1;
+// マッチングキャストカウンタ
+match_cast_cnt = 0;
 
 // 結果を配列で格納する
 var result_battle = [];
 // キャストごとの結果を配列で格納する
 var cast_result = [];
+// マッチングしたキャストの結果を格納する
+var match_cast_result = [];
 
 // 表示用
 var innerNode = null;
@@ -112,14 +125,13 @@ var errmsg = [
 ]
 
 // 本処理
-// 同じページで二度実行できないようにする
-
 // 開始URLをチェックし、対戦履歴ページなら処理を開始する
 if( urlchk() ){
 	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性があります。");
 	// 対戦履歴のページ数だけ処理する
 	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
-	//for(var linkcnt=0; linkcnt < 16; linkcnt++){
+	//for(var linkcnt=0; linkcnt < 19; linkcnt++){
+	//for(var linkcnt=0; linkcnt < 13; linkcnt++){
 		urlstr = document.links[linkcnt].toString();
 		// 起動済みでないかのチェック
 		if(urlstr.match(/changesum/)){
@@ -138,7 +150,6 @@ if( urlchk() ){
 			break;
 		}
 	}
-	
 	// エラーが無ければ集計処理
 	if(errnum == 0){
 		hyouji();
@@ -147,6 +158,7 @@ if( urlchk() ){
 	// 終了メッセージ
 	alert("処理終了　エラー番号:" + errnum + "\n" + errmsg[errnum]);
 } else {
+	// ﾅﾝﾃﾞｯ!!
 	alert("ﾅﾝﾃﾞｯ!!");
 }
 
@@ -154,18 +166,17 @@ if( urlchk() ){
 function sorceget(){
 	if (request.readyState == 4 && request.status == 200){
 		var src_txt = null;
-		var result_ary = [];
-		var mylv_ary = [];
-		var enemylv_ary = [];
-		var player = [];
-		var skill_use = null;
-		var src_ary = [];
-		var tmp_ary = [];
-		var chkreg = null;
-		var cpuchk = [];
-		var other_member = [];
 		var tmpstr = null;
+		var card_chk = null;
+		var chkreg = null;
 		var cnt = 0;
+		
+		var src_ary = [];
+		var result_ary = [];
+		var player = [];
+		var other_member = [];
+		var tmp_ary = [];
+		var comchk = [];
 		
 		// ソースをテキストに
 		src_txt = request.responseText;
@@ -209,10 +220,10 @@ function sorceget(){
 		}
 		
 		// レベルアップ時間を取得
-		mylv_ary = src_ary[0].match(levelup_my_lv);
-		result_ary[10] = mylv_ary;
-		enemylv_ary = src_ary[0].match(levelup_enemy_lv);
-		result_ary[11] = enemylv_ary;
+		tmpstr = src_ary[0].match(levelup_my_lv);
+		result_ary[10] = tmpstr;
+		tmpstr = src_ary[0].match(levelup_enemy_lv);
+		result_ary[11] = tmpstr;
 		// 兵士撃破数を取得
 		tmpstr = src_ary[0].match(mtc_detail_data_heishi);
 		result_ary[12] = tagsplit(tmpstr[0]);
@@ -253,20 +264,42 @@ function sorceget(){
 		tmpstr = src_ary[0].match(mtc_detail_data2_exp);
 		result_ary[24] = tagsplit(tmpstr[0]);
 		
-		// プレイヤースキルアシスト情報を取得
+		// 自プレイヤースキルアシスト情報を取得
 		player[0] = src_ary[0].match(mtc_detail_skill);
-		skill_use = src_ary[0].match(mtc_detail_skill_count);
+		// スキル使用回数を取得
+		card_chk = src_ary[0].match(mtc_detail_skill_count);
 		// スキル使用回数特有のスペースやタブを除去
-		for(cnt = 0; cnt < skill_use.length; cnt++){
-			skill_use[cnt] = skill_use[cnt].replace(/\s+/g, "");
-			skill_use[cnt] = skill_use[cnt].replace(/<.*>/, "");
+		for(cnt = 0; cnt < card_chk.length; cnt++){
+			card_chk[cnt] = card_chk[cnt].replace(/\s+/g, "");
+			card_chk[cnt] = card_chk[cnt].replace(/<.*>/, "");
 		}
-		player[1] = skill_use;
+		player[1] = card_chk;
 		player[2] = src_ary[0].match(mtc_detail_assist);
 		player[3] = src_ary[0].match(mtc_detail_soul);
+		
+		// カードのレベルを取得
+		card_chk = [];
+		tmpstr = src_ary[0].split(mtc_detail_cardblock);
+		for(cnt = 0; cnt < 8; cnt++){
+			// LV MAXチェック
+			var chkstr = tmpstr[cnt+1].match(mtc_detail_cardblock_lv_max);
+			if(chkstr != null){
+				card_chk[cnt] = "MAX";
+			} else {
+				chkstr = tmpstr[cnt+1].match(mtc_detail_cardblock_lv);
+				if(chkstr != null){
+					card_chk[cnt] = tagsplit(chkstr[0]);
+				} else {
+					card_chk[cnt] = "0";
+				}
+			}
+		}
+		player[4] = card_chk;
+		
+		// プレイヤーカード情報を格納
 		result_ary[25] = player;
 		
-		// CPUプレイヤーの確認
+		// COMプレイヤーと使用キャストの確認
 		for(cnt = 0; cnt < 7; cnt++){
 			if(cnt < 3){
 				chkreg = new RegExp("id=\"friend_" + cnt + "\"\\s*com=\"false\"");
@@ -275,11 +308,10 @@ function sorceget(){
 				chkreg = new RegExp("id=\"enemy_" + enemy_cnt + "\"\\s*com=\"false\"");
 			}
 			if(src_ary[1].match(chkreg) == null){
-				cpuchk[cnt] = true;
+				comchk[cnt] = 1;
 			} else {
-				cpuchk[cnt] = false;
+				comchk[cnt] = 0;
 			}
-			//console.log("CPUチェック" + cnt + "：" + cpuchk[cnt] + "　|　" + chkreg);
 		}
 		
 		// 他プレイヤーのための分割
@@ -289,24 +321,45 @@ function sorceget(){
 		// 他プレイヤーのデータを取得
 		for(cnt = 0; cnt < 7; cnt++){
 			var member_tmp = [];
-			member_tmp[0] = cpuchk[cnt];
-			// CPUの場合は取得を行わない
-			if(member_tmp[0] == false){
+			
+			// COMフラグの挿入
+			member_tmp[0] = comchk[cnt];
+			// COMでないなら取得を行う
+			if(member_tmp[0] == 0){
+				// tmpstr = tmp_ary[player_cnt].split(mtc_detail_cardblock);
 				player_cnt++;
 				member_tmp[1] = tmp_ary[player_cnt].match(mtc_detail_cast);
-				member_tmp[2] = tmp_ary[player_cnt].match(mtc_detail_skill);
-				member_tmp[3] = tmp_ary[player_cnt].match(mtc_detail_assist);
-				member_tmp[4] = tmp_ary[player_cnt].match(mtc_detail_soul);
-				other_member[cnt] = member_tmp;
+				tmpstr = tmp_ary[player_cnt].match(mp_mydata_name);
+				member_tmp[2] = tagsplit(tmpstr[0]);
+				tmpstr = tmp_ary[player_cnt].match(mp_mydata_location);
+				member_tmp[3] = tagsplit(tmpstr[0]);
+				member_tmp[4] = tmp_ary[player_cnt].match(mtc_detail_skill);
+				member_tmp[5] = tmp_ary[player_cnt].match(mtc_detail_assist);
+				member_tmp[6] = tmp_ary[player_cnt].match(mtc_detail_soul);
+				// カードのレベルを取得
+				card_chk = [];
+				tmpstr = tmp_ary[player_cnt].split(mtc_detail_m_cardblock);
+				for(var lvcnt = 0; lvcnt < 8; lvcnt++){
+					var chkstr = tmpstr[lvcnt+1].match(mtc_detail_cardblock_lv_max);
+					if(chkstr != null){
+						card_chk[lvcnt] = "MAX";
+					} else {
+						var chkstr = tmpstr[lvcnt+1].match(mtc_detail_cardblock_lv);
+						if(chkstr != null){
+							card_chk[lvcnt] = tagsplit(chkstr[0]);
+						} else {
+							card_chk[lvcnt] = "0";
+						}
+					}
+				}
+				member_tmp[7] = card_chk;
 			} else {
-				other_member[cnt] = cpuchk[cnt];
+				member_tmp[1] = com_img;
+				member_tmp[2] = "COM";
 			}
+			other_member[cnt] = member_tmp;
 		}
-		/*
-		for(cnt = 0; cnt < 7; cnt++){
-			console.log("てすと" + cnt + "：" + other_member[cnt]);
-		}
-		*/
+		result_ary[26] = other_member;
 		// 結果を格納
 		result_battle[battle_cnt] = result_ary;
 	} else {
@@ -344,6 +397,9 @@ function hyouji(){
 			// フラグ初期化
 			cast_chkflg = -1;
 		}
+		
+		// マッチングキャストの集計
+		match_cast_add(cnt);
 	}
 	
 	// タイトルを表示
@@ -467,25 +523,25 @@ function hyouji(){
 	
 	nodetitle3 = document.createElement("div");
 	nodetitle3.className = "frame02_1_title";
-	nodetitle3.innerHTML = "マッチングキャスト予定地";
+	nodetitle3.innerHTML = "マッチングキャスト";
 	castNode.appendChild(nodetitle3);
 	
 	// 使用キャスト画像を表示
-	for(var cnt=0; cnt < cast_cnt; cnt++){
+	for(var cnt=0; cnt < match_cast_cnt; cnt++){
 		var imgNode = document.createElement("img");
-		imgNode.src = cast_result[cnt][0];
+		imgNode.src = match_cast_result[cnt][0];
 		imgNode.width = 60;
 		imgNode.height = 70;
 		
 		var linkNode = document.createElement("a");
-		linkNode.href = "JavaScript:changesum(" + cnt.toString() + ")";
+		linkNode.href = "JavaScript:changeother(" + cnt.toString() + ")";
 		linkNode.appendChild(imgNode);
 		castNode.appendChild(linkNode);
 	}
 	
 	// 項目情報
 	addNode("マッチング回数", "0" + "回", 0, "cast");
-	addNode("↓スキル採用率", "", 0, "cast");
+	addNode("↓建設予定地", "", 1, "cast");
 	
 	// ページに追加
 	gameNode.appendChild(innerNode);
@@ -691,6 +747,43 @@ function cast_result_add(cast_no, ary_no){
 	}
 }
 
+// マッチング相手の集計処理
+function match_cast_add(ary_no){
+	// 7キャスト分ループする
+	for(var match_cnt = 0; match_cnt < result_battle[ary_no][26].length; match_cnt++){
+		var ary_tmp = [];
+		var chkcast_flg = 0;
+		
+		// COMチェック
+		if(result_battle[ary_no][26][match_cnt][0] == 0){
+			// 同名キャストチェック
+			for(var cast_chk = 0; cast_chk < match_cast_cnt; cast_chk++){
+				if(result_battle[ary_no][26][match_cnt][1].toString() == match_cast_result[cast_chk][0].toString()){
+					// 同名だった場合
+					match_cast_result[cast_chk][1]++;
+					chkcast_flg = 1;
+					break;
+				}
+			}
+			
+			// まだ登録されていないキャストの場合
+			if(chkcast_flg == 0){
+				ary_tmp[0] = result_battle[ary_no][26][match_cnt][1];
+				ary_tmp[1] = 1;
+				match_cast_result[match_cast_cnt] = ary_tmp;
+				match_cast_cnt++;
+				/*
+				ary_tmp[2] = result_battle[ary_no][26][match_cnt][4];
+				ary_tmp[3] = [1, 1, 1, 1];
+				ary_tmp[4] = [];
+				*/
+			}
+		} else {
+			// COMの場合
+		}
+	}
+}
+
 // キャストをクリックした時の処理
 function changesum(getcast){
 	node_ary[0].innerHTML = cast_result[getcast][1];
@@ -736,6 +829,10 @@ function changesum(getcast){
 	skillcnt_ary[3].innerHTML = (Math.floor((cast_result[getcast][32][3]/cast_result[getcast][1])*10))/10 + "回";
 	skillimg_ary[4].src = cast_result[getcast][31][4];
 	skillcnt_ary[4].innerHTML = (Math.floor((cast_result[getcast][32][4]/cast_result[getcast][1])*10))/10 + "回";
+}
+
+function changeother(getcast){
+	cast_ary[0].innerHTML = match_cast_result[getcast][1] + "回";
 }
 
 // 文字列からタグを除去
@@ -836,3 +933,4 @@ function addSkill(imgurl, usecnt, node_no){
 	skillcnt_ary[node_no] = tmpNode1;
 	skillNode.appendChild(fixNode);
 }
+

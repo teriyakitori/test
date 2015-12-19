@@ -1,4 +1,3 @@
-
 javascript:
 
 // 実行するURL
@@ -116,6 +115,7 @@ var innerNode = null;
 var skillNode = document.createElement("h2");
 var castNode = document.createElement("h2");
 var dtlNode = null;
+var matchdtlNode = null;
 
 // 表示ノード用配列
 var node_ary = [];
@@ -568,10 +568,10 @@ function hyouji(){
 	addNode("↓カード採用率", "", 2, "cast");
 	
 	// スキル枠確保
-	dtlNode = document.createElement("div");
-	dtlNode.className = "mtc_detail_skill";
-	dtlNode.style.position = "static";
-	dtlNode.style.width = "100%";
+	matchdtlNode = document.createElement("div");
+	matchdtlNode.className = "mtc_detail_skill";
+	matchdtlNode.style.position = "static";
+	matchdtlNode.style.width = "100%";
 	
 	addCard("common/img_card_thum/deck_nocard.png", "", 0, "cast");
 	addCard("common/img_card_thum/deck_nocard.png", "", 1, "cast");
@@ -582,7 +582,7 @@ function hyouji(){
 	addCard("common/img_card_thum/deck_nocard.png", "", 6, "cast");
 	addCard("common/img_card_thum/deck_nocard.png", "", 7, "cast");
 	
-	castNode.appendChild(dtlNode);
+	castNode.appendChild(matchdtlNode);
 	
 	// ページに追加
 	gameNode.appendChild(innerNode);
@@ -989,9 +989,8 @@ function addCard(imgurl, usecnt, node_no, mode){
 	} else if(mode == "cast"){
 		castcardimg_ary[node_no] = tmpImg1;
 		castcardcnt_ary[node_no] = tmpNode1;
-		dtlNode.appendChild(fixNode);
+		matchdtlNode.appendChild(fixNode);
 	} else {
 		errnum = 3;
 	}
 }
-

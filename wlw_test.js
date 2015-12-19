@@ -509,10 +509,10 @@ function hyouji(){
 	for(var cnt=0; cnt < cast_cnt; cnt++){
 		var imgNode = document.createElement("img");
 		imgNode.src = cast_result[cnt][0];
-		/*
+		
 		imgNode.width = icon_width;
 		imgNode.height = icon_height;
-		*/
+		
 		var linkNode = document.createElement("a");
 		linkNode.href = "JavaScript:changesum(" + cnt.toString() + ")";
 		linkNode.appendChild(imgNode);
@@ -974,7 +974,7 @@ function addCard(imgurl, usecnt, node_no, mode){
 	var tmpImg1 = document.createElement("img");
 	tmpImg1.src = imgurl;
 	//tmpImg1.width = 60;
-	//tmpImg1.height = 84;
+	tmpImg1.height = 84;
 	
 	var tmpNode1 = document.createElement("div");
 	tmpNode1.className = "mtc_detail_skill_count";
@@ -995,3 +995,4 @@ function addCard(imgurl, usecnt, node_no, mode){
 		errnum = 3;
 	}
 }
+

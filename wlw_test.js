@@ -979,28 +979,90 @@ function changesum(getcast){
 
 // マッチング相手表示
 function changeother(getcast){
+	var getrank_ary = [];
+	
 	cast_ary[0].innerHTML = match_cast_result[getcast][1] + "回";
 	cast_ary[1].innerHTML = (Math.floor(match_cast_result[getcast][1]*10000/match_cast_sum))/100 + "%";
 	
 	// カード表示処理
 	otheradd(getcast, 0, 0, "ws");
-	otheradd(getcast, 1, 0, "skill");
-	otheradd(getcast, 2, 1, "skill");
-	otheradd(getcast, 3, 2, "skill");
-	otheradd(getcast, 4, 3, "skill");
-	otheradd(getcast, 5, 0, "assist");
-	otheradd(getcast, 6, 1, "assist");
-	otheradd(getcast, 7, 2, "assist");
-	otheradd(getcast, 8, 3, "assist");
-	otheradd(getcast, 9, 4, "assist");
-	otheradd(getcast, 10, 5, "assist");
-	otheradd(getcast, 11, 6, "assist");
-	otheradd(getcast, 12, 7, "assist");
-	otheradd(getcast, 13, 0, "soul");
-	otheradd(getcast, 14, 1, "soul");
-	otheradd(getcast, 15, 2, "soul");
-	otheradd(getcast, 16, 3, "soul");
-	otheradd(getcast, 17, 4, "soul");
+	
+	getrank_ary = card_ranking(getcast, 4, "skill");
+	otheradd(getcast, 1, getrank_ary[0], "skill");
+	otheradd(getcast, 2, getrank_ary[1], "skill");
+	otheradd(getcast, 3, getrank_ary[2], "skill");
+	otheradd(getcast, 4, getrank_ary[3], "skill");
+	
+	getrank_ary = card_ranking(getcast, 8, "assist");
+	otheradd(getcast, 5, getrank_ary[0], "assist");
+	otheradd(getcast, 6, getrank_ary[1], "assist");
+	otheradd(getcast, 7, getrank_ary[2], "assist");
+	otheradd(getcast, 8, getrank_ary[3], "assist");
+	otheradd(getcast, 9, getrank_ary[4], "assist");
+	otheradd(getcast, 10, getrank_ary[5], "assist");
+	otheradd(getcast, 11, getrank_ary[6], "assist");
+	otheradd(getcast, 12, getrank_ary[7], "assist");
+	
+	getrank_ary = card_ranking(getcast, 5, "soul");
+	otheradd(getcast, 13, getrank_ary[0], "soul");
+	otheradd(getcast, 14, getrank_ary[1], "soul");
+	otheradd(getcast, 15, getrank_ary[2], "soul");
+	otheradd(getcast, 16, getrank_ary[3], "soul");
+	otheradd(getcast, 17, getrank_ary[4], "soul");
+}
+
+// カードの登場回数順にソートして表示する処理
+function card_ranking(getcast, addcnt, mode){
+	// 数値の大きい順に配列番号を格納していく
+	work_ary = [];
+	sort_ary = [];
+	rank_ary = [];
+	add_work = 0;
+	mode_work = 0;
+	over_cnt = 0;
+	
+	// モードによって処理対象の配列番号に変換する
+	if(mode.toString() == "ws"){
+		mode_work = 3;
+	} else if(mode.toString() == "skill"){
+		mode_work = 5;
+	} else if(mode.toString() == "assist"){
+		mode_work = 7;
+	} else if(mode.toString() == "soul"){
+		mode_work = 9;
+	}
+	
+	// 配列をソート済みとソート前でコピー
+	//work_ary = match_cast_result[getcast][mode_work].contact();
+	//sort_ary = match_cast_result[getcast][mode_work].contact();
+	for(add_work = 0; add_work < match_cast_result[getcast][mode_work].length; add_work++){
+		work_ary.push(match_cast_result[getcast][mode_work][add_work]);
+		sort_ary.push(match_cast_result[getcast][mode_work][add_work]);
+	}
+	
+	// 降順ソート処理
+	sort_ary.sort(function sortNumber(a,b)
+	{
+		return b - a;
+	});
+	
+	// 必要数まで出現位置を格納していく
+	for(add_work = 0; add_work < addcnt; add_work++){
+		if(sort_ary.length < add_work){
+			// 配列オーバーしている時は超えた数値値を参照するように返す
+			rank_ary[add_work] = add_work;
+		} else {
+			for(var item_cnt = 0; item_cnt < sort_ary.length; item_cnt++){
+				if(sort_ary[add_work] == work_ary[item_cnt]){
+					rank_ary[add_work] = item_cnt;
+					work_ary[item_cnt] = -1;
+					break;
+				}
+			}
+		}
+	}
+	
+	return rank_ary;
 }
 
 // マッチングキャストの集計表示処理
@@ -1151,4 +1213,3 @@ function addCard(imgurl, usecnt, node_no, mode){
 		errnum = 3;
 	}
 }
-

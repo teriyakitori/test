@@ -1,3 +1,4 @@
+
 javascript:
 
 // 実行するURL
@@ -163,9 +164,12 @@ if( urlchk() ){
 	if (window.parent.screen.width < 481) { 
 		//画面サイズが小さい時の処理
 		icon_width = 30;
-	}else{
+		icon_height = 35;
+		
+	} else {
 		//画面サイズが大きい時の処理
 		icon_width = 60;
+		icon_height = 70;
 	}
 	
 	// エラーが無ければ集計処理
@@ -446,6 +450,7 @@ function hyouji(){
 		var imgNode = document.createElement("img");
 		imgNode.src = cast_result[cnt][0];
 		imgNode.width = icon_width;
+		imgNode.height = icon_height;
 		
 		var linkNode = document.createElement("a");
 		linkNode.href = "JavaScript:changesum(" + cnt.toString() + ")";
@@ -504,6 +509,7 @@ function hyouji(){
 		var imgNode = document.createElement("img");
 		imgNode.src = cast_result[cnt][0];
 		imgNode.width = icon_width;
+		imgNode.height = icon_height;
 		
 		var linkNode = document.createElement("a");
 		linkNode.href = "JavaScript:changesum(" + cnt.toString() + ")";
@@ -547,6 +553,7 @@ function hyouji(){
 		var imgNode = document.createElement("img");
 		imgNode.src = match_cast_result[cnt][0];
 		imgNode.width = icon_width;
+		imgNode.height = icon_height;
 		
 		var linkNode = document.createElement("a");
 		linkNode.href = "JavaScript:changeother(" + cnt.toString() + ")";
@@ -986,3 +993,4 @@ function addCard(imgurl, usecnt, node_no, mode){
 		errnum = 3;
 	}
 }
+

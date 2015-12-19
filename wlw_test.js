@@ -1,3 +1,4 @@
+
 javascript:
 
 // 実行するURL
@@ -115,7 +116,7 @@ var innerNode = null;
 var skillNode = document.createElement("h2");
 var castNode = document.createElement("h2");
 var dtlNode = null;
-var matchdtlNode = null;
+var dtlNode = null;
 
 // 表示ノード用配列
 var node_ary = [];
@@ -160,7 +161,6 @@ if( urlchk() ){
 		}
 	}
 	
-	alert(window.parent.screen.width);
 	// 画面サイズによって値を設定
 	if (window.parent.screen.width < 481) { 
 		//画面サイズが小さい時の処理
@@ -509,9 +509,10 @@ function hyouji(){
 	for(var cnt=0; cnt < cast_cnt; cnt++){
 		var imgNode = document.createElement("img");
 		imgNode.src = cast_result[cnt][0];
+		/*
 		imgNode.width = icon_width;
 		imgNode.height = icon_height;
-		
+		*/
 		var linkNode = document.createElement("a");
 		linkNode.href = "JavaScript:changesum(" + cnt.toString() + ")";
 		linkNode.appendChild(imgNode);
@@ -568,10 +569,10 @@ function hyouji(){
 	addNode("↓カード採用率", "", 2, "cast");
 	
 	// スキル枠確保
-	matchdtlNode = document.createElement("div");
-	matchdtlNode.className = "mtc_detail_skill";
-	matchdtlNode.style.position = "static";
-	matchdtlNode.style.width = "100%";
+	dtlNode = document.createElement("div");
+	dtlNode.className = "mtc_detail_skill";
+	dtlNode.style.position = "static";
+	dtlNode.style.width = "100%";
 	
 	addCard("common/img_card_thum/deck_nocard.png", "", 0, "cast");
 	addCard("common/img_card_thum/deck_nocard.png", "", 1, "cast");
@@ -582,7 +583,7 @@ function hyouji(){
 	addCard("common/img_card_thum/deck_nocard.png", "", 6, "cast");
 	addCard("common/img_card_thum/deck_nocard.png", "", 7, "cast");
 	
-	castNode.appendChild(matchdtlNode);
+	castNode.appendChild(dtlNode);
 	
 	// ページに追加
 	gameNode.appendChild(innerNode);
@@ -989,7 +990,7 @@ function addCard(imgurl, usecnt, node_no, mode){
 	} else if(mode == "cast"){
 		castcardimg_ary[node_no] = tmpImg1;
 		castcardcnt_ary[node_no] = tmpNode1;
-		matchdtlNode.appendChild(fixNode);
+		dtlNode.appendChild(fixNode);
 	} else {
 		errnum = 3;
 	}

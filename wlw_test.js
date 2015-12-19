@@ -160,6 +160,7 @@ if( urlchk() ){
 		}
 	}
 	
+	alert(window.parent.screen.width);
 	// 画面サイズによって値を設定
 	if (window.parent.screen.width < 481) { 
 		//画面サイズが小さい時の処理

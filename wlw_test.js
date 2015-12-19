@@ -509,7 +509,7 @@ function hyouji(){
 	dtlNode = document.createElement("div");
 	dtlNode.className = "mtc_detail_skill";
 	dtlNode.style.position = "static";
-	dtlNode.style.width = "100%";
+	dtlNode.style.width = "540px";
 	//dtlNode.style.textAlign = "center";
 	
 	// 枠の確保
@@ -955,8 +955,8 @@ function addCard(imgurl, usecnt, node_no, mode){
 	
 	var tmpImg1 = document.createElement("img");
 	tmpImg1.src = imgurl;
-	tmpImg1.width = 60;
-	tmpImg1.height = 84;
+	//tmpImg1.width = 60;
+	//tmpImg1.height = 84;
 	
 	var tmpNode1 = document.createElement("div");
 	tmpNode1.className = "mtc_detail_skill_count";

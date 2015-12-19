@@ -158,7 +158,7 @@ if( urlchk() ){
 			break;
 		}
 	}
-	alert(window.parent.screen.width);
+	
 	// 画面サイズによって値を設定
 	if (window.parent.screen.width < 481) { 
 		//画面サイズが小さい時の処理
@@ -539,7 +539,7 @@ function hyouji(){
 	
 	nodetitle3 = document.createElement("div");
 	nodetitle3.className = "frame02_1_title";
-	nodetitle3.innerHTML = "マッチングキャスト予定";
+	nodetitle3.innerHTML = "マッチングキャスト予定地";
 	castNode.appendChild(nodetitle3);
 	
 	// 使用キャスト画像を表示
@@ -986,4 +986,3 @@ function addCard(imgurl, usecnt, node_no, mode){
 		errnum = 3;
 	}
 }
-

@@ -1,3 +1,4 @@
+
 javascript:
 
 // 実行するURL
@@ -161,7 +162,7 @@ if( urlchk() ){
 	}
 	
 	// 画面サイズによって値を設定
-	if (window.parent.screen.width < 481) { 
+	if (window.innerWidth < 481) { 
 		//画面サイズが小さい時の処理
 		icon_width = 30;
 		icon_height = 35;

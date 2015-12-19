@@ -95,6 +95,8 @@ var battle_cnt = 0;
 var cast_cnt = 0;
 // キャスト重複チェック
 var cast_chkflg = -1;
+// マッチングキャスト累計
+match_cast_sum = 0;
 // マッチングキャストカウンタ
 match_cast_cnt = 0;
 
@@ -921,6 +923,8 @@ function addSkill(imgurl, usecnt, node_no){
 	
 	var tmpImg1 = document.createElement("img");
 	tmpImg1.src = imgurl;
+	tmpImg1.width = 60;
+	tmpImg1.height = 70;
 	
 	var tmpNode1 = document.createElement("div");
 	tmpNode1.className = "mtc_detail_skill_count";

@@ -1,4 +1,3 @@
-
 javascript:
 
 // 実行するURL
@@ -108,6 +107,9 @@ var cast_result = [];
 // マッチングしたキャストの結果を格納する
 var match_cast_result = [];
 
+// 表示サイズ用
+var icon_width = 0;
+
 // 表示用
 var innerNode = null;
 var skillNode = document.createElement("h2");
@@ -156,6 +158,16 @@ if( urlchk() ){
 			break;
 		}
 	}
+	
+	// 画面サイズによって値を設定
+	if (window.matchMedia("screen and (min-width:481px)").matches) { 
+		//481px以上のデスクトップでの処理
+		icon_width = 60;
+	}else{
+        //スクリーンサイズが481pxより小さい時の処理
+		icon_width = 30;
+	}
+	
 	// エラーが無ければ集計処理
 	if(errnum == 0){
 		hyouji();
@@ -433,8 +445,7 @@ function hyouji(){
 	for(var cnt=0; cnt < cast_cnt; cnt++){
 		var imgNode = document.createElement("img");
 		imgNode.src = cast_result[cnt][0];
-		imgNode.width = 60;
-		imgNode.height = 70;
+		imgNode.width = icon_width;
 		
 		var linkNode = document.createElement("a");
 		linkNode.href = "JavaScript:changesum(" + cnt.toString() + ")";
@@ -492,8 +503,7 @@ function hyouji(){
 	for(var cnt=0; cnt < cast_cnt; cnt++){
 		var imgNode = document.createElement("img");
 		imgNode.src = cast_result[cnt][0];
-		imgNode.width = 60;
-		imgNode.height = 70;
+		imgNode.width = icon_width;
 		
 		var linkNode = document.createElement("a");
 		linkNode.href = "JavaScript:changesum(" + cnt.toString() + ")";
@@ -509,7 +519,7 @@ function hyouji(){
 	dtlNode = document.createElement("div");
 	dtlNode.className = "mtc_detail_skill";
 	dtlNode.style.position = "static";
-	dtlNode.style.width = "540px";
+	dtlNode.style.width = "100%";
 	//dtlNode.style.textAlign = "center";
 	
 	// 枠の確保
@@ -529,15 +539,14 @@ function hyouji(){
 	
 	nodetitle3 = document.createElement("div");
 	nodetitle3.className = "frame02_1_title";
-	nodetitle3.innerHTML = "マッチングキャスト予定地";
+	nodetitle3.innerHTML = "マッチングキャスト予定";
 	castNode.appendChild(nodetitle3);
 	
 	// 使用キャスト画像を表示
 	for(var cnt=0; cnt < match_cast_cnt; cnt++){
 		var imgNode = document.createElement("img");
 		imgNode.src = match_cast_result[cnt][0];
-		imgNode.width = 60;
-		imgNode.height = 70;
+		imgNode.width = icon_width;
 		
 		var linkNode = document.createElement("a");
 		linkNode.href = "JavaScript:changeother(" + cnt.toString() + ")";
@@ -956,7 +965,7 @@ function addCard(imgurl, usecnt, node_no, mode){
 	var tmpImg1 = document.createElement("img");
 	tmpImg1.src = imgurl;
 	//tmpImg1.width = 60;
-	tmpImg1.height = 84;
+	//tmpImg1.height = 84;
 	
 	var tmpNode1 = document.createElement("div");
 	tmpNode1.className = "mtc_detail_skill_count";

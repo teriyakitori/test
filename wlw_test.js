@@ -923,8 +923,8 @@ function addSkill(imgurl, usecnt, node_no){
 	
 	var tmpImg1 = document.createElement("img");
 	tmpImg1.src = imgurl;
-	tmpImg1.width = 60;
-	tmpImg1.height = 70;
+	tmpImg1.width = 62;
+	tmpImg1.height = 87;
 	
 	var tmpNode1 = document.createElement("div");
 	tmpNode1.className = "mtc_detail_skill_count";
@@ -937,4 +937,3 @@ function addSkill(imgurl, usecnt, node_no){
 	skillcnt_ary[node_no] = tmpNode1;
 	skillNode.appendChild(fixNode);
 }
-

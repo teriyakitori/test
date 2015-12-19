@@ -529,7 +529,7 @@ function hyouji(){
 	
 	nodetitle3 = document.createElement("div");
 	nodetitle3.className = "frame02_1_title";
-	nodetitle3.innerHTML = "マッチングキャスト予定";
+	nodetitle3.innerHTML = "マッチングキャスト予定地";
 	castNode.appendChild(nodetitle3);
 	
 	// 使用キャスト画像を表示
@@ -956,7 +956,7 @@ function addCard(imgurl, usecnt, node_no, mode){
 	var tmpImg1 = document.createElement("img");
 	tmpImg1.src = imgurl;
 	//tmpImg1.width = 60;
-	//tmpImg1.height = 84;
+	tmpImg1.height = 84;
 	
 	var tmpNode1 = document.createElement("div");
 	tmpNode1.className = "mtc_detail_skill_count";

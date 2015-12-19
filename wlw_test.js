@@ -158,14 +158,14 @@ if( urlchk() ){
 			break;
 		}
 	}
-	
+	alert(window.parent.screen.width);
 	// 画面サイズによって値を設定
-	if (window.matchMedia("screen and (min-width:481px)").matches) { 
-		//481px以上のデスクトップでの処理
-		icon_width = 60;
-	}else{
-        //スクリーンサイズが481pxより小さい時の処理
+	if (window.parent.screen.width < 481) { 
+		//画面サイズが小さい時の処理
 		icon_width = 30;
+	}else{
+		//画面サイズが大きい時の処理
+		icon_width = 60;
 	}
 	
 	// エラーが無ければ集計処理

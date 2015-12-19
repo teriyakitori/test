@@ -1,3 +1,4 @@
+
 javascript:
 
 // 実行するURL
@@ -528,7 +529,7 @@ function hyouji(){
 	
 	nodetitle3 = document.createElement("div");
 	nodetitle3.className = "frame02_1_title";
-	nodetitle3.innerHTML = "マッチングキャスト予定地";
+	nodetitle3.innerHTML = "マッチングキャスト予定";
 	castNode.appendChild(nodetitle3);
 	
 	// 使用キャスト画像を表示
@@ -859,11 +860,11 @@ function changeother(getcast){
 	cast_ary[1].innerHTML = (Math.floor(match_cast_result[getcast][1]*10000/match_cast_sum))/100 + "%";
 	
 	castcardimg_ary[0].src = match_cast_result[getcast][2][0];
-	castcardcnt_ary[0].innerHTML = (Math.floor(match_cast_result[getcast][3][1]*1000/match_cast_result[getcast][1]))/10 + "%";
+	castcardcnt_ary[0].innerHTML = (Math.floor(match_cast_result[getcast][3][0]*1000/match_cast_result[getcast][1]))/10 + "%";
 	castcardimg_ary[1].src = match_cast_result[getcast][2][1];
-	castcardcnt_ary[1].innerHTML = (Math.floor(match_cast_result[getcast][3][2]*1000/match_cast_result[getcast][1]))/10 + "%";
+	castcardcnt_ary[1].innerHTML = (Math.floor(match_cast_result[getcast][3][1]*1000/match_cast_result[getcast][1]))/10 + "%";
 	castcardimg_ary[2].src = match_cast_result[getcast][2][2];
-	castcardcnt_ary[2].innerHTML = (Math.floor(match_cast_result[getcast][3][4]*1000/match_cast_result[getcast][1]))/10 + "%";
+	castcardcnt_ary[2].innerHTML = (Math.floor(match_cast_result[getcast][3][2]*1000/match_cast_result[getcast][1]))/10 + "%";
 	castcardimg_ary[3].src = match_cast_result[getcast][2][3];
 	castcardcnt_ary[3].innerHTML = (Math.floor(match_cast_result[getcast][3][3]*1000/match_cast_result[getcast][1]))/10 + "%";
 }
@@ -954,8 +955,8 @@ function addCard(imgurl, usecnt, node_no, mode){
 	
 	var tmpImg1 = document.createElement("img");
 	tmpImg1.src = imgurl;
-	tmpImg1.width = 62;
-	tmpImg1.height = 87;
+	tmpImg1.width = 60;
+	tmpImg1.height = 84;
 	
 	var tmpNode1 = document.createElement("div");
 	tmpNode1.className = "mtc_detail_skill_count";

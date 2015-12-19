@@ -111,6 +111,7 @@ var match_cast_result = [];
 var innerNode = null;
 var skillNode = document.createElement("h2");
 var castNode = document.createElement("h2");
+var dtlNode = null;
 
 // 表示ノード用配列
 var node_ary = [];
@@ -118,6 +119,8 @@ var skill_ary = [];
 var skillimg_ary = [];
 var skillcnt_ary = [];
 var cast_ary = [];
+var castcardimg_ary = [];
+var castcardcnt_ary = [];
 
 // エラー用変数
 var errnum = 0;
@@ -133,7 +136,7 @@ if( urlchk() ){
 	// 対戦履歴のページ数だけ処理する
 	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
 	//for(var linkcnt=0; linkcnt < 19; linkcnt++){
-	//for(var linkcnt=0; linkcnt < 13; linkcnt++){
+	//for(var linkcnt=0; linkcnt < 14; linkcnt++){
 		urlstr = document.links[linkcnt].toString();
 		// 起動済みでないかのチェック
 		if(urlstr.match(/changesum/)){
@@ -502,18 +505,18 @@ function hyouji(){
 	addNode("↓スキル使用回数", "", 2, "skill");
 	
 	// スキル枠初期化
-	var dtlNode = document.createElement("div");
+	dtlNode = document.createElement("div");
 	dtlNode.className = "mtc_detail_skill";
 	dtlNode.style.position = "static";
 	dtlNode.style.width = "100%";
 	//dtlNode.style.textAlign = "center";
 	
 	// 枠の確保
-	addSkill("common/img_card_thum/deck_nocard.png", "", 0);
-	addSkill("common/img_card_thum/deck_nocard.png", "", 1);
-	addSkill("common/img_card_thum/deck_nocard.png", "", 2);
-	addSkill("common/img_card_thum/deck_nocard.png", "", 3);
-	addSkill("common/img_card_thum/deck_nocard.png", "", 4);
+	addCard("common/img_card_thum/deck_nocard.png", "", 0, "skill");
+	addCard("common/img_card_thum/deck_nocard.png", "", 1, "skill");
+	addCard("common/img_card_thum/deck_nocard.png", "", 2, "skill");
+	addCard("common/img_card_thum/deck_nocard.png", "", 3, "skill");
+	addCard("common/img_card_thum/deck_nocard.png", "", 4, "skill");
 	
 	skillNode.appendChild(dtlNode);
 	
@@ -525,7 +528,7 @@ function hyouji(){
 	
 	nodetitle3 = document.createElement("div");
 	nodetitle3.className = "frame02_1_title";
-	nodetitle3.innerHTML = "マッチングキャスト";
+	nodetitle3.innerHTML = "マッチングキャスト予定地";
 	castNode.appendChild(nodetitle3);
 	
 	// 使用キャスト画像を表示
@@ -543,7 +546,25 @@ function hyouji(){
 	
 	// 項目情報
 	addNode("マッチング回数", "0" + "回", 0, "cast");
-	addNode("↓建設予定地", "", 1, "cast");
+	addNode("出現率", "0" + "%", 1, "cast");
+	addNode("↓カード採用率", "", 2, "cast");
+	
+	// スキル枠確保
+	dtlNode = document.createElement("div");
+	dtlNode.className = "mtc_detail_skill";
+	dtlNode.style.position = "static";
+	dtlNode.style.width = "100%";
+	
+	addCard("common/img_card_thum/deck_nocard.png", "", 0, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 1, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 2, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 3, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 4, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 5, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 6, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 7, "cast");
+	
+	castNode.appendChild(dtlNode);
 	
 	// ページに追加
 	gameNode.appendChild(innerNode);
@@ -774,15 +795,14 @@ function match_cast_add(ary_no){
 				ary_tmp[1] = 1;
 				match_cast_result[match_cast_cnt] = ary_tmp;
 				match_cast_cnt++;
-				/*
+				
 				ary_tmp[2] = result_battle[ary_no][26][match_cnt][4];
 				ary_tmp[3] = [1, 1, 1, 1];
-				ary_tmp[4] = [];
-				*/
 			}
 		} else {
 			// COMの場合
 		}
+		match_cast_sum++;
 	}
 }
 
@@ -833,8 +853,19 @@ function changesum(getcast){
 	skillcnt_ary[4].innerHTML = (Math.floor((cast_result[getcast][32][4]/cast_result[getcast][1])*10))/10 + "回";
 }
 
+// マッチング相手表示
 function changeother(getcast){
 	cast_ary[0].innerHTML = match_cast_result[getcast][1] + "回";
+	cast_ary[1].innerHTML = (Math.floor(match_cast_result[getcast][1]*10000/match_cast_sum))/100 + "%";
+	
+	castcardimg_ary[0].src = match_cast_result[getcast][2][0];
+	castcardcnt_ary[0].innerHTML = (Math.floor(match_cast_result[getcast][3][1]*1000/match_cast_result[getcast][1]))/10 + "%";
+	castcardimg_ary[1].src = match_cast_result[getcast][2][1];
+	castcardcnt_ary[1].innerHTML = (Math.floor(match_cast_result[getcast][3][2]*1000/match_cast_result[getcast][1]))/10 + "%";
+	castcardimg_ary[2].src = match_cast_result[getcast][2][2];
+	castcardcnt_ary[2].innerHTML = (Math.floor(match_cast_result[getcast][3][4]*1000/match_cast_result[getcast][1]))/10 + "%";
+	castcardimg_ary[3].src = match_cast_result[getcast][2][3];
+	castcardcnt_ary[3].innerHTML = (Math.floor(match_cast_result[getcast][3][3]*1000/match_cast_result[getcast][1]))/10 + "%";
 }
 
 // 文字列からタグを除去
@@ -917,7 +948,7 @@ function addNode(titlestr, datastr, node_no, mode){
 }
 
 // スキル表示枠初期化
-function addSkill(imgurl, usecnt, node_no){
+function addCard(imgurl, usecnt, node_no, mode){
 	var fixNode = document.createElement("div");
 	fixNode.className = "mtc_detail_cardblock";
 	
@@ -933,7 +964,16 @@ function addSkill(imgurl, usecnt, node_no){
 	fixNode.appendChild(tmpImg1);
 	fixNode.appendChild(tmpNode1);
 	
-	skillimg_ary[node_no] = tmpImg1;
-	skillcnt_ary[node_no] = tmpNode1;
-	skillNode.appendChild(fixNode);
+	if(mode == "skill"){
+		skillimg_ary[node_no] = tmpImg1;
+		skillcnt_ary[node_no] = tmpNode1;
+		dtlNode.appendChild(fixNode);
+	} else if(mode == "cast"){
+		castcardimg_ary[node_no] = tmpImg1;
+		castcardcnt_ary[node_no] = tmpNode1;
+		dtlNode.appendChild(fixNode);
+	} else {
+		errnum = 3;
+	}
 }
+

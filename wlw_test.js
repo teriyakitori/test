@@ -1,4 +1,3 @@
-
 javascript:
 
 // 実行するURL
@@ -115,7 +114,6 @@ var icon_width = 0;
 var innerNode = null;
 var skillNode = document.createElement("h2");
 var castNode = document.createElement("h2");
-var dtlNode = null;
 var dtlNode = null;
 
 // 表示ノード用配列
@@ -566,7 +564,7 @@ function hyouji(){
 	// 項目情報
 	addNode("マッチング回数", "0" + "回", 0, "cast");
 	addNode("出現率", "0" + "%", 1, "cast");
-	addNode("↓カード採用率", "", 2, "cast");
+	addNode("↓スキル採用率", "", 2, "cast");
 	
 	// スキル枠確保
 	dtlNode = document.createElement("div");
@@ -579,10 +577,38 @@ function hyouji(){
 	addCard("common/img_card_thum/deck_nocard.png", "", 2, "cast");
 	addCard("common/img_card_thum/deck_nocard.png", "", 3, "cast");
 	addCard("common/img_card_thum/deck_nocard.png", "", 4, "cast");
+	castNode.appendChild(dtlNode);
+	
+	addNode("↓アシスト採用率", "", 3, "cast");
+	
+	dtlNode = document.createElement("div");
+	dtlNode.className = "mtc_detail_skill";
+	dtlNode.style.position = "static";
+	dtlNode.style.width = "100%";
+	
 	addCard("common/img_card_thum/deck_nocard.png", "", 5, "cast");
 	addCard("common/img_card_thum/deck_nocard.png", "", 6, "cast");
 	addCard("common/img_card_thum/deck_nocard.png", "", 7, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 8, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 9, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 10, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 11, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 12, "cast");
+	castNode.appendChild(dtlNode);
 	
+	// ソウル表示
+	addNode("↓ソウル採用率", "", 4, "cast");
+	
+	dtlNode = document.createElement("div");
+	dtlNode.className = "mtc_detail_skill";
+	dtlNode.style.position = "static";
+	dtlNode.style.width = "100%";
+	
+	addCard("common/img_card_thum/deck_nocard.png", "", 13, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 14, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 15, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 16, "cast");
+	addCard("common/img_card_thum/deck_nocard.png", "", 17, "cast");
 	castNode.appendChild(dtlNode);
 	
 	// ページに追加
@@ -801,8 +827,75 @@ function match_cast_add(ary_no){
 			// 同名キャストチェック
 			for(var cast_chk = 0; cast_chk < match_cast_cnt; cast_chk++){
 				if(result_battle[ary_no][26][match_cnt][1].toString() == match_cast_result[cast_chk][0].toString()){
-					// 同名だった場合
+					// 同名だった場合、キャスト出現数カウントを増加
 					match_cast_result[cast_chk][1]++;
+					
+					// ワンダースキルカードチェック
+					var chkcard_flg = 0;
+					for(var chkcard = 0; chkcard < match_cast_result[cast_chk][2].length; chkcard++){
+						if(result_battle[ary_no][26][match_cnt][4][0].toString() == match_cast_result[cast_chk][2][chkcard].toString()){
+							match_cast_result[cast_chk][3][chkcard]++;
+							chkcard_flg = 1;
+							break;
+						}
+					}
+					// 新規カードの場合は追加
+					if(chkcard_flg == 0){
+						match_cast_result[cast_chk][2].push(result_battle[ary_no][26][match_cnt][4][0]);
+						match_cast_result[cast_chk][3].push(1);
+					}
+					
+					// スキルカード1～3チェック
+					for(var card_pos = 1; card_pos < 4; card_pos++){
+						var chkcard_flg = 0;
+						// 既存の登録済みカードに存在するかのチェック
+						for(var chkcard = 0; chkcard < match_cast_result[cast_chk][4].length; chkcard++){
+							if(result_battle[ary_no][26][match_cnt][4][card_pos].toString() == match_cast_result[cast_chk][4][chkcard].toString()){
+								match_cast_result[cast_chk][5][chkcard]++;
+								chkcard_flg = 1;
+								break;
+							}
+						}
+						// 新規カードの場合は追加
+						if(chkcard_flg == 0){
+							match_cast_result[cast_chk][4].push(result_battle[ary_no][26][match_cnt][4][card_pos]);
+							match_cast_result[cast_chk][5].push(1);
+						}
+					}
+					
+					// アシストカード1～3チェック
+					for(var card_pos = 0; card_pos < 3; card_pos++){
+						var chkcard_flg = 0;
+						// 既存の登録済みカードに存在するかのチェック
+						for(var chkcard = 0; chkcard < match_cast_result[cast_chk][6].length; chkcard++){
+							if(result_battle[ary_no][26][match_cnt][5][card_pos].toString() == match_cast_result[cast_chk][6][chkcard].toString()){
+								match_cast_result[cast_chk][7][chkcard]++;
+								chkcard_flg = 1;
+								break;
+							}
+						}
+						// 新規カードの場合は追加
+						if(chkcard_flg == 0){
+							match_cast_result[cast_chk][6].push(result_battle[ary_no][26][match_cnt][5][card_pos]);
+							match_cast_result[cast_chk][7].push(1);
+						}
+					}
+					
+					// ソウルカードチェック
+					var chkcard_flg = 0;
+					for(var chkcard = 0; chkcard < match_cast_result[cast_chk][8].length; chkcard++){
+						if(result_battle[ary_no][26][match_cnt][6][0].toString() == match_cast_result[cast_chk][8][chkcard].toString()){
+							match_cast_result[cast_chk][9][chkcard]++;
+							chkcard_flg = 1;
+							break;
+						}
+					}
+					// 新規カードの場合は追加
+					if(chkcard_flg == 0){
+						match_cast_result[cast_chk][8].push(result_battle[ary_no][26][match_cnt][6][0]);
+						match_cast_result[cast_chk][9].push(1);
+					}
+					
 					chkcast_flg = 1;
 					break;
 				}
@@ -810,18 +903,30 @@ function match_cast_add(ary_no){
 			
 			// まだ登録されていないキャストの場合
 			if(chkcast_flg == 0){
+				// キャスト画像
 				ary_tmp[0] = result_battle[ary_no][26][match_cnt][1];
+				// キャスト登場回数
 				ary_tmp[1] = 1;
+				// ワンダースキル
+				ary_tmp[2] = [result_battle[ary_no][26][match_cnt][4][0]];
+				ary_tmp[3] = [1];
+				// スキル
+				ary_tmp[4] = [result_battle[ary_no][26][match_cnt][4][1], result_battle[ary_no][26][match_cnt][4][2], result_battle[ary_no][26][match_cnt][4][3]]
+				ary_tmp[5] = [1, 1, 1];
+				// アシスト
+				ary_tmp[6] = result_battle[ary_no][26][match_cnt][5];
+				ary_tmp[7] = [1, 1, 1];
+				// ソウル
+				ary_tmp[8] = result_battle[ary_no][26][match_cnt][6];
+				ary_tmp[9] = [1];
 				match_cast_result[match_cast_cnt] = ary_tmp;
 				match_cast_cnt++;
-				
-				ary_tmp[2] = result_battle[ary_no][26][match_cnt][4];
-				ary_tmp[3] = [1, 1, 1, 1];
 			}
+			// COMは数えない
+			match_cast_sum++;
 		} else {
 			// COMの場合
 		}
-		match_cast_sum++;
 	}
 }
 
@@ -877,14 +982,65 @@ function changeother(getcast){
 	cast_ary[0].innerHTML = match_cast_result[getcast][1] + "回";
 	cast_ary[1].innerHTML = (Math.floor(match_cast_result[getcast][1]*10000/match_cast_sum))/100 + "%";
 	
-	castcardimg_ary[0].src = match_cast_result[getcast][2][0];
-	castcardcnt_ary[0].innerHTML = (Math.floor(match_cast_result[getcast][3][0]*1000/match_cast_result[getcast][1]))/10 + "%";
-	castcardimg_ary[1].src = match_cast_result[getcast][2][1];
-	castcardcnt_ary[1].innerHTML = (Math.floor(match_cast_result[getcast][3][1]*1000/match_cast_result[getcast][1]))/10 + "%";
-	castcardimg_ary[2].src = match_cast_result[getcast][2][2];
-	castcardcnt_ary[2].innerHTML = (Math.floor(match_cast_result[getcast][3][2]*1000/match_cast_result[getcast][1]))/10 + "%";
-	castcardimg_ary[3].src = match_cast_result[getcast][2][3];
-	castcardcnt_ary[3].innerHTML = (Math.floor(match_cast_result[getcast][3][3]*1000/match_cast_result[getcast][1]))/10 + "%";
+	// カード表示処理
+	otheradd(getcast, 0, 0, "ws");
+	otheradd(getcast, 1, 0, "skill");
+	otheradd(getcast, 2, 1, "skill");
+	otheradd(getcast, 3, 2, "skill");
+	otheradd(getcast, 4, 3, "skill");
+	otheradd(getcast, 5, 0, "assist");
+	otheradd(getcast, 6, 1, "assist");
+	otheradd(getcast, 7, 2, "assist");
+	otheradd(getcast, 8, 3, "assist");
+	otheradd(getcast, 9, 4, "assist");
+	otheradd(getcast, 10, 5, "assist");
+	otheradd(getcast, 11, 6, "assist");
+	otheradd(getcast, 12, 7, "assist");
+	otheradd(getcast, 13, 0, "soul");
+	otheradd(getcast, 14, 1, "soul");
+	otheradd(getcast, 15, 2, "soul");
+	otheradd(getcast, 16, 3, "soul");
+	otheradd(getcast, 17, 4, "soul");
+}
+
+// マッチングキャストの集計表示処理
+function otheradd(getcast, aryno, itemno, mode){
+	// モードによって追加処理を変える
+	if(mode.toString() == "ws"){
+		// カードデータが格納されているかチェック
+		if(match_cast_result[getcast][2][itemno] != null){
+			castcardimg_ary[aryno].src = match_cast_result[getcast][2][itemno];
+			castcardcnt_ary[aryno].innerHTML = (Math.floor(match_cast_result[getcast][3][itemno]*1000/match_cast_result[getcast][1]))/10 + "%";
+		} else {
+			// カードが格納されていない場所が呼び出されたら空白を入れる
+			castcardimg_ary[aryno].src = nocard_img;
+			castcardcnt_ary[aryno].innerHTML = "";
+		}
+	} else if(mode.toString() == "skill"){
+		if(match_cast_result[getcast][4][itemno] != null){
+			castcardimg_ary[aryno].src = match_cast_result[getcast][4][itemno];
+			castcardcnt_ary[aryno].innerHTML = (Math.floor(match_cast_result[getcast][5][itemno]*1000/match_cast_result[getcast][1]))/10 + "%";
+		} else {
+			castcardimg_ary[aryno].src = nocard_img;
+			castcardcnt_ary[aryno].innerHTML = "";
+		}
+	} else if(mode.toString() == "assist"){
+		if(match_cast_result[getcast][6][itemno] != null){
+			castcardimg_ary[aryno].src = match_cast_result[getcast][6][itemno];
+			castcardcnt_ary[aryno].innerHTML = (Math.floor(match_cast_result[getcast][7][itemno]*1000/match_cast_result[getcast][1]))/10 + "%";
+		} else {
+			castcardimg_ary[aryno].src = nocard_img;
+			castcardcnt_ary[aryno].innerHTML = "";
+		}
+	} else if(mode.toString() == "soul"){
+		if(match_cast_result[getcast][8][itemno] != null){
+			castcardimg_ary[aryno].src = match_cast_result[getcast][8][itemno];
+			castcardcnt_ary[aryno].innerHTML = (Math.floor(match_cast_result[getcast][9][itemno]*1000/match_cast_result[getcast][1]))/10 + "%";
+		} else {
+			castcardimg_ary[aryno].src = nocard_img;
+			castcardcnt_ary[aryno].innerHTML = "";
+		}
+	}
 }
 
 // 文字列からタグを除去

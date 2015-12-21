@@ -141,8 +141,8 @@ var errmsg = [
 if( urlchk() ){
 	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性があります。");
 	// 対戦履歴のページ数だけ処理する
-	//for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
-	for(var linkcnt=0; linkcnt < 12; linkcnt++){
+	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
+	//for(var linkcnt=0; linkcnt < 12; linkcnt++){
 		urlstr = document.links[linkcnt].toString();
 		// 起動済みでないかのチェック
 		if(urlstr.match(/changesum/)){

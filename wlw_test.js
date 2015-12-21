@@ -142,7 +142,7 @@ if( urlchk() ){
 	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性があります。");
 	// 対戦履歴のページ数だけ処理する
 	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
-	//for(var linkcnt=0; linkcnt < 12; linkcnt++){
+	//for(var linkcnt=0; linkcnt < 14; linkcnt++){
 		urlstr = document.links[linkcnt].toString();
 		// 起動済みでないかのチェック
 		if(urlstr.match(/changesum/)){
@@ -479,7 +479,14 @@ function hyouji(){
 	addNode("キャスト撃破数", (Math.floor((cast_result[0][19]/battle_cnt)*100))/100 + "体", 17, "result");
 	addNode("巨人撃破数", (Math.floor((cast_result[0][20]/battle_cnt)*100))/100 + "体", 18, "result");
 	addNode("撤退数", (Math.floor((cast_result[0][21]/battle_cnt)*100))/100 + "回", 19, "result");
-	addNode("キルレ", (Math.floor((cast_result[0][19]/cast_result[0][21])*100))/100, 20, "result");
+	
+	// 0除算はいけないことなので阻止する
+	if(cast_result[0][21] != 0){
+		addNode("キルレ", (Math.floor((cast_result[0][19]/cast_result[0][21])*100))/100, 20, "result");
+	} else {
+		addNode("キルレ", "撤退数0！", 20, "result");
+	}
+	
 	addNode("SS使用回数", (Math.floor((cast_result[0][22]/battle_cnt)*100))/100 + "回", 21, "result");
 	addNode("SSヒット数", (Math.floor((cast_result[0][23]/battle_cnt)*100))/100 + "回", 22, "result");
 	addNode("DS使用数", (Math.floor((cast_result[0][24]/battle_cnt)*100))/100 + "回", 23, "result");
@@ -1236,4 +1243,3 @@ function addCard(imgurl, usecnt, node_no, mode){
 		dtlNode.appendChild(fixNode);
 	}
 }
-

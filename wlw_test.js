@@ -3,6 +3,7 @@ javascript:
 // 実行するURL
 var starturl1 = "https://wonderland-wars.net/matchlog.html";
 var starturl2 = "https://wonderland-wars.net/matchlog.html?type=all";
+var trainingurl = "https://wonderland-wars.net/matchlog.html?type=training"
 
 // 空欄カード用URL
 var nocard_img = "common/img_card_thum/deck_nocard.png";
@@ -109,6 +110,8 @@ var match_cast_result = [];
 
 // 表示サイズ用
 var icon_width = 0;
+var icon_height = 0;
+var margin_bot = 0;
 
 // 表示用
 var innerNode = null;
@@ -128,8 +131,9 @@ var castcardcnt_ary = [];
 // エラー用変数
 var errnum = 0;
 var errmsg = [
-"正常に処理されました。",
-"ブックマークレットが既に実行済みです。\n複数回起動した場合、読み込み処理に異常が発生します。\n再表示したい場合は、対戦履歴ページの更新を行ってから実行してください。"
+"正常に処理されました。"
+,"ブックマークレットが既に実行済みです。\n複数回起動した場合、読み込み処理に異常が発生します。\n再表示したい場合は、対戦履歴ページの更新を行ってから実行してください。"
+,"対戦履歴の取得件数が0件でした。\n対戦履歴が存在していないか、\n対戦履歴詳細のURLが変更されて読み込めなくなった可能性があります。"
 ]
 
 // 本処理
@@ -137,9 +141,8 @@ var errmsg = [
 if( urlchk() ){
 	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性があります。");
 	// 対戦履歴のページ数だけ処理する
-	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
-	//for(var linkcnt=0; linkcnt < 19; linkcnt++){
-	//for(var linkcnt=0; linkcnt < 14; linkcnt++){
+	//for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
+	for(var linkcnt=0; linkcnt < 12; linkcnt++){
 		urlstr = document.links[linkcnt].toString();
 		// 起動済みでないかのチェック
 		if(urlstr.match(/changesum/)){
@@ -159,28 +162,36 @@ if( urlchk() ){
 		}
 	}
 	
-	// 画面サイズによって値を設定
-	if (window.innerWidth < 481) { 
-		//画面サイズが小さい時の処理
-		icon_width = 30;
-		icon_height = 35;
-		
-	} else {
-		//画面サイズが大きい時の処理
-		icon_width = 60;
-		icon_height = 70;
+	if(battle_cnt == 0){
+		errnum = 2;
 	}
 	
-	// エラーが無ければ集計処理
+	// エラーが無ければ集計＆表示処理
 	if(errnum == 0){
+		// 画面サイズによってレイアウト用の値を設定
+		if (window.innerWidth < 481) { 
+			//表示領域が小さい時の処理
+			icon_width = 30;
+			icon_height = 35;
+			margin_bot ="10px";
+		} else {
+			//表示領域が大きい時の処理
+			icon_width = 60;
+			icon_height = 70;
+			margin_bot ="20px";
+		}
+		
 		hyouji();
 	}
 	
 	// 終了メッセージ
 	alert("処理終了　エラー番号:" + errnum + "\n" + errmsg[errnum]);
 } else {
-	// ﾅﾝﾃﾞｯ!!
-	alert("ﾅﾝﾃﾞｯ!!");
+	if(location.href.toString() != trainingurl){
+		alert("ﾅﾝﾃﾞｯ!!");
+	} else {
+		alert("しゅうれんだー");
+	}
 }
 
 // 対戦履歴詳細ページの情報を取得
@@ -375,6 +386,7 @@ function sorceget(){
 				}
 				member_tmp[7] = card_chk;
 			} else {
+				// COMのとき
 				member_tmp[1] = com_img;
 				member_tmp[2] = "COM";
 			}
@@ -383,8 +395,6 @@ function sorceget(){
 		result_ary[26] = other_member;
 		// 結果を格納
 		result_battle[battle_cnt] = result_ary;
-	} else {
-		
 	}
 }
 
@@ -545,7 +555,7 @@ function hyouji(){
 	
 	nodetitle3 = document.createElement("div");
 	nodetitle3.className = "frame02_1_title";
-	nodetitle3.innerHTML = "マッチングキャスト予定地";
+	nodetitle3.innerHTML = "マッチングキャストデータ";
 	castNode.appendChild(nodetitle3);
 	
 	// 使用キャスト画像を表示
@@ -571,6 +581,7 @@ function hyouji(){
 	dtlNode.className = "mtc_detail_skill";
 	dtlNode.style.position = "static";
 	dtlNode.style.width = "100%";
+	dtlNode.style.marginBottom = margin_bot;
 	
 	addCard("common/img_card_thum/deck_nocard.png", "", 0, "cast");
 	addCard("common/img_card_thum/deck_nocard.png", "", 1, "cast");
@@ -585,6 +596,7 @@ function hyouji(){
 	dtlNode.className = "mtc_detail_skill";
 	dtlNode.style.position = "static";
 	dtlNode.style.width = "100%";
+	dtlNode.style.marginBottom = margin_bot;
 	
 	addCard("common/img_card_thum/deck_nocard.png", "", 5, "cast");
 	addCard("common/img_card_thum/deck_nocard.png", "", 6, "cast");
@@ -603,6 +615,7 @@ function hyouji(){
 	dtlNode.className = "mtc_detail_skill";
 	dtlNode.style.position = "static";
 	dtlNode.style.width = "100%";
+	dtlNode.style.marginBottom = margin_bot;
 	
 	addCard("common/img_card_thum/deck_nocard.png", "", 13, "cast");
 	addCard("common/img_card_thum/deck_nocard.png", "", 14, "cast");
@@ -618,7 +631,7 @@ function hyouji(){
 	inspos.parentNode.insertBefore(castNode, inspos);
 }
 
-// キャスト集計初期化処理
+// 使用キャスト集計初期化処理
 function cast_result_ini(ary_no){
 	var setcnt = 0;
 	var cast_tmp = [];
@@ -627,14 +640,14 @@ function cast_result_ini(ary_no){
 	
 	// 処理対象が全体の集計の場合は固定値
 	if(cast_cnt == 0){
-		// 集計データ画像URLを格納
+		// 集計用画像URLを格納
 		cast_tmp[0] = sum_img;
 	} else {
 		// キャスト画像URLを格納
 		cast_tmp[0] = result_battle[ary_no][5];
 	}
 	
-	// 集計回数カウントを初期化
+	// 使用回数カウントを初期化
 	cast_tmp[1] = 1;
 	
 	// 勝率計算
@@ -715,18 +728,16 @@ function cast_result_ini(ary_no){
 	cast_tmp[31] = skillName_tmp;
 	cast_tmp[32] = skillCnt_tmp;
 	
-	//console.log("skilltmp:" + cast_tmp[31] + "\nskillcnt:" + cast_tmp[32]);
-	
 	// キャスト集計結果の最初に集計を格納
 	cast_result[cast_cnt] = cast_tmp;
 	cast_cnt++;
 }
 
-// キャスト集計加算処理
+// 使用キャスト集計処理
 function cast_result_add(cast_no, ary_no){
 	var cast_tmp = [];
 	
-	// 集計回数を加算
+	// 使用回数を加算
 	cast_result[cast_no][1]++;
 	// 勝率計算
 	if(result_battle[ary_no][9] == "win"){
@@ -786,6 +797,7 @@ function cast_result_add(cast_no, ary_no){
 	
 	// スキル使用回数集計
 	for(var skillcnt = 0; skillcnt < result_battle[ary_no][25][0].length; skillcnt++){
+		// これまでに出現していないスキルカードの場合は0のまま
 		var chkcard_flg = 0;
 		
 		// スキル画像が空欄カードだった場合は加算処理を行わない
@@ -793,7 +805,7 @@ function cast_result_add(cast_no, ary_no){
 			// 同名カードのチェック
 			for(var chkcnt = 0; chkcnt < cast_result[cast_no][31].length; chkcnt++){
 				// 同名カードがあった場合は加算処理
-				if(result_battle[ary_no][25][0][skillcnt].toString() == cast_result[cast_no][31][chkcnt]){
+				if(cast_result[cast_no][31][chkcnt] == result_battle[ary_no][25][0][skillcnt].toString()){
 					cast_result[cast_no][32][chkcnt] += parseInt(result_battle[ary_no][25][1][skillcnt]);
 					chkcard_flg = 1;
 					break;
@@ -802,11 +814,12 @@ function cast_result_add(cast_no, ary_no){
 			
 			// まだ集計していないカードの場合
 			if(chkcard_flg == 0){
-				// 空欄カードの位置に新カードと使用回数を格納する
+				// 新カードURLと使用回数を格納する
 				for(chkcnt = 0; chkcnt < cast_result[cast_no][31].length; chkcnt++){
+					// まだカード情報が初期化されたままの最初の箇所に置き換える
 					if(cast_result[cast_no][31][chkcnt].toString() == nocard_img.toString()){
 						cast_result[cast_no][31][chkcnt] = result_battle[ary_no][25][0][skillcnt];
-						cast_result[cast_no][32][chkcnt] = result_battle[ary_no][25][1][skillcnt];
+						cast_result[cast_no][32][chkcnt] = parseInt(result_battle[ary_no][25][1][skillcnt]);
 						break;
 					}
 				}
@@ -817,35 +830,38 @@ function cast_result_add(cast_no, ary_no){
 
 // マッチング相手の集計処理
 function match_cast_add(ary_no){
-	// 7キャスト分ループする
+	// マッチングキャスト上限の7キャスト分ループする、COMが含まれていても7回
 	for(var match_cnt = 0; match_cnt < result_battle[ary_no][26].length; match_cnt++){
 		var ary_tmp = [];
 		var chkcast_flg = 0;
 		
 		// COMチェック
 		if(result_battle[ary_no][26][match_cnt][0] == 0){
-			// 同名キャストチェック
+			// 既に格納されている集計データの中で、既出キャストでないかのチェック。初回は0なので飛ばす
 			for(var cast_chk = 0; cast_chk < match_cast_cnt; cast_chk++){
+				// 既出キャストチェック
 				if(result_battle[ary_no][26][match_cnt][1].toString() == match_cast_result[cast_chk][0].toString()){
-					// 同名だった場合、キャスト出現数カウントを増加
+					// 既出だった場合、キャスト出現数カウントを増加
 					match_cast_result[cast_chk][1]++;
 					
 					// ワンダースキルカードチェック
 					var chkcard_flg = 0;
+					// 今のところ複数は存在しないが、念のため（増えた場合は要確認）
 					for(var chkcard = 0; chkcard < match_cast_result[cast_chk][2].length; chkcard++){
+						// 既存の登録済みカードに存在するかのチェック
 						if(result_battle[ary_no][26][match_cnt][4][0].toString() == match_cast_result[cast_chk][2][chkcard].toString()){
 							match_cast_result[cast_chk][3][chkcard]++;
 							chkcard_flg = 1;
 							break;
 						}
 					}
-					// 新規カードの場合は追加
+					// 新規ワンダースキルカードの場合は追加
 					if(chkcard_flg == 0){
 						match_cast_result[cast_chk][2].push(result_battle[ary_no][26][match_cnt][4][0]);
 						match_cast_result[cast_chk][3].push(1);
 					}
 					
-					// スキルカード1～3チェック
+					// スキルカード1～3チェック、0番はワンダースキルなので飛ばす
 					for(var card_pos = 1; card_pos < 4; card_pos++){
 						var chkcard_flg = 0;
 						// 既存の登録済みカードに存在するかのチェック
@@ -856,7 +872,7 @@ function match_cast_add(ary_no){
 								break;
 							}
 						}
-						// 新規カードの場合は追加
+						// 新規スキルカードの場合は追加
 						if(chkcard_flg == 0){
 							match_cast_result[cast_chk][4].push(result_battle[ary_no][26][match_cnt][4][card_pos]);
 							match_cast_result[cast_chk][5].push(1);
@@ -874,7 +890,7 @@ function match_cast_add(ary_no){
 								break;
 							}
 						}
-						// 新規カードの場合は追加
+						// 新規アシストカードの場合は追加
 						if(chkcard_flg == 0){
 							match_cast_result[cast_chk][6].push(result_battle[ary_no][26][match_cnt][5][card_pos]);
 							match_cast_result[cast_chk][7].push(1);
@@ -884,18 +900,20 @@ function match_cast_add(ary_no){
 					// ソウルカードチェック
 					var chkcard_flg = 0;
 					for(var chkcard = 0; chkcard < match_cast_result[cast_chk][8].length; chkcard++){
+						// 既存の登録済みカードに存在するかのチェック
 						if(result_battle[ary_no][26][match_cnt][6][0].toString() == match_cast_result[cast_chk][8][chkcard].toString()){
 							match_cast_result[cast_chk][9][chkcard]++;
 							chkcard_flg = 1;
 							break;
 						}
 					}
-					// 新規カードの場合は追加
+					// 新規ソウルカードの場合は追加
 					if(chkcard_flg == 0){
 						match_cast_result[cast_chk][8].push(result_battle[ary_no][26][match_cnt][6][0]);
 						match_cast_result[cast_chk][9].push(1);
 					}
 					
+					// 既出キャラであったことのフラグ
 					chkcast_flg = 1;
 					break;
 				}
@@ -920,17 +938,18 @@ function match_cast_add(ary_no){
 				ary_tmp[8] = result_battle[ary_no][26][match_cnt][6];
 				ary_tmp[9] = [1];
 				match_cast_result[match_cast_cnt] = ary_tmp;
+				// キャストの登録番号を進める
 				match_cast_cnt++;
 			}
-			// COMは数えない
+			// COMはマッチングキャスト数に数えない（キャスト出現率の処理の都合上）
 			match_cast_sum++;
 		} else {
-			// COMの場合
+			// COMの場合 COMとのマッチング時に何か欲しい時に
 		}
 	}
 }
 
-// キャストをクリックした時の処理
+// キャストをクリックした時の処理。試合結果とスキル使用回数は連動。マッチングキャストは別
 function changesum(getcast){
 	node_ary[0].innerHTML = cast_result[getcast][1];
 	node_ary[1].innerHTML = cast_result[getcast][2];
@@ -977,15 +996,20 @@ function changesum(getcast){
 	skillcnt_ary[4].innerHTML = (Math.floor((cast_result[getcast][32][4]/cast_result[getcast][1])*10))/10 + "回";
 }
 
-// マッチング相手表示
+// マッチングキャスト表示
 function changeother(getcast){
+	// ソートの受け皿
 	var getrank_ary = [];
 	
 	cast_ary[0].innerHTML = match_cast_result[getcast][1] + "回";
 	cast_ary[1].innerHTML = (Math.floor(match_cast_result[getcast][1]*10000/match_cast_sum))/100 + "%";
 	
-	// カード表示処理
+	// カード表示処理、配列には先頭から使用回数が多い順に配列番号が格納されている
 	otheradd(getcast, 0, 0, "ws");
+	
+	// ワンダースキルが複数になったらこちらを使う（要確認）
+	// getrank_ary = card_ranking(getcast, 1, "skill");
+	// otheradd(getcast, 0, getrank_ary[0], "ws");
 	
 	getrank_ary = card_ranking(getcast, 4, "skill");
 	otheradd(getcast, 1, getrank_ary[0], "skill");
@@ -1013,7 +1037,7 @@ function changeother(getcast){
 
 // カードの登場回数順にソートして表示する処理
 function card_ranking(getcast, addcnt, mode){
-	// 数値の大きい順に配列番号を格納していく
+	// 登録回数の大きい順に配列番号を格納していく、引数はキャスト番号、返す長さ、処理カード種別
 	work_ary = [];
 	sort_ary = [];
 	rank_ary = [];
@@ -1021,7 +1045,7 @@ function card_ranking(getcast, addcnt, mode){
 	mode_work = 0;
 	over_cnt = 0;
 	
-	// モードによって処理対象の配列番号に変換する
+	// 処理対象のカード種別によって配列番号に変換する
 	if(mode.toString() == "ws"){
 		mode_work = 3;
 	} else if(mode.toString() == "skill"){
@@ -1032,9 +1056,7 @@ function card_ranking(getcast, addcnt, mode){
 		mode_work = 9;
 	}
 	
-	// 配列をソート済みとソート前でコピー
-	//work_ary = match_cast_result[getcast][mode_work].contact();
-	//sort_ary = match_cast_result[getcast][mode_work].contact();
+	// 配列をソート済みとソート前でコピー、contact()は試した
 	for(add_work = 0; add_work < match_cast_result[getcast][mode_work].length; add_work++){
 		work_ary.push(match_cast_result[getcast][mode_work][add_work]);
 		sort_ary.push(match_cast_result[getcast][mode_work][add_work]);
@@ -1049,12 +1071,15 @@ function card_ranking(getcast, addcnt, mode){
 	// 必要数まで出現位置を格納していく
 	for(add_work = 0; add_work < addcnt; add_work++){
 		if(sort_ary.length < add_work){
-			// 配列オーバーしている時は超えた数値値を参照するように返す
+			// 表示したい数より登録されているカードが少ない場合は、それを超えた配列番号を参照するように返す（表示処理でブランクにしている）
 			rank_ary[add_work] = add_work;
 		} else {
 			for(var item_cnt = 0; item_cnt < sort_ary.length; item_cnt++){
+				// ソート済みの配列とソート前の配列を比較し、最大値と一致する値を見つける
 				if(sort_ary[add_work] == work_ary[item_cnt]){
+					// 配列番号を格納
 					rank_ary[add_work] = item_cnt;
+					// ソート前の配列の値を処理済みとしてマイナスに置き換え、同回数のカードの邪魔をしないようにする
 					work_ary[item_cnt] = -1;
 					break;
 				}
@@ -1119,6 +1144,7 @@ function tagsplit(getstr){
 function lvsplit(lvstr){
 	var strtmp = null;
 	
+	// そのレベルに到達していない場合はundefinedが入るので、100（0:00）として扱う
 	if(lvstr == undefined){
 		return 100;
 	}
@@ -1136,7 +1162,7 @@ function lvuptime(lvsec, batcnt){
 	lvup_min = Math.floor(lvup_tmp / 60);
 	lvup_sec = lvup_tmp - lvup_min * 60;
 	
-	// 一桁秒は0をくっつける
+	// 一桁秒は0をくっつける（3分5秒→3:5になるので3:05にする）
 	if(lvup_sec < 10){
 		return lvup_min + ":0" + lvup_sec;
 	} else {
@@ -1149,7 +1175,7 @@ function urlchk(){
 	if(location.href.toString() == starturl1 || location.href.toString() == starturl2){
 		return true;
 	} else {
-	alert("実行するページのアドレスが一致しません。\n【WLW】対戦履歴(全国対戦):Wonder.NET ワンダーランドウォーズ\n「https://wonderland-wars.net/matchlog.html」\n上記のページで実行してください。");
+		alert("実行するページのアドレスが一致しません。\n【WLW】対戦履歴(全国対戦):Wonder.NET ワンダーランドウォーズ\n「https://wonderland-wars.net/matchlog.html」\n上記のページで実行してください。");
 		return false;
 	}
 }
@@ -1179,8 +1205,6 @@ function addNode(titlestr, datastr, node_no, mode){
 	} else if(mode == "cast"){
 		cast_ary[node_no] = tmpNode2;
 		castNode.appendChild(fixNode);
-	} else{
-		errnum = 2;
 	}
 }
 
@@ -1191,6 +1215,7 @@ function addCard(imgurl, usecnt, node_no, mode){
 	
 	var tmpImg1 = document.createElement("img");
 	tmpImg1.src = imgurl;
+	
 	//tmpImg1.width = 60;
 	//tmpImg1.height = 84;
 	
@@ -1209,7 +1234,6 @@ function addCard(imgurl, usecnt, node_no, mode){
 		castcardimg_ary[node_no] = tmpImg1;
 		castcardcnt_ary[node_no] = tmpNode1;
 		dtlNode.appendChild(fixNode);
-	} else {
-		errnum = 3;
 	}
 }
+

@@ -978,7 +978,12 @@ function changesum(getcast){
 	node_ary[17].innerHTML = (Math.floor((cast_result[getcast][19]/cast_result[getcast][1])*100))/100 + "体";
 	node_ary[18].innerHTML = (Math.floor((cast_result[getcast][20]/cast_result[getcast][1])*100))/100 + "体";
 	node_ary[19].innerHTML = (Math.floor((cast_result[getcast][21]/cast_result[getcast][1])*100))/100 + "回";
-	node_ary[20].innerHTML = (Math.floor((cast_result[getcast][19]/cast_result[getcast][21])*100))/100;
+	// キルレのゼロ阻止
+	if(cast_result[getcast][21] != 0){
+		node_ary[20].innerHTML = (Math.floor((cast_result[getcast][19]/cast_result[getcast][21])*100))/100;
+	} else {
+		node_ary[20].innerHTML = "撤退数0！";
+	}
 	node_ary[21].innerHTML = (Math.floor((cast_result[getcast][22]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[22].innerHTML = (Math.floor((cast_result[getcast][23]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[23].innerHTML = (Math.floor((cast_result[getcast][24]/cast_result[getcast][1])*100))/100 + "回";
@@ -1243,3 +1248,4 @@ function addCard(imgurl, usecnt, node_no, mode){
 		dtlNode.appendChild(fixNode);
 	}
 }
+

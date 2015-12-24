@@ -3,7 +3,6 @@ javascript:
 // 実行するURL
 var starturl1 = "https://wonderland-wars.net/matchlog.html";
 var starturl2 = "https://wonderland-wars.net/matchlog.html?type=all";
-var trainingurl = "https://wonderland-wars.net/matchlog.html?type=training"
 
 // 空欄カード用URL
 var nocard_img = "common/img_card_thum/deck_nocard.png";
@@ -114,6 +113,11 @@ var icon_height = 0;
 var margin_bot = 0;
 
 // 表示用
+var getcast_sum = 0;
+var getcast_other = 0;
+var imgNode_cast = [];
+var imgNode_skill = [];
+var imgNode_other = [];
 var innerNode = null;
 var skillNode = document.createElement("h2");
 var castNode = document.createElement("h2");
@@ -142,7 +146,6 @@ if( urlchk() ){
 	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性があります。");
 	// 対戦履歴のページ数だけ処理する
 	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
-	//for(var linkcnt=0; linkcnt < 14; linkcnt++){
 		urlstr = document.links[linkcnt].toString();
 		// 起動済みでないかのチェック
 		if(urlstr.match(/changesum/)){
@@ -187,11 +190,7 @@ if( urlchk() ){
 	// 終了メッセージ
 	alert("処理終了　エラー番号:" + errnum + "\n" + errmsg[errnum]);
 } else {
-	if(location.href.toString() != trainingurl){
-		alert("ﾅﾝﾃﾞｯ!!");
-	} else {
-		alert("しゅうれんだー");
-	}
+	alert("ﾅﾝﾃﾞｯ!!");
 }
 
 // 対戦履歴詳細ページの情報を取得
@@ -451,19 +450,19 @@ function hyouji(){
 	
 	nodetitle1 = document.createElement("div");
 	nodetitle1.className = "frame02_1_title";
-	nodetitle1.innerHTML = "試合結果";
+	nodetitle1.innerHTML = "試合結果（平均データ）";
 	gameNode.appendChild(nodetitle1);
 	
 	// 使用キャスト画像を表示
 	for(var cnt=0; cnt < cast_cnt; cnt++){
-		var imgNode = document.createElement("img");
-		imgNode.src = cast_result[cnt][0];
-		imgNode.width = icon_width;
-		imgNode.height = icon_height;
+		imgNode_cast[cnt] = document.createElement("img");
+		imgNode_cast[cnt].src = cast_result[cnt][0];
+		imgNode_cast[cnt].width = icon_width;
+		imgNode_cast[cnt].height = icon_height;
 		
 		var linkNode = document.createElement("a");
 		linkNode.href = "JavaScript:changesum(" + cnt.toString() + ")";
-		linkNode.appendChild(imgNode);
+		linkNode.appendChild(imgNode_cast[cnt]);
 		gameNode.appendChild(linkNode);
 	}
 	
@@ -522,15 +521,15 @@ function hyouji(){
 	
 	// 使用キャスト画像を表示
 	for(var cnt=0; cnt < cast_cnt; cnt++){
-		var imgNode = document.createElement("img");
-		imgNode.src = cast_result[cnt][0];
+		imgNode_skill[cnt] = document.createElement("img");
+		imgNode_skill[cnt].src = cast_result[cnt][0];
 		
-		imgNode.width = icon_width;
-		imgNode.height = icon_height;
+		imgNode_skill[cnt].width = icon_width;
+		imgNode_skill[cnt].height = icon_height;
 		
 		var linkNode = document.createElement("a");
 		linkNode.href = "JavaScript:changesum(" + cnt.toString() + ")";
-		linkNode.appendChild(imgNode);
+		linkNode.appendChild(imgNode_skill[cnt]);
 		skillNode.appendChild(linkNode);
 	}
 	
@@ -567,20 +566,20 @@ function hyouji(){
 	
 	// 使用キャスト画像を表示
 	for(var cnt=0; cnt < match_cast_cnt; cnt++){
-		var imgNode = document.createElement("img");
-		imgNode.src = match_cast_result[cnt][0];
-		imgNode.width = icon_width;
-		imgNode.height = icon_height;
+		imgNode_other[cnt] = document.createElement("img");
+		imgNode_other[cnt].src = match_cast_result[cnt][0];
+		imgNode_other[cnt].width = icon_width;
+		imgNode_other[cnt].height = icon_height;
 		
 		var linkNode = document.createElement("a");
 		linkNode.href = "JavaScript:changeother(" + cnt.toString() + ")";
-		linkNode.appendChild(imgNode);
+		linkNode.appendChild(imgNode_other[cnt]);
 		castNode.appendChild(linkNode);
 	}
 	
 	// 項目情報
 	addNode("マッチング回数", "0" + "回", 0, "cast");
-	addNode("出現率", "0" + "%", 1, "cast");
+	addNode("登場率", "0" + "%", 1, "cast");
 	addNode("↓スキル採用率", "", 2, "cast");
 	
 	// スキル枠確保
@@ -939,10 +938,10 @@ function match_cast_add(ary_no){
 				ary_tmp[4] = [result_battle[ary_no][26][match_cnt][4][1], result_battle[ary_no][26][match_cnt][4][2], result_battle[ary_no][26][match_cnt][4][3]]
 				ary_tmp[5] = [1, 1, 1];
 				// アシスト
-				ary_tmp[6] = result_battle[ary_no][26][match_cnt][5];
+				ary_tmp[6] = [result_battle[ary_no][26][match_cnt][5][0], result_battle[ary_no][26][match_cnt][5][1], result_battle[ary_no][26][match_cnt][5][2]];
 				ary_tmp[7] = [1, 1, 1];
 				// ソウル
-				ary_tmp[8] = result_battle[ary_no][26][match_cnt][6];
+				ary_tmp[8] = [result_battle[ary_no][26][match_cnt][6][0]];
 				ary_tmp[9] = [1];
 				match_cast_result[match_cast_cnt] = ary_tmp;
 				// キャストの登録番号を進める
@@ -958,6 +957,13 @@ function match_cast_add(ary_no){
 
 // キャストをクリックした時の処理。試合結果とスキル使用回数は連動。マッチングキャストは別
 function changesum(getcast){
+	// クリック時透過処理、前回の透過アイコンも元に戻す
+	imgNode_cast[getcast_sum].style.opacity = 1;
+	imgNode_skill[getcast_sum].style.opacity = 1;
+	getcast_sum = getcast;
+	imgNode_cast[getcast].style.opacity = 0.5;
+	imgNode_skill[getcast].style.opacity = 0.5;
+	
 	node_ary[0].innerHTML = cast_result[getcast][1];
 	node_ary[1].innerHTML = cast_result[getcast][2];
 	node_ary[2].innerHTML = cast_result[getcast][3];
@@ -1012,6 +1018,11 @@ function changesum(getcast){
 function changeother(getcast){
 	// ソートの受け皿
 	var getrank_ary = [];
+	
+	// クリック時透過処理、前回の透過アイコンも元に戻す
+	imgNode_skill[getcast_other].style.opacity = 1;
+	getcast_other = getcast;
+	imgNode_skill[getcast].style.opacity = 1;
 	
 	cast_ary[0].innerHTML = match_cast_result[getcast][1] + "回";
 	cast_ary[1].innerHTML = (Math.floor(match_cast_result[getcast][1]*10000/match_cast_sum))/100 + "%";
@@ -1248,4 +1259,3 @@ function addCard(imgurl, usecnt, node_no, mode){
 		dtlNode.appendChild(fixNode);
 	}
 }
-

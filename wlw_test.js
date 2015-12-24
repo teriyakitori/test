@@ -1020,9 +1020,9 @@ function changeother(getcast){
 	var getrank_ary = [];
 	
 	// クリック時透過処理、前回の透過アイコンも元に戻す
-	imgNode_skill[getcast_other].style.opacity = 1;
+	imgNode_other[getcast_other].style.opacity = 1;
 	getcast_other = getcast;
-	imgNode_skill[getcast].style.opacity = 1;
+	imgNode_other[getcast].style.opacity = 0.5;
 	
 	cast_ary[0].innerHTML = match_cast_result[getcast][1] + "回";
 	cast_ary[1].innerHTML = (Math.floor(match_cast_result[getcast][1]*10000/match_cast_sum))/100 + "%";

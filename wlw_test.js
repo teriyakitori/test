@@ -82,6 +82,8 @@ var mtc_detail_data_drs2hit = /<div class="mtc_detail_data_drs2hit".*<\/div>/;
 var mtc_detail_data2_kyoten = /<div class="mtc_detail_data2_kyoten".*<\/div>/;
 // 入手経験値
 var mtc_detail_data2_exp = /<div class="mtc_detail_data2_exp".*<\/div>/;
+// パートナー値
+var mtc_detail_m_with_num = /<div class="mtc_detail_m_with_num".*<\/div>/;
 
 // 試合時間秒数*10
 var battle_time = 420;
@@ -119,6 +121,9 @@ var imgNode_cast = [];
 var imgNode_skill = [];
 var imgNode_other = [];
 var innerNode = null;
+var inspos  = null;
+var textNode = document.createElement("h2");
+var gameNode = document.createElement("h2");
 var skillNode = document.createElement("h2");
 var castNode = document.createElement("h2");
 var dtlNode = null;
@@ -145,12 +150,13 @@ var errmsg = [
 if( urlchk() ){
 	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性があります。");
 	// 対戦履歴のページ数だけ処理する
+	//for(var linkcnt=0; linkcnt < 14; linkcnt++){
 	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
 		urlstr = document.links[linkcnt].toString();
 		// 起動済みでないかのチェック
 		if(urlstr.match(/changesum/)){
-			errnum = 1;
-			break;
+			//errnum = 1;
+			//break;
 		}
 		// 対象外のURLも含まれるので、アドレスチェックを行う
 		if( urlstr.match(/matchlogdetail/i) ){
@@ -164,7 +170,7 @@ if( urlchk() ){
 			break;
 		}
 	}
-	
+	// 試合が取得できなかった場合
 	if(battle_cnt == 0){
 		errnum = 2;
 	}
@@ -183,7 +189,7 @@ if( urlchk() ){
 			icon_height = 70;
 			margin_bot ="20px";
 		}
-		
+		syukei();
 		hyouji();
 	}
 	
@@ -384,6 +390,19 @@ function sorceget(){
 					}
 				}
 				member_tmp[7] = card_chk;
+				
+				// パートナー値の取得
+				tmpstr = tmp_ary[player_cnt].match(mtc_detail_m_with_num);
+				if(tmpstr == null){
+					// 敵チームは空欄
+					member_tmp[8] = "";
+					member_tmp[9] = "";
+				} else {
+					tmpstr = tmpstr[0].toString().replace(/.*\(/, "").replace(/\).*/, "").replace(/\"/g, "").split(",");
+					member_tmp[8] = tmpstr[0];
+					member_tmp[9] = tmpstr[1];
+				}
+				
 			} else {
 				// COMのとき
 				member_tmp[1] = com_img;
@@ -397,8 +416,8 @@ function sorceget(){
 	}
 }
 
-// 表示処理
-function hyouji(){
+// 集計処理
+function syukei(){
 	// 試合数だけ集計処理を行う
 	for(cnt = 0; cnt < battle_cnt; cnt++){
 		// 初回は集計データの初期化
@@ -431,16 +450,37 @@ function hyouji(){
 		// マッチングキャストの集計
 		match_cast_add(cnt);
 	}
+}
+
+// 表示処理
+function hyouji(){
+	inspos = document.getElementById("page_title");
 	
 	// タイトルを表示
-	var inspos  = document.getElementById("page_title");
-	var gameNode = document.createElement("h2");
-	//var skillNode = document.createElement("h2");
-	var textNode = document.createTextNode("本気でやっつけてやるんだから！");
+	textNode.innerHTML = "本気でやっつけてやるんだから！"
+	textNode.id = "page_title";
+	inspos.parentNode.insertBefore(textNode, inspos);
 	
-	gameNode.appendChild(textNode);
-	gameNode.id = "page_title";
-	inspos.parentNode.insertBefore(gameNode, inspos);
+	var selecttest = document.createElement("select");
+	selecttest.className = "select02";
+	selecttest.setAttribute("onchange", "select_fun(this.value)");
+	
+	var option_def = document.createElement("option");
+	option_def.value = 0;
+	option_def.innerHTML = "オプション機能（β版）";
+	selecttest.appendChild(option_def);
+	
+	var option_nan = document.createElement("option");
+	option_nan.value = 1;
+	option_nan.innerHTML = "ﾅﾝﾃﾞｯ!!";
+	selecttest.appendChild(option_nan);
+	
+	var option_del = document.createElement("option");
+	option_del.value = 2;
+	option_del.innerHTML = "かくれんぼ";
+	selecttest.appendChild(option_del);
+	
+	inspos.parentNode.insertBefore(selecttest, inspos);
 	
 	// 試合結果表示
 	gameNode = document.createElement("div");
@@ -542,7 +582,6 @@ function hyouji(){
 	dtlNode.className = "mtc_detail_skill";
 	dtlNode.style.position = "static";
 	dtlNode.style.width = "100%";
-	//dtlNode.style.textAlign = "center";
 	
 	// 枠の確保
 	addCard("common/img_card_thum/deck_nocard.png", "", 0, "skill");
@@ -1012,6 +1051,7 @@ function changesum(getcast){
 	skillcnt_ary[3].innerHTML = (Math.floor((cast_result[getcast][32][3]/cast_result[getcast][1])*10))/10 + "回";
 	skillimg_ary[4].src = cast_result[getcast][31][4];
 	skillcnt_ary[4].innerHTML = (Math.floor((cast_result[getcast][32][4]/cast_result[getcast][1])*10))/10 + "回";
+	
 }
 
 // マッチングキャスト表示
@@ -1259,3 +1299,20 @@ function addCard(imgurl, usecnt, node_no, mode){
 		dtlNode.appendChild(fixNode);
 	}
 }
+
+// テスト版機能のメニュー
+function select_fun(getno){
+	
+	if(getno == 0){
+		// 何もしない
+	} else if(getno == 1){
+		alert("ﾅﾝﾃﾞｯ!!");
+	} else if(getno == 2){
+		alert("わたしのこと見つけられる？");
+		inspos.parentNode.removeChild(textNode);
+		inspos.parentNode.removeChild(gameNode);
+		inspos.parentNode.removeChild(skillNode);
+		inspos.parentNode.removeChild(castNode);
+	}
+}
+

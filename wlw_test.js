@@ -117,11 +117,11 @@ var margin_bot = 0;
 // 表示用
 var getcast_sum = 0;
 var getcast_other = 0;
-var selecttest = null;
 var imgNode_cast = [];
 var imgNode_skill = [];
 var imgNode_other = [];
 var innerNode = null;
+var selecttest = null;
 var inspos  = null;
 var textNode = document.createElement("h2");
 var gameNode = document.createElement("h2");
@@ -174,7 +174,7 @@ if( urlchk() ){
 		}
 	}
 	// 試合が取得できなかった場合
-	if(battle_cnt == 0){
+	if(battle_cnt == 0 && errnum == 0){
 		errnum = 2;
 	}
 	
@@ -1069,7 +1069,6 @@ function changesum(getcast){
 	skillcnt_ary[3].innerHTML = (Math.floor((cast_result[getcast][32][3]/cast_result[getcast][1])*10))/10 + "回";
 	skillimg_ary[4].src = cast_result[getcast][31][4];
 	skillcnt_ary[4].innerHTML = (Math.floor((cast_result[getcast][32][4]/cast_result[getcast][1])*10))/10 + "回";
-	
 }
 
 // マッチングキャスト表示
@@ -1351,4 +1350,3 @@ function select_fun(getno){
 		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2015/12/26です。\nこの項目は試験的に作ったものであり、動作確認や結果のチェックが甘いです。");
 	}
 }
-

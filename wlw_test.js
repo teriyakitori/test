@@ -485,7 +485,7 @@ function hyouji(){
 	
 	var option_def = document.createElement("option");
 	option_def.value = 0;
-	option_def.innerHTML = "オプション機能（β版）";
+	option_def.innerHTML = "オプション機能（テスト中の機能）";
 	selecttest.appendChild(option_def);
 	
 	var option_del = document.createElement("option");
@@ -495,7 +495,7 @@ function hyouji(){
 	
 	var option_nan = document.createElement("option");
 	option_nan.value = 10;
-	option_nan.innerHTML = "ﾅﾝﾃﾞｯ!!";
+	option_nan.innerHTML = "ﾅﾝﾃﾞｯ!!（更新情報）";
 	selecttest.appendChild(option_nan);
 	
 	inspos.parentNode.insertBefore(selecttest, inspos);
@@ -1321,14 +1321,14 @@ function addCard(imgurl, usecnt, node_no, mode){
 function select_fun(getno){
 	
 	if(betatest_flg != 0){
-		alert("オプション機能実行後に、続けてオプション機能は行えません。\n一度更新をしてブックマークレットの起動からやり直してください。");
+		alert("一部のオプション機能実行後には、続けてオプション機能は行えません。\n");
 		return;
 	}
 	
 	if(getno == 0){
 		// 何もしない
 	} else if(getno == 1){
-		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n最新の入国した日を集計します。\n一日に20戦以上した場合は変わりません。")){
+		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n最新の入国した日を対象に集計処理します。\n一日に20戦以上した場合は変わりません。")){
 			// 表示の削除処理
 			inspos.parentNode.removeChild(textNode);
 			inspos.parentNode.removeChild(gameNode);
@@ -1347,6 +1347,7 @@ function select_fun(getno){
 			return;
 		}
 	} else if(getno == 10){
-		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2015/12/26です。\nこの項目は試験的に作ったものであり、動作確認や結果のチェックが甘いです。");
+		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2015/12/26です。\nオプション機能が追加されました。\nこの項目は試験的に作ったものであり、動作確認や結果のチェックが甘いです。");
 	}
 }
+

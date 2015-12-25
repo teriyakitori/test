@@ -1313,6 +1313,7 @@ function select_fun(getno){
 		inspos.parentNode.removeChild(gameNode);
 		inspos.parentNode.removeChild(skillNode);
 		inspos.parentNode.removeChild(castNode);
+		inspos.parentNode.removeChild(selecttest);
 	}
 }
 

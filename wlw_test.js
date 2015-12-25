@@ -117,6 +117,7 @@ var margin_bot = 0;
 // 表示用
 var getcast_sum = 0;
 var getcast_other = 0;
+var selecttest = null;
 var imgNode_cast = [];
 var imgNode_skill = [];
 var imgNode_other = [];
@@ -137,6 +138,9 @@ var cast_ary = [];
 var castcardimg_ary = [];
 var castcardcnt_ary = [];
 
+// テスト処理用
+var betatest_flg = 0;
+
 // エラー用変数
 var errnum = 0;
 var errmsg = [
@@ -150,13 +154,12 @@ var errmsg = [
 if( urlchk() ){
 	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性があります。");
 	// 対戦履歴のページ数だけ処理する
-	//for(var linkcnt=0; linkcnt < 14; linkcnt++){
 	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
 		urlstr = document.links[linkcnt].toString();
 		// 起動済みでないかのチェック
 		if(urlstr.match(/changesum/)){
-			//errnum = 1;
-			//break;
+			errnum = 1;
+			break;
 		}
 		// 対象外のURLも含まれるので、アドレスチェックを行う
 		if( urlstr.match(/matchlogdetail/i) ){
@@ -417,12 +420,26 @@ function sorceget(){
 }
 
 // 集計処理
-function syukei(){
+function syukei(syukei_date){
+	var skip_cnt = 0;
+	var suminichk_flg = 0;
+	
 	// 試合数だけ集計処理を行う
 	for(cnt = 0; cnt < battle_cnt; cnt++){
+		// 集計日時指定のチェック
+		if(syukei_date != null){
+			if(result_battle[cnt][0].toString().match(syukei_date.toString()) ){
+				
+			} else {
+				skip_cnt++;
+				continue;
+			}
+		}
+		
 		// 初回は集計データの初期化
-		if(cnt == 0){
+		if(suminichk_flg == 0){
 			cast_result_ini(cnt);
+			suminichk_flg = 1;
 		} else {
 			// 集計に加算処理
 			cast_result_add(0, cnt);
@@ -450,6 +467,7 @@ function syukei(){
 		// マッチングキャストの集計
 		match_cast_add(cnt);
 	}
+	battle_cnt -= skip_cnt;
 }
 
 // 表示処理
@@ -461,7 +479,7 @@ function hyouji(){
 	textNode.id = "page_title";
 	inspos.parentNode.insertBefore(textNode, inspos);
 	
-	var selecttest = document.createElement("select");
+	selecttest = document.createElement("select");
 	selecttest.className = "select02";
 	selecttest.setAttribute("onchange", "select_fun(this.value)");
 	
@@ -470,15 +488,15 @@ function hyouji(){
 	option_def.innerHTML = "オプション機能（β版）";
 	selecttest.appendChild(option_def);
 	
+	var option_del = document.createElement("option");
+	option_del.value = 1;
+	option_del.innerHTML = "今日は一緒に行けるの？（最新日のみ集計）";
+	selecttest.appendChild(option_del);
+	
 	var option_nan = document.createElement("option");
-	option_nan.value = 1;
+	option_nan.value = 10;
 	option_nan.innerHTML = "ﾅﾝﾃﾞｯ!!";
 	selecttest.appendChild(option_nan);
-	
-	var option_del = document.createElement("option");
-	option_del.value = 2;
-	option_del.innerHTML = "かくれんぼ";
-	selecttest.appendChild(option_del);
 	
 	inspos.parentNode.insertBefore(selecttest, inspos);
 	
@@ -1303,17 +1321,34 @@ function addCard(imgurl, usecnt, node_no, mode){
 // テスト版機能のメニュー
 function select_fun(getno){
 	
+	if(betatest_flg != 0){
+		alert("オプション機能実行後に、続けてオプション機能は行えません。\n一度更新をしてブックマークレットの起動からやり直してください。");
+		return;
+	}
+	
 	if(getno == 0){
 		// 何もしない
 	} else if(getno == 1){
-		alert("ﾅﾝﾃﾞｯ!!");
-	} else if(getno == 2){
-		alert("わたしのこと見つけられる？");
-		inspos.parentNode.removeChild(textNode);
-		inspos.parentNode.removeChild(gameNode);
-		inspos.parentNode.removeChild(skillNode);
-		inspos.parentNode.removeChild(castNode);
-		inspos.parentNode.removeChild(selecttest);
+		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n最新の入国した日を集計します。\n一日に20戦以上した場合は変わりません。")){
+			// 表示の削除処理
+			inspos.parentNode.removeChild(textNode);
+			inspos.parentNode.removeChild(gameNode);
+			inspos.parentNode.removeChild(skillNode);
+			inspos.parentNode.removeChild(castNode);
+			inspos.parentNode.removeChild(selecttest);
+			cast_cnt = 0;
+			match_cast_cnt = 0;
+			match_cast_sum = 0;
+			var get_date = result_battle[0][0].toString().split(" ");
+			syukei(get_date[0]);
+			hyouji();
+			alert(get_date[0] + "の試合は" + battle_cnt + "件です。");
+			betatest_flg = 1;
+		} else {
+			return;
+		}
+	} else if(getno == 10){
+		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2015/12/26です。\nこの項目は試験的に作ったものであり、動作確認や結果のチェックが甘いです。");
 	}
 }
 

@@ -1352,7 +1352,7 @@ function select_fun(getno){
 			return;
 		}
 	} else if(getno == 2){
-		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\nLv5先行有利を確認するための機能です。\nデータの都合上、タイミングに最大8秒ほどの誤差もありえます")){
+		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\nLv5先行有利を確認するための機能です。\nデータの都合上、レベルアップ時間は最大8秒ほどの誤差がありえます")){
 			var saki_win = 0;
 			var saki_lose = 0;
 			var ato_win = 0;

@@ -488,10 +488,15 @@ function hyouji(){
 	option_def.innerHTML = "オプション機能（テスト中の機能）";
 	selecttest.appendChild(option_def);
 	
-	var option_del = document.createElement("option");
-	option_del.value = 1;
-	option_del.innerHTML = "今日は一緒に行けるの？（最新日のみ集計）";
-	selecttest.appendChild(option_del);
+	var option_now = document.createElement("option");
+	option_now.value = 1;
+	option_now.innerHTML = "今日は一緒に行けるの？（最新日のみ集計）";
+	selecttest.appendChild(option_now);
+	
+	var option_lv5 = document.createElement("option");
+	option_lv5.value = 2;
+	option_lv5.innerHTML = "おおきくなるよ！（LV5先行時勝率計算）";
+	selecttest.appendChild(option_lv5);
 	
 	var option_nan = document.createElement("option");
 	option_nan.value = 10;
@@ -1343,6 +1348,35 @@ function select_fun(getno){
 			hyouji();
 			alert(get_date[0] + "の試合は" + battle_cnt + "件です。");
 			betatest_flg = 1;
+		} else {
+			return;
+		}
+	} else if(getno == 2){
+		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\nLv5先行有利を確認するための機能です。\nデータの都合上、タイミングに最大8秒ほどの誤差もありえます")){
+			var saki_win = 0;
+			var saki_lose = 0;
+			var ato_win = 0;
+			var ato_lose = 0;
+			var draw_cnt = 0;
+			
+			for(var cnt = 0; cnt < battle_cnt; cnt++){
+				if( parseInt(lvsplit(result_battle[cnt][10][3])) == parseInt(lvsplit(result_battle[cnt][11][3])) ){
+					draw_cnt++;
+				} else if( parseInt(lvsplit(result_battle[cnt][10][3])) < parseInt(lvsplit(result_battle[cnt][11][3])) ){
+					if(result_battle[cnt][9].toString() == "win"){
+						saki_win++;
+					} else {
+						saki_lose++;
+					}
+				} else {
+					if(result_battle[cnt][9].toString() == "win"){
+						ato_win++;
+					} else {
+						ato_lose++;
+					}
+				}
+			}
+			alert("対象試合数：" + battle_cnt + "\n自軍Lv5先行時\n勝率：" + Math.round((saki_win / (saki_win + saki_lose))*100) + "%　勝利数：" + saki_win + "　敗北数：" + saki_lose + "\n敵軍Lv5先行時\n勝率：" + Math.round((ato_win / (ato_win + ato_lose))*100) + "%　勝利数：" + ato_win + "　敗北数：" + ato_lose + "\nレベルアップ（ほぼ）同時試合数：" + draw_cnt);
 		} else {
 			return;
 		}

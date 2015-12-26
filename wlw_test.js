@@ -1376,7 +1376,56 @@ function select_fun(getno){
 					}
 				}
 			}
-			alert("対象試合数：" + battle_cnt + "\n自軍Lv5先行時\n勝率：" + Math.round((saki_win / (saki_win + saki_lose))*100) + "%　勝利数：" + saki_win + "　敗北数：" + saki_lose + "\n敵軍Lv5先行時\n勝率：" + Math.round((ato_win / (ato_win + ato_lose))*100) + "%　勝利数：" + ato_win + "　敗北数：" + ato_lose + "\nレベルアップ（ほぼ）同時試合数：" + draw_cnt);
+			
+			// 勝手に3と7盛った版
+			var saki3_win = 0;
+			var saki3_lose = 0;
+			var ato3_win = 0;
+			var ato3_lose = 0;
+			var saki7_win = 0;
+			var saki7_lose = 0;
+			var ato7_win = 0;
+			var ato7_lose = 0;
+			for(var cnt = 0; cnt < battle_cnt; cnt++){
+				if( parseInt(lvsplit(result_battle[cnt][10][1])) < parseInt(lvsplit(result_battle[cnt][11][1])) ){
+					if(result_battle[cnt][9].toString() == "win"){
+						saki3_win++;
+					} else {
+						saki3_lose++;
+					}
+				} else {
+					if(result_battle[cnt][9].toString() == "win"){
+						ato3_win++;
+					} else {
+						ato3_lose++;
+					}
+				}
+			}
+			for(var cnt = 0; cnt < battle_cnt; cnt++){
+				if( parseInt(lvsplit(result_battle[cnt][10][5])) < parseInt(lvsplit(result_battle[cnt][11][5])) ){
+					if(result_battle[cnt][9].toString() == "win"){
+						saki7_win++;
+					} else {
+						saki7_lose++;
+					}
+				} else {
+					if(result_battle[cnt][9].toString() == "win"){
+						ato7_win++;
+					} else {
+						ato7_lose++;
+					}
+				}
+			}
+			
+			//alert("対象試合数：" + battle_cnt + "\n自軍Lv5先行時\n勝率：" + Math.round((saki_win / (saki_win + saki_lose))*100) + "%　勝利数：" + saki_win + "　敗北数：" + saki_lose + "\n敵軍Lv5先行時\n勝率：" + Math.round((ato_win / (ato_win + ato_lose))*100) + "%　勝利数：" + ato_win + "　敗北数：" + ato_lose + "\nレベルアップ（ほぼ）同時試合数：" + draw_cnt);
+			alert("対象試合数：" + battle_cnt + 
+				"\n自軍Lv3先行時\n勝率：" + Math.round((saki3_win / (saki3_win + saki3_lose))*100) + "%　勝利数：" + saki3_win + "　敗北数：" + saki3_lose + 
+				"\n敵軍Lv3先行時\n勝率：" + Math.round((ato3_win / (ato3_win + ato3_lose))*100) + "%　勝利数：" + ato3_win + "　敗北数：" + ato3_lose + 
+				"\n自軍Lv5先行時\n勝率：" + Math.round((saki_win / (saki_win + saki_lose))*100) + "%　勝利数：" + saki_win + "　敗北数：" + saki_lose + 
+				"\n敵軍Lv5先行時\n勝率：" + Math.round((ato_win / (ato_win + ato_lose))*100) + "%　勝利数：" + ato_win + "　敗北数：" + ato_lose + 
+				"\n自軍Lv7先行時\n勝率：" + Math.round((saki7_win / (saki7_win + saki7_lose))*100) + "%　勝利数：" + saki7_win + "　敗北数：" + saki7_lose + 
+				"\n敵軍Lv7先行時\n勝率：" + Math.round((ato7_win / (ato7_win + ato7_lose))*100) + "%　勝利数：" + ato7_win + "　敗北数：" + ato7_lose + 
+				"\nレベルアップ（ほぼ）同時試合数：" + draw_cnt);
 		} else {
 			return;
 		}

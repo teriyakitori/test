@@ -6,10 +6,16 @@ var starturl2 = "https://wonderland-wars.net/matchlog.html?type=all";
 
 // 空欄カード用URL
 var nocard_img = "common/img_card_thum/deck_nocard.png";
-var com_img = "common/img_cast/582e3423a336042b335de96584d116e2.png";
+var com_img = "582e3423a336042b335de96584d116e2.png";
 
 // 集計表示用アイコンURL
-var sum_img = "common/img_cast/582e3423a336042b335de96584d116e2.png";
+var sum_img = "582e3423a336042b335de96584d116e2.png";
+
+// 表示補助用
+var cast_url_plus = "common/img_cast/";
+var skill_url_plus = "common/img_card_thum/skill/";
+var assist_url_plus = "common/img_card_thum/assist/";
+var soul_url_plus = "common/img_card_thum/soul/";
 
 var request= new XMLHttpRequest();
 
@@ -243,14 +249,15 @@ function sorceget(){
 		result_ary[4] = tmpstr[0];
 		
 		// プレイヤー画像を取得
-		result_ary[5] = src_ary[0].match(mtc_detail_cast);
+		tmpstr = src_ary[0].match(mtc_detail_cast).toString().split("/");
+		result_ary[5] = tmpstr[2];
 		// タイムを取得
 		tmpstr = src_ary[0].match(mtc_detail_time);
 		result_ary[6] = tagsplit(tmpstr[0]);
 		// 味方ゲージを取得
-		result_ary[7] = src_ary[0].match(mtc_detail_mygage);
+		result_ary[7] = parseInt( lvsplit( src_ary[0].match(mtc_detail_mygage).toString() ) );
 		// 敵ゲージを取得
-		result_ary[8] = src_ary[0].match(mtc_detail_enemygage);
+		result_ary[8] = parseInt( lvsplit( src_ary[0].match(mtc_detail_enemygage).toString() ) );
 		// 勝敗を取得
 		var win_lose = src_ary[0].match(mtc_detail_result);
 		if(win_lose[0].match("icon_win.png") != null){
@@ -260,10 +267,27 @@ function sorceget(){
 		}
 		
 		// レベルアップ時間を取得
+		var lvup_ary = [];
 		tmpstr = src_ary[0].match(levelup_my_lv);
-		result_ary[10] = tmpstr;
+		for(cnt = 0; cnt < 7; cnt++){
+			if(tmpstr[cnt] == null){
+				lvup_ary[cnt] = 100;
+			} else {
+				lvup_ary[cnt] = parseInt(lvsplit(tmpstr[cnt]));
+			}
+		}
+		result_ary[10] = lvup_ary;
+		
+		var lvup_ary = [];
 		tmpstr = src_ary[0].match(levelup_enemy_lv);
-		result_ary[11] = tmpstr;
+		for(cnt = 0; cnt < 7; cnt++){
+			if(tmpstr[cnt] == null){
+				lvup_ary[cnt] = 100;
+			} else {
+				lvup_ary[cnt] = parseInt(lvsplit(tmpstr[cnt]));
+			}
+		}
+		result_ary[11] = lvup_ary;
 		// 兵士撃破数を取得
 		tmpstr = src_ary[0].match(mtc_detail_data_heishi);
 		result_ary[12] = tagsplit(tmpstr[0]);
@@ -305,7 +329,12 @@ function sorceget(){
 		result_ary[24] = tagsplit(tmpstr[0]);
 		
 		// 自プレイヤースキルアシスト情報を取得
+		// スキルカードファイル名を取得
 		player[0] = src_ary[0].match(mtc_detail_skill);
+		for(cnt = 0; cnt < player[0].length; cnt++){
+			tmpstr = player[0][cnt].split("/");
+			player[0][cnt] = tmpstr[3];
+		}
 		// スキル使用回数を取得
 		card_chk = src_ary[0].match(mtc_detail_skill_count);
 		// スキル使用回数特有のスペースやタブを除去
@@ -314,8 +343,20 @@ function sorceget(){
 			card_chk[cnt] = card_chk[cnt].replace(/<.*>/, "");
 		}
 		player[1] = card_chk;
+		
+		// アシストカードファイル名を取得
 		player[2] = src_ary[0].match(mtc_detail_assist);
+		for(cnt = 0; cnt < player[2].length; cnt++){
+			tmpstr = player[2][cnt].split("/");
+			player[2][cnt] = tmpstr[3];
+		}
+		
+		// ソウルカードファイル名を取得
 		player[3] = src_ary[0].match(mtc_detail_soul);
+		for(cnt = 0; cnt < player[3].length; cnt++){
+			tmpstr = player[3][cnt].split("/");
+			player[3][cnt] = tmpstr[3];
+		}
 		
 		// カードのレベルを取得
 		card_chk = [];
@@ -366,16 +407,42 @@ function sorceget(){
 			member_tmp[0] = comchk[cnt];
 			// COMでないなら取得を行う
 			if(member_tmp[0] == 0){
-				// tmpstr = tmp_ary[player_cnt].split(mtc_detail_cardblock);
 				player_cnt++;
-				member_tmp[1] = tmp_ary[player_cnt].match(mtc_detail_cast);
+				// キャスト画像URL
+				tmpstr = tmp_ary[player_cnt].match(mtc_detail_cast).toString().split("/");
+				member_tmp[1] = tmpstr[2].toString();
+				// プレイヤー名
 				tmpstr = tmp_ary[player_cnt].match(mp_mydata_name);
 				member_tmp[2] = tagsplit(tmpstr[0]);
+				// 都道府県
 				tmpstr = tmp_ary[player_cnt].match(mp_mydata_location);
 				member_tmp[3] = tagsplit(tmpstr[0]);
-				member_tmp[4] = tmp_ary[player_cnt].match(mtc_detail_skill);
-				member_tmp[5] = tmp_ary[player_cnt].match(mtc_detail_assist);
-				member_tmp[6] = tmp_ary[player_cnt].match(mtc_detail_soul);
+				// 装備情報
+				// スキルカード
+				var eqary= [];
+				tmpstr = tmp_ary[player_cnt].match(mtc_detail_skill);
+				for(var eqcnt = 0; eqcnt < 4; eqcnt++){
+					var eqstr = tmpstr[eqcnt].toString().split("/");
+					eqary[eqcnt] = eqstr[3].toString();
+				}
+				member_tmp[4] = eqary;
+				// アシストカード
+				var eqary= [];
+				tmpstr = tmp_ary[player_cnt].match(mtc_detail_assist);
+				for(var eqcnt = 0; eqcnt < 3; eqcnt++){
+					var eqstr = tmpstr[eqcnt].toString().split("/");
+					eqary[eqcnt] = eqstr[3].toString();
+				}
+				member_tmp[5] = eqary;
+				// ソウルカード
+				var eqary= [];
+				tmpstr = tmp_ary[player_cnt].match(mtc_detail_soul);
+				for(var eqcnt = 0; eqcnt < 1; eqcnt++){
+					var eqstr = tmpstr[eqcnt].toString().split("/");
+					eqary[eqcnt] = eqstr[3].toString();
+				}
+				member_tmp[6] = eqary;
+				
 				// カードのレベルを取得
 				card_chk = [];
 				tmpstr = tmp_ary[player_cnt].split(mtc_detail_m_cardblock);
@@ -429,7 +496,7 @@ function syukei(syukei_date){
 		// 集計日時指定のチェック
 		if(syukei_date != null){
 			if(result_battle[cnt][0].toString().match(syukei_date.toString()) ){
-				
+				// 日が一致した場合の処理（今はなし）
 			} else {
 				skip_cnt++;
 				continue;
@@ -448,7 +515,7 @@ function syukei(syukei_date){
 		// キャストごとの重複チェック
 		for(var okkiku = 0; okkiku < cast_cnt; okkiku++){
 			// キャストの画像URLが一致した場合
-			if(result_battle[cnt][5].toString() == cast_result[okkiku][0].toString()){
+			if(cast_url_plus + result_battle[cnt][5].toString() == cast_result[okkiku][0].toString()){
 				cast_chkflg = okkiku;
 				break;
 			}
@@ -497,6 +564,16 @@ function hyouji(){
 	option_lv5.value = 2;
 	option_lv5.innerHTML = "おおきくなるよ！（LV5先行時勝率計算）";
 	selecttest.appendChild(option_lv5);
+	
+	var option_sal = document.createElement("option");
+	option_sal.value = 3;
+	option_sal.innerHTML = "いたずら、しちゃうぞ～（対戦履歴セーブ＆ロード）";
+	selecttest.appendChild(option_sal);
+	
+	var option_del = document.createElement("option");
+	option_del.value = 4;
+	option_del.innerHTML = "うーん、困ったなぁ（保存データ初期化）";
+	selecttest.appendChild(option_del);
 	
 	var option_nan = document.createElement("option");
 	option_nan.value = 10;
@@ -709,10 +786,10 @@ function cast_result_ini(ary_no){
 	// 処理対象が全体の集計の場合は固定値
 	if(cast_cnt == 0){
 		// 集計用画像URLを格納
-		cast_tmp[0] = sum_img;
+		cast_tmp[0] = cast_url_plus + sum_img;
 	} else {
 		// キャスト画像URLを格納
-		cast_tmp[0] = result_battle[ary_no][5];
+		cast_tmp[0] = cast_url_plus + result_battle[ary_no][5];
 	}
 	
 	// 使用回数カウントを初期化
@@ -728,22 +805,22 @@ function cast_result_ini(ary_no){
 	}
 	
 	// 味方レベルアップ時間
-	cast_tmp[4] = parseInt(lvsplit(result_battle[ary_no][10][0])) * battle_per;
-	cast_tmp[5] = parseInt(lvsplit(result_battle[ary_no][10][1])) * battle_per;
-	cast_tmp[6] = parseInt(lvsplit(result_battle[ary_no][10][2])) * battle_per;
-	cast_tmp[7] = parseInt(lvsplit(result_battle[ary_no][10][3])) * battle_per;
-	cast_tmp[8] = parseInt(lvsplit(result_battle[ary_no][10][4])) * battle_per;
-	cast_tmp[9] = parseInt(lvsplit(result_battle[ary_no][10][5])) * battle_per;
-	cast_tmp[10] = parseInt(lvsplit(result_battle[ary_no][10][6])) * battle_per;
+	cast_tmp[4] = result_battle[ary_no][10][0] * battle_per;
+	cast_tmp[5] = result_battle[ary_no][10][1] * battle_per;
+	cast_tmp[6] = result_battle[ary_no][10][2] * battle_per;
+	cast_tmp[7] = result_battle[ary_no][10][3] * battle_per;
+	cast_tmp[8] = result_battle[ary_no][10][4] * battle_per;
+	cast_tmp[9] = result_battle[ary_no][10][5] * battle_per;
+	cast_tmp[10] = result_battle[ary_no][10][6] * battle_per;
 	
 	// 敵レベルアップ時間
-	cast_tmp[11] = parseInt(lvsplit(result_battle[ary_no][11][0])) * battle_per;
-	cast_tmp[12] = parseInt(lvsplit(result_battle[ary_no][11][1])) * battle_per;
-	cast_tmp[13] = parseInt(lvsplit(result_battle[ary_no][11][2])) * battle_per;
-	cast_tmp[14] = parseInt(lvsplit(result_battle[ary_no][11][3])) * battle_per;
-	cast_tmp[15] = parseInt(lvsplit(result_battle[ary_no][11][4])) * battle_per;
-	cast_tmp[16] = parseInt(lvsplit(result_battle[ary_no][11][5])) * battle_per;
-	cast_tmp[17] = parseInt(lvsplit(result_battle[ary_no][11][6])) * battle_per;
+	cast_tmp[11] = result_battle[ary_no][11][0] * battle_per;
+	cast_tmp[12] = result_battle[ary_no][11][1] * battle_per;
+	cast_tmp[13] = result_battle[ary_no][11][2] * battle_per;
+	cast_tmp[14] = result_battle[ary_no][11][3] * battle_per;
+	cast_tmp[15] = result_battle[ary_no][11][4] * battle_per;
+	cast_tmp[16] = result_battle[ary_no][11][5] * battle_per;
+	cast_tmp[17] = result_battle[ary_no][11][6] * battle_per;
 	
 	// 兵士撃破数
 	cast_tmp[18] = parseInt(result_battle[ary_no][12]);
@@ -785,7 +862,7 @@ function cast_result_ini(ary_no){
 			// スキル画像が空欄カードだった場合は処理を行わない（空欄後詰め処理）
 			if(result_battle[ary_no][25][0][skillcnt].toString() != nocard_img.toString()){
 				// スキル名格納
-				skillName_tmp[setcnt] = result_battle[ary_no][25][0][skillcnt];
+				skillName_tmp[setcnt] = skill_url_plus + result_battle[ary_no][25][0][skillcnt];
 				// スキル使用回数格納
 				skillCnt_tmp[setcnt] = parseInt(result_battle[ary_no][25][1][skillcnt]);
 				setcnt++;
@@ -814,22 +891,22 @@ function cast_result_add(cast_no, ary_no){
 		cast_result[cast_no][3]++;
 	}
 	// 味方レベルアップ時間
-	cast_result[cast_no][4] += parseInt(lvsplit(result_battle[ary_no][10][0])) * battle_per;
-	cast_result[cast_no][5] += parseInt(lvsplit(result_battle[ary_no][10][1])) * battle_per;
-	cast_result[cast_no][6] += parseInt(lvsplit(result_battle[ary_no][10][2])) * battle_per;
-	cast_result[cast_no][7] += parseInt(lvsplit(result_battle[ary_no][10][3])) * battle_per;
-	cast_result[cast_no][8] += parseInt(lvsplit(result_battle[ary_no][10][4])) * battle_per;
-	cast_result[cast_no][9] += parseInt(lvsplit(result_battle[ary_no][10][5])) * battle_per;
-	cast_result[cast_no][10] += parseInt(lvsplit(result_battle[ary_no][10][6])) * battle_per;
+	cast_result[cast_no][4] += result_battle[ary_no][10][0] * battle_per;
+	cast_result[cast_no][5] += result_battle[ary_no][10][1] * battle_per;
+	cast_result[cast_no][6] += result_battle[ary_no][10][2] * battle_per;
+	cast_result[cast_no][7] += result_battle[ary_no][10][3] * battle_per;
+	cast_result[cast_no][8] += result_battle[ary_no][10][4] * battle_per;
+	cast_result[cast_no][9] += result_battle[ary_no][10][5] * battle_per;
+	cast_result[cast_no][10] += result_battle[ary_no][10][6] * battle_per;
 	
 	// 敵レベルアップ時間
-	cast_result[cast_no][11] += parseInt(lvsplit(result_battle[ary_no][11][0])) * battle_per;
-	cast_result[cast_no][12] += parseInt(lvsplit(result_battle[ary_no][11][1])) * battle_per;
-	cast_result[cast_no][13] += parseInt(lvsplit(result_battle[ary_no][11][2])) * battle_per;
-	cast_result[cast_no][14] += parseInt(lvsplit(result_battle[ary_no][11][3])) * battle_per;
-	cast_result[cast_no][15] += parseInt(lvsplit(result_battle[ary_no][11][4])) * battle_per;
-	cast_result[cast_no][16] += parseInt(lvsplit(result_battle[ary_no][11][5])) * battle_per;
-	cast_result[cast_no][17] += parseInt(lvsplit(result_battle[ary_no][11][6])) * battle_per;
+	cast_result[cast_no][11] += result_battle[ary_no][11][0] * battle_per;
+	cast_result[cast_no][12] += result_battle[ary_no][11][1] * battle_per;
+	cast_result[cast_no][13] += result_battle[ary_no][11][2] * battle_per;
+	cast_result[cast_no][14] += result_battle[ary_no][11][3] * battle_per;
+	cast_result[cast_no][15] += result_battle[ary_no][11][4] * battle_per;
+	cast_result[cast_no][16] += result_battle[ary_no][11][5] * battle_per;
+	cast_result[cast_no][17] += result_battle[ary_no][11][6] * battle_per;
 	
 	// 兵士撃破数
 	cast_result[cast_no][18] += parseInt(result_battle[ary_no][12]);
@@ -873,7 +950,7 @@ function cast_result_add(cast_no, ary_no){
 			// 同名カードのチェック
 			for(var chkcnt = 0; chkcnt < cast_result[cast_no][31].length; chkcnt++){
 				// 同名カードがあった場合は加算処理
-				if(cast_result[cast_no][31][chkcnt] == result_battle[ary_no][25][0][skillcnt].toString()){
+				if(cast_result[cast_no][31][chkcnt] == skill_url_plus + result_battle[ary_no][25][0][skillcnt].toString()){
 					cast_result[cast_no][32][chkcnt] += parseInt(result_battle[ary_no][25][1][skillcnt]);
 					chkcard_flg = 1;
 					break;
@@ -886,7 +963,7 @@ function cast_result_add(cast_no, ary_no){
 				for(chkcnt = 0; chkcnt < cast_result[cast_no][31].length; chkcnt++){
 					// まだカード情報が初期化されたままの最初の箇所に置き換える
 					if(cast_result[cast_no][31][chkcnt].toString() == nocard_img.toString()){
-						cast_result[cast_no][31][chkcnt] = result_battle[ary_no][25][0][skillcnt];
+						cast_result[cast_no][31][chkcnt] = skill_url_plus + result_battle[ary_no][25][0][skillcnt];
 						cast_result[cast_no][32][chkcnt] = parseInt(result_battle[ary_no][25][1][skillcnt]);
 						break;
 					}
@@ -908,7 +985,7 @@ function match_cast_add(ary_no){
 			// 既に格納されている集計データの中で、既出キャストでないかのチェック。初回は0なので飛ばす
 			for(var cast_chk = 0; cast_chk < match_cast_cnt; cast_chk++){
 				// 既出キャストチェック
-				if(result_battle[ary_no][26][match_cnt][1].toString() == match_cast_result[cast_chk][0].toString()){
+				if(cast_url_plus + result_battle[ary_no][26][match_cnt][1].toString() == match_cast_result[cast_chk][0].toString()){
 					// 既出だった場合、キャスト出現数カウントを増加
 					match_cast_result[cast_chk][1]++;
 					
@@ -917,7 +994,7 @@ function match_cast_add(ary_no){
 					// 今のところ複数は存在しないが、念のため（増えた場合は要確認）
 					for(var chkcard = 0; chkcard < match_cast_result[cast_chk][2].length; chkcard++){
 						// 既存の登録済みカードに存在するかのチェック
-						if(result_battle[ary_no][26][match_cnt][4][0].toString() == match_cast_result[cast_chk][2][chkcard].toString()){
+						if(skill_url_plus + result_battle[ary_no][26][match_cnt][4][0].toString() == match_cast_result[cast_chk][2][chkcard].toString()){
 							match_cast_result[cast_chk][3][chkcard]++;
 							chkcard_flg = 1;
 							break;
@@ -925,7 +1002,7 @@ function match_cast_add(ary_no){
 					}
 					// 新規ワンダースキルカードの場合は追加
 					if(chkcard_flg == 0){
-						match_cast_result[cast_chk][2].push(result_battle[ary_no][26][match_cnt][4][0]);
+						match_cast_result[cast_chk][2].push(skill_url_plus + result_battle[ary_no][26][match_cnt][4][0]);
 						match_cast_result[cast_chk][3].push(1);
 					}
 					
@@ -934,7 +1011,7 @@ function match_cast_add(ary_no){
 						var chkcard_flg = 0;
 						// 既存の登録済みカードに存在するかのチェック
 						for(var chkcard = 0; chkcard < match_cast_result[cast_chk][4].length; chkcard++){
-							if(result_battle[ary_no][26][match_cnt][4][card_pos].toString() == match_cast_result[cast_chk][4][chkcard].toString()){
+							if(skill_url_plus + result_battle[ary_no][26][match_cnt][4][card_pos].toString() == match_cast_result[cast_chk][4][chkcard].toString()){
 								match_cast_result[cast_chk][5][chkcard]++;
 								chkcard_flg = 1;
 								break;
@@ -942,7 +1019,7 @@ function match_cast_add(ary_no){
 						}
 						// 新規スキルカードの場合は追加
 						if(chkcard_flg == 0){
-							match_cast_result[cast_chk][4].push(result_battle[ary_no][26][match_cnt][4][card_pos]);
+							match_cast_result[cast_chk][4].push(skill_url_plus + result_battle[ary_no][26][match_cnt][4][card_pos]);
 							match_cast_result[cast_chk][5].push(1);
 						}
 					}
@@ -952,7 +1029,7 @@ function match_cast_add(ary_no){
 						var chkcard_flg = 0;
 						// 既存の登録済みカードに存在するかのチェック
 						for(var chkcard = 0; chkcard < match_cast_result[cast_chk][6].length; chkcard++){
-							if(result_battle[ary_no][26][match_cnt][5][card_pos].toString() == match_cast_result[cast_chk][6][chkcard].toString()){
+							if(assist_url_plus + result_battle[ary_no][26][match_cnt][5][card_pos].toString() == match_cast_result[cast_chk][6][chkcard].toString()){
 								match_cast_result[cast_chk][7][chkcard]++;
 								chkcard_flg = 1;
 								break;
@@ -960,7 +1037,7 @@ function match_cast_add(ary_no){
 						}
 						// 新規アシストカードの場合は追加
 						if(chkcard_flg == 0){
-							match_cast_result[cast_chk][6].push(result_battle[ary_no][26][match_cnt][5][card_pos]);
+							match_cast_result[cast_chk][6].push(assist_url_plus + result_battle[ary_no][26][match_cnt][5][card_pos]);
 							match_cast_result[cast_chk][7].push(1);
 						}
 					}
@@ -969,7 +1046,7 @@ function match_cast_add(ary_no){
 					var chkcard_flg = 0;
 					for(var chkcard = 0; chkcard < match_cast_result[cast_chk][8].length; chkcard++){
 						// 既存の登録済みカードに存在するかのチェック
-						if(result_battle[ary_no][26][match_cnt][6][0].toString() == match_cast_result[cast_chk][8][chkcard].toString()){
+						if(soul_url_plus + result_battle[ary_no][26][match_cnt][6][0].toString() == match_cast_result[cast_chk][8][chkcard].toString()){
 							match_cast_result[cast_chk][9][chkcard]++;
 							chkcard_flg = 1;
 							break;
@@ -977,7 +1054,7 @@ function match_cast_add(ary_no){
 					}
 					// 新規ソウルカードの場合は追加
 					if(chkcard_flg == 0){
-						match_cast_result[cast_chk][8].push(result_battle[ary_no][26][match_cnt][6][0]);
+						match_cast_result[cast_chk][8].push(soul_url_plus + result_battle[ary_no][26][match_cnt][6][0]);
 						match_cast_result[cast_chk][9].push(1);
 					}
 					
@@ -990,20 +1067,20 @@ function match_cast_add(ary_no){
 			// まだ登録されていないキャストの場合
 			if(chkcast_flg == 0){
 				// キャスト画像
-				ary_tmp[0] = result_battle[ary_no][26][match_cnt][1];
+				ary_tmp[0] = cast_url_plus + result_battle[ary_no][26][match_cnt][1];
 				// キャスト登場回数
 				ary_tmp[1] = 1;
 				// ワンダースキル
-				ary_tmp[2] = [result_battle[ary_no][26][match_cnt][4][0]];
+				ary_tmp[2] = [skill_url_plus + result_battle[ary_no][26][match_cnt][4][0]];
 				ary_tmp[3] = [1];
 				// スキル
-				ary_tmp[4] = [result_battle[ary_no][26][match_cnt][4][1], result_battle[ary_no][26][match_cnt][4][2], result_battle[ary_no][26][match_cnt][4][3]]
+				ary_tmp[4] = [skill_url_plus + result_battle[ary_no][26][match_cnt][4][1], skill_url_plus + result_battle[ary_no][26][match_cnt][4][2], skill_url_plus + result_battle[ary_no][26][match_cnt][4][3]]
 				ary_tmp[5] = [1, 1, 1];
 				// アシスト
-				ary_tmp[6] = [result_battle[ary_no][26][match_cnt][5][0], result_battle[ary_no][26][match_cnt][5][1], result_battle[ary_no][26][match_cnt][5][2]];
+				ary_tmp[6] = [assist_url_plus + result_battle[ary_no][26][match_cnt][5][0], assist_url_plus + result_battle[ary_no][26][match_cnt][5][1], assist_url_plus + result_battle[ary_no][26][match_cnt][5][2]];
 				ary_tmp[7] = [1, 1, 1];
 				// ソウル
-				ary_tmp[8] = [result_battle[ary_no][26][match_cnt][6][0]];
+				ary_tmp[8] = [soul_url_plus + result_battle[ary_no][26][match_cnt][6][0]];
 				ary_tmp[9] = [1];
 				match_cast_result[match_cast_cnt] = ary_tmp;
 				// キャストの登録番号を進める
@@ -1324,6 +1401,12 @@ function addCard(imgurl, usecnt, node_no, mode){
 
 // テスト版機能のメニュー
 function select_fun(getno){
+	// ローカルストレージに保存する処理
+	var lsold_name = "honkide_old";
+	var lsnew_name = "honkide_new";
+	var lscnt_name = "honkide_cnt";
+	var lsidx_name = "honkide_idx";
+	var lsdata_name = "honkide_data";
 	
 	if(betatest_flg != 0){
 		alert("一部のオプション機能実行後には、続けてオプション機能は行えません。\n");
@@ -1360,9 +1443,9 @@ function select_fun(getno){
 			var draw_cnt = 0;
 			
 			for(var cnt = 0; cnt < battle_cnt; cnt++){
-				if( parseInt(lvsplit(result_battle[cnt][10][3])) == parseInt(lvsplit(result_battle[cnt][11][3])) ){
+				if(result_battle[cnt][10][3] == result_battle[cnt][11][3]){
 					draw_cnt++;
-				} else if( parseInt(lvsplit(result_battle[cnt][10][3])) < parseInt(lvsplit(result_battle[cnt][11][3])) ){
+				} else if(result_battle[cnt][10][3] < result_battle[cnt][11][3]){
 					if(result_battle[cnt][9].toString() == "win"){
 						saki_win++;
 					} else {
@@ -1387,7 +1470,7 @@ function select_fun(getno){
 			var ato7_win = 0;
 			var ato7_lose = 0;
 			for(var cnt = 0; cnt < battle_cnt; cnt++){
-				if( parseInt(lvsplit(result_battle[cnt][10][1])) < parseInt(lvsplit(result_battle[cnt][11][1])) ){
+				if(result_battle[cnt][10][1] < result_battle[cnt][11][1]){
 					if(result_battle[cnt][9].toString() == "win"){
 						saki3_win++;
 					} else {
@@ -1402,7 +1485,7 @@ function select_fun(getno){
 				}
 			}
 			for(var cnt = 0; cnt < battle_cnt; cnt++){
-				if( parseInt(lvsplit(result_battle[cnt][10][5])) < parseInt(lvsplit(result_battle[cnt][11][5])) ){
+				if(result_battle[cnt][10][5] < result_battle[cnt][11][5]){
 					if(result_battle[cnt][9].toString() == "win"){
 						saki7_win++;
 					} else {
@@ -1425,12 +1508,131 @@ function select_fun(getno){
 				"\n敵軍Lv5先行時\n勝率：" + Math.round((ato_win / (ato_win + ato_lose))*100) + "%　勝利数：" + ato_win + "　敗北数：" + ato_lose + 
 				"\n自軍Lv7先行時\n勝率：" + Math.round((saki7_win / (saki7_win + saki7_lose))*100) + "%　勝利数：" + saki7_win + "　敗北数：" + saki7_lose + 
 				"\n敵軍Lv7先行時\n勝率：" + Math.round((ato7_win / (ato7_win + ato7_lose))*100) + "%　勝利数：" + ato7_win + "　敗北数：" + ato7_lose + 
-				"\nレベルアップ（ほぼ）同時試合数：" + draw_cnt);
+				"\nレベル5アップ（ほぼ）同時試合数：" + draw_cnt);
 		} else {
 			return;
 		}
+	} else if(getno == 3){
+		// ローカルストレージに保存する処理
+		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n\n-----必ず読んでください-----\n集計処理を行った対戦履歴データを「ブラウザ」に保存します。\n同時に保存済みのデータを読み込んで、20件以上の集計データを表示するための機能です。\nPCやスマホの中にデータを保存しておくため、容量を圧迫します。\n集計データに異常が見られた場合や、バージョンアップで結果をリセットしたい場合は、保存データ初期化を実行してください。")){
+			var lsdata_getcnt = null;
+			var lsdata_getidx = null;
+			var lsdata_getold = null;
+			var lsdata_getnew = null;
+			var lsadd_cnt = 0;
+			var lschk_new = battle_cnt;
+			var data_max = 500;
+			var maxchk_flg = 0;
+			
+			// ローカルストレージ機能のチェック
+			if(("localStorage" in window) && window["localStorage"] != null){
+				// ローカルストレージ内にデータが格納済みかどうかのチェック
+				if(localStorage.getItem(lscnt_name) != null){
+					lsdata_getcnt = parseInt(localStorage.getItem(lscnt_name));
+					lsdata_getidx = parseInt(localStorage.getItem(lsidx_name));
+					lsdata_getold = localStorage.getItem(lsold_name);
+					lsdata_getnew = localStorage.getItem(lsnew_name);
+				} else {
+					// 無かったら0で
+					lsdata_getcnt = 0;
+					lsdata_getidx = 0;
+					lsdata_getnew = "0";
+				}
+				
+				// データの追加
+				for(var cnt = 0; cnt < battle_cnt; cnt++){
+					// 最新日時の一致する場所を探す
+					if(lsdata_getnew == result_battle[cnt][0].toString()){
+						lschk_new = cnt;
+						break;
+					}
+				}
+				
+				// 削除の都合上古い順からどうしても入れたい
+				for(cnt = 0; cnt < lschk_new; cnt++){
+					var ary_no = lschk_new - 1 - cnt;
+					// データ上限チェック
+					if(lsdata_getidx == data_max){
+						maxchk_flg = 1;
+						lsdata_getidx = 0;
+					}
+					localStorage.setItem(lsdata_name + lsdata_getidx, JSON.stringify(result_battle[ary_no]) );
+					
+					lsadd_cnt++;
+					lsdata_getidx++;
+				}
+				
+				// 最新データ日時の保存
+				lsdata_getnew = result_battle[0][0].toString();
+				localStorage.setItem(lsnew_name, lsdata_getnew);
+				
+				// 最古データ日時の保存
+				if(lsdata_getold == null){
+					lsdata_getold = result_battle[battle_cnt - 1][0].toString();
+					localStorage.setItem(lsold_name, lsdata_getold);
+				}
+				// 古いデータが上書きされた場合は更新する
+				if(maxchk_flg == 1){
+					var getold_ary  = JSON.parse(localStorage.getItem(lsdata_name + lsdata_getidx));
+					localStorage.setItem(lsold_name, getold_ary[0].toString());
+				}
+				
+				// データの先頭位置更新
+				localStorage.setItem(lsidx_name, lsdata_getidx);
+				
+				// 保存件数を更新
+				lsdata_getcnt += lsadd_cnt;
+				if(lsdata_getcnt > data_max){
+					lsdata_getcnt = data_max;
+				}
+				localStorage.setItem(lscnt_name, lsdata_getcnt);
+				
+				// 表示の削除処理
+				inspos.parentNode.removeChild(textNode);
+				inspos.parentNode.removeChild(gameNode);
+				inspos.parentNode.removeChild(skillNode);
+				inspos.parentNode.removeChild(castNode);
+				inspos.parentNode.removeChild(selecttest);
+				
+				cast_cnt = 0;
+				match_cast_cnt = 0;
+				match_cast_sum = 0;
+				
+				// データの再構成
+				battle_cnt = lsdata_getcnt;
+				for(cnt = 0; cnt < battle_cnt; cnt++){
+					result_battle[cnt] = JSON.parse(localStorage.getItem(lsdata_name + cnt));
+				}
+				
+				syukei();
+				hyouji();
+				
+				alert(lsadd_cnt + "件のデータを追加しました。\n" + battle_cnt + "件のデータの集計処理を表示しています。\n\n" + "最新データ:" + lsdata_getnew + "\n最古データ:" + lsdata_getold + "\n保存件数上限：" + data_max);
+				betatest_flg = 1;
+			} else {
+				alert("ブラウザのローカルストレージ機能が使えないため、保存が行えません。");
+				return;
+			}
+		}
+	} else if(getno == 4){
+		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n保存した対戦履歴データを削除してリセットを行います。\nデータがおかしくなった場合や、ゲームのバランス調整が行われた際に使用してください。")){
+			var lsdata_getcnt = parseInt(localStorage.getItem(lscnt_name));
+			if(isNaN(lsdata_getcnt)){
+				alert("削除するデータが存在しません。");
+				return;
+			}
+			for(var cnt = 0; cnt <= lsdata_getcnt; cnt++){
+				localStorage.removeItem(lsdata_name + cnt);
+			}
+			localStorage.removeItem(lsold_name);
+			localStorage.removeItem(lsnew_name);
+			localStorage.removeItem(lsidx_name);
+			localStorage.removeItem(lscnt_name);
+			
+			alert(lsdata_getcnt + "件のデータを削除しました。");
+		}
 	} else if(getno == 10){
-		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2015/12/26です。\nオプション機能が追加されました。\nこの項目は試験的に作ったものであり、動作確認や結果のチェックが甘いです。");
+		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2015/12/27です。\nオプション機能が追加されました。\nこの項目は試験的に作ったものであり、動作確認や結果のチェックが甘いです。\n集計結果保存機能が追加されました。");
 	}
 }
 

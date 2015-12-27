@@ -552,32 +552,32 @@ function hyouji(){
 	
 	var option_def = document.createElement("option");
 	option_def.value = 0;
-	option_def.innerHTML = "オプション機能（テスト中の機能）";
+	option_def.innerHTML = "オプション機能(テスト中の機能)";
 	selecttest.appendChild(option_def);
 	
 	var option_now = document.createElement("option");
 	option_now.value = 1;
-	option_now.innerHTML = "今日は一緒に行けるの？（最新日のみ集計）";
+	option_now.innerHTML = "わかったよー！(最新日のみ集計)";
 	selecttest.appendChild(option_now);
 	
 	var option_lv5 = document.createElement("option");
 	option_lv5.value = 2;
-	option_lv5.innerHTML = "おおきくなるよ！（LV5先行時勝率計算）";
+	option_lv5.innerHTML = "いえい！(LV5先行勝率計算)";
 	selecttest.appendChild(option_lv5);
 	
 	var option_sal = document.createElement("option");
 	option_sal.value = 3;
-	option_sal.innerHTML = "いたずら、しちゃうぞ～（対戦履歴セーブ＆ロード）";
+	option_sal.innerHTML = "ｼｭｰﾃｨﾝ!!(対戦履歴保存&読込)";
 	selecttest.appendChild(option_sal);
 	
 	var option_del = document.createElement("option");
 	option_del.value = 4;
-	option_del.innerHTML = "うーん、困ったなぁ（保存データ初期化）";
+	option_del.innerHTML = "ﾖｯｹﾛｰ!!(保存データ初期化)";
 	selecttest.appendChild(option_del);
 	
 	var option_nan = document.createElement("option");
 	option_nan.value = 10;
-	option_nan.innerHTML = "ﾅﾝﾃﾞｯ!!（更新情報）";
+	option_nan.innerHTML = "ﾅﾝﾃﾞｯ!!(更新情報)";
 	selecttest.appendChild(option_nan);
 	
 	inspos.parentNode.insertBefore(selecttest, inspos);
@@ -1514,7 +1514,7 @@ function select_fun(getno){
 		}
 	} else if(getno == 3){
 		// ローカルストレージに保存する処理
-		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n\n-----必ず読んでください-----\n集計処理を行った対戦履歴データを「ブラウザ」に保存します。\n同時に保存済みのデータを読み込んで、20件以上の集計データを表示するための機能です。\nPCやスマホの中にデータを保存しておくため、容量を圧迫します。\n集計データに異常が見られた場合や、バージョンアップで結果をリセットしたい場合は、保存データ初期化を実行してください。")){
+		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n\n-----必ず読んでください-----\n集計処理を行った対戦履歴データを「ブラウザ」に保存します。\n同時に保存済みのデータを読み込んで、20件以上の集計データを表示するための機能です。\nPCやスマホの中にデータを保存しておくため、容量を圧迫します。\n集計データに異常が見られた場合や、バージョンアップで結果をリセットしたい場合は、保存データ初期化を実行してください。\nまた、複数のAimeを切り替えての保存は対応していません。")){
 			var lsdata_getcnt = null;
 			var lsdata_getidx = null;
 			var lsdata_getold = null;

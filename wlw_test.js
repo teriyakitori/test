@@ -487,15 +487,15 @@ function sorceget(){
 }
 
 // 集計処理
-function syukei(syukei_date){
+function syukei(strdata, mode){
 	var skip_cnt = 0;
 	var suminichk_flg = 0;
 	
 	// 試合数だけ集計処理を行う
 	for(cnt = 0; cnt < battle_cnt; cnt++){
 		// 集計日時指定のチェック
-		if(syukei_date != null){
-			if(result_battle[cnt][0].toString().match(syukei_date.toString()) ){
+		if(mode == 1){
+			if(result_battle[cnt][0].toString().match(strdata.toString()) ){
 				// 日が一致した場合の処理（今はなし）
 			} else {
 				skip_cnt++;
@@ -566,12 +566,12 @@ function hyouji(){
 	selecttest.appendChild(option_lv5);
 	
 	var option_sal = document.createElement("option");
-	option_sal.value = 3;
+	option_sal.value = 8;
 	option_sal.innerHTML = "ｼｭｰﾃｨﾝ!!(対戦履歴保存&読込)";
 	selecttest.appendChild(option_sal);
 	
 	var option_del = document.createElement("option");
-	option_del.value = 4;
+	option_del.value = 9;
 	option_del.innerHTML = "ﾖｯｹﾛｰ!!(保存データ初期化)";
 	selecttest.appendChild(option_del);
 	
@@ -1408,11 +1408,6 @@ function select_fun(getno){
 	var lsidx_name = "honkide_idx";
 	var lsdata_name = "honkide_data";
 	
-	if(betatest_flg != 0){
-		alert("一部のオプション機能実行後には、続けてオプション機能は行えません。\n");
-		return;
-	}
-	
 	if(getno == 0){
 		// 何もしない
 	} else if(getno == 1){
@@ -1427,7 +1422,7 @@ function select_fun(getno){
 			match_cast_cnt = 0;
 			match_cast_sum = 0;
 			var get_date = result_battle[0][0].toString().split(" ");
-			syukei(get_date[0]);
+			syukei(get_date[0], 1);
 			hyouji();
 			alert(get_date[0] + "の試合は" + battle_cnt + "件です。");
 			betatest_flg = 1;
@@ -1459,62 +1454,20 @@ function select_fun(getno){
 					}
 				}
 			}
-			
-			// 勝手に3と7盛った版
-			var saki3_win = 0;
-			var saki3_lose = 0;
-			var ato3_win = 0;
-			var ato3_lose = 0;
-			var saki7_win = 0;
-			var saki7_lose = 0;
-			var ato7_win = 0;
-			var ato7_lose = 0;
-			for(var cnt = 0; cnt < battle_cnt; cnt++){
-				if(result_battle[cnt][10][1] < result_battle[cnt][11][1]){
-					if(result_battle[cnt][9].toString() == "win"){
-						saki3_win++;
-					} else {
-						saki3_lose++;
-					}
-				} else {
-					if(result_battle[cnt][9].toString() == "win"){
-						ato3_win++;
-					} else {
-						ato3_lose++;
-					}
-				}
-			}
-			for(var cnt = 0; cnt < battle_cnt; cnt++){
-				if(result_battle[cnt][10][5] < result_battle[cnt][11][5]){
-					if(result_battle[cnt][9].toString() == "win"){
-						saki7_win++;
-					} else {
-						saki7_lose++;
-					}
-				} else {
-					if(result_battle[cnt][9].toString() == "win"){
-						ato7_win++;
-					} else {
-						ato7_lose++;
-					}
-				}
-			}
-			
-			//alert("対象試合数：" + battle_cnt + "\n自軍Lv5先行時\n勝率：" + Math.round((saki_win / (saki_win + saki_lose))*100) + "%　勝利数：" + saki_win + "　敗北数：" + saki_lose + "\n敵軍Lv5先行時\n勝率：" + Math.round((ato_win / (ato_win + ato_lose))*100) + "%　勝利数：" + ato_win + "　敗北数：" + ato_lose + "\nレベルアップ（ほぼ）同時試合数：" + draw_cnt);
-			alert("対象試合数：" + battle_cnt + 
-				"\n自軍Lv3先行時\n勝率：" + Math.round((saki3_win / (saki3_win + saki3_lose))*100) + "%　勝利数：" + saki3_win + "　敗北数：" + saki3_lose + 
-				"\n敵軍Lv3先行時\n勝率：" + Math.round((ato3_win / (ato3_win + ato3_lose))*100) + "%　勝利数：" + ato3_win + "　敗北数：" + ato3_lose + 
-				"\n自軍Lv5先行時\n勝率：" + Math.round((saki_win / (saki_win + saki_lose))*100) + "%　勝利数：" + saki_win + "　敗北数：" + saki_lose + 
-				"\n敵軍Lv5先行時\n勝率：" + Math.round((ato_win / (ato_win + ato_lose))*100) + "%　勝利数：" + ato_win + "　敗北数：" + ato_lose + 
-				"\n自軍Lv7先行時\n勝率：" + Math.round((saki7_win / (saki7_win + saki7_lose))*100) + "%　勝利数：" + saki7_win + "　敗北数：" + saki7_lose + 
-				"\n敵軍Lv7先行時\n勝率：" + Math.round((ato7_win / (ato7_win + ato7_lose))*100) + "%　勝利数：" + ato7_win + "　敗北数：" + ato7_lose + 
-				"\nレベル5アップ（ほぼ）同時試合数：" + draw_cnt);
+			alert("対象試合数：" + battle_cnt + "\n自軍Lv5先行時\n勝率：" + Math.round((saki_win / (saki_win + saki_lose))*100) + "%　勝利数：" + saki_win + "　敗北数：" + saki_lose + "\n敵軍Lv5先行時\n勝率：" + Math.round((ato_win / (ato_win + ato_lose))*100) + "%　勝利数：" + ato_win + "　敗北数：" + ato_lose + "\nレベルアップ（ほぼ）同時試合数：" + draw_cnt);
+			betatest_flg = 1;
 		} else {
 			return;
 		}
-	} else if(getno == 3){
+	} else if(getno == 8){
+		// 絞った状態で保存は止める
+		if(betatest_flg != 0){
+			alert("一部のオプション機能実行後に、続けて保存することはできません。\n保存＆読込処理を行いたい場合は最初に行ってください。");
+			return;
+		}
 		// ローカルストレージに保存する処理
-		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n\n-----必ず読んでください-----\n集計処理を行った対戦履歴データを「ブラウザ」に保存します。\n同時に保存済みのデータを読み込んで、20件以上の集計データを表示するための機能です。\nPCやスマホの中にデータを保存しておくため、容量を圧迫します。\n集計データに異常が見られた場合や、バージョンアップで結果をリセットしたい場合は、保存データ初期化を実行してください。\nまた、複数のAimeを切り替えての保存は対応していません。")){
+		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n\n-----使用前に必ずお読みください-----\n・保存と同時にデータを読み込み、20件以上の集計データを表示するための機能です。\n・集計データに異常が見られた場合や、リセットを行いたい場合は保存データ初期化を実行してください。\n・.netのレイアウト変更による取得失敗がいつ起こるかわからないため、バージョン毎リセットのカジュアルな使い方をおすすめします。\n・複数のAimeやブラウザを切り替えての保存には対応していません。"))
+		{
 			var lsdata_getcnt = null;
 			var lsdata_getidx = null;
 			var lsdata_getold = null;
@@ -1598,23 +1551,23 @@ function select_fun(getno){
 				match_cast_cnt = 0;
 				match_cast_sum = 0;
 				
-				// データの再構成
+				// データの再構成、同じ形にするために最新データから入れる
 				battle_cnt = lsdata_getcnt;
 				for(cnt = 0; cnt < battle_cnt; cnt++){
-					result_battle[cnt] = JSON.parse(localStorage.getItem(lsdata_name + cnt));
+					result_battle[battle_cnt - cnt - 1] = JSON.parse(localStorage.getItem(lsdata_name + cnt));
 				}
 				
 				syukei();
 				hyouji();
 				
-				alert(lsadd_cnt + "件のデータを追加しました。\n" + battle_cnt + "件のデータの集計処理を表示しています。\n\n" + "最新データ:" + lsdata_getnew + "\n最古データ:" + lsdata_getold + "\n保存件数上限：" + data_max);
+				alert(lsadd_cnt + "件のデータを保存しました。\n" + battle_cnt + "件のデータの集計データを表示しています。\n\n" + "New:" + lsdata_getnew + "\nOld:" + lsdata_getold + "\n保存件数上限：" + data_max);
 				betatest_flg = 1;
 			} else {
 				alert("ブラウザのローカルストレージ機能が使えないため、保存が行えません。");
 				return;
 			}
 		}
-	} else if(getno == 4){
+	} else if(getno == 9){
 		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n保存した対戦履歴データを削除してリセットを行います。\nデータがおかしくなった場合や、ゲームのバランス調整が行われた際に使用してください。")){
 			var lsdata_getcnt = parseInt(localStorage.getItem(lscnt_name));
 			if(isNaN(lsdata_getcnt)){

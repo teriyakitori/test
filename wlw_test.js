@@ -616,7 +616,7 @@ function hyouji(){
 	addNode("勝率", (cast_result[0][2]*100/battle_cnt).toFixed() + "%", 3, "result");
 	addNode("兵士撃破数", Math.floor(cast_result[0][18]/battle_cnt) + "体", 16, "result");
 	addNode("キャスト撃破数", (Math.floor((cast_result[0][19]/battle_cnt)*100))/100 + "体", 17, "result");
-	addNode("巨人撃破数", (Math.floor((cast_result[0][20]/battle_cnt)*100))/100 + "体", 18, "result");
+	//addNode("巨人撃破数", (Math.floor((cast_result[0][20]/battle_cnt)*100))/100 + "体", 18, "result");
 	addNode("撤退数", (Math.floor((cast_result[0][21]/battle_cnt)*100))/100 + "回", 19, "result");
 	
 	// 0除算はいけないことなので阻止する
@@ -625,29 +625,33 @@ function hyouji(){
 	} else {
 		addNode("キルレ", "撤退数0！", 20, "result");
 	}
-	
+	addNode("SS使用/HIT数", (Math.floor((cast_result[0][22]/battle_cnt)*100))/100 + "回" + "/" + (Math.floor((cast_result[0][23]/battle_cnt)*100))/100 + "回", 21, "result");
+	addNode("DS使用/HIT数", (Math.floor((cast_result[0][24]/battle_cnt)*100))/100 + "回" + "/" + (Math.floor((cast_result[0][25]/battle_cnt)*100))/100 + "回", 23, "result");
+	/*
 	addNode("SS使用回数", (Math.floor((cast_result[0][22]/battle_cnt)*100))/100 + "回", 21, "result");
 	addNode("SSヒット数", (Math.floor((cast_result[0][23]/battle_cnt)*100))/100 + "回", 22, "result");
 	addNode("DS使用数", (Math.floor((cast_result[0][24]/battle_cnt)*100))/100 + "回", 23, "result");
 	addNode("DSヒット数", (Math.floor((cast_result[0][25]/battle_cnt)*100))/100 + "回", 24, "result");
+	*/
 	addNode("帰城数", (Math.floor((cast_result[0][26]/battle_cnt)*100))/100 + "回", 25, "result");
 	addNode("SS被弾数", (Math.floor((cast_result[0][27]/battle_cnt)*100))/100 + "回", 26, "result");
 	addNode("DS被弾数", (Math.floor((cast_result[0][28]/battle_cnt)*100))/100 + "回", 27, "result");
-	addNode("拠点破壊数", (Math.floor((cast_result[0][29]/battle_cnt)*100))/100 + "個", 28, "result");
-	addNode("入手経験値量", (Math.floor((cast_result[0][30]/battle_cnt)*100))/100, 29, "result");
-	addNode("味方LV2残時間", lvuptime(cast_result[0][4], battle_cnt), 4, "result");
-	addNode("味方LV3残時間", lvuptime(cast_result[0][5], battle_cnt), 5, "result");
-	addNode("味方LV4残時間", lvuptime(cast_result[0][6], battle_cnt), 6, "result");
-	addNode("味方LV5残時間", lvuptime(cast_result[0][7], battle_cnt), 7, "result");
-	addNode("味方LV6残時間", lvuptime(cast_result[0][8], battle_cnt), 8, "result");
-	addNode("味方LV7残時間", lvuptime(cast_result[0][9], battle_cnt), 9, "result");
+	//addNode("拠点破壊数", (Math.floor((cast_result[0][29]/battle_cnt)*100))/100 + "個", 28, "result");
+	//addNode("入手経験値量", (Math.floor((cast_result[0][30]/battle_cnt)*100))/100, 29, "result");
+	addNode("LV2時間(味/敵)", lvuptime(cast_result[0][4], battle_cnt) + "/" + lvuptime(cast_result[0][11], battle_cnt), 4, "result");
+	addNode("LV3時間(味/敵)", lvuptime(cast_result[0][5], battle_cnt) + "/" + lvuptime(cast_result[0][12], battle_cnt), 5, "result");
+	addNode("LV4時間(味/敵)", lvuptime(cast_result[0][6], battle_cnt) + "/" + lvuptime(cast_result[0][13], battle_cnt), 6, "result");
+	addNode("LV5時間(味/敵)", lvuptime(cast_result[0][7], battle_cnt) + "/" + lvuptime(cast_result[0][14], battle_cnt), 7, "result");
+	addNode("LV6時間(味/敵)", lvuptime(cast_result[0][8], battle_cnt) + "/" + lvuptime(cast_result[0][15], battle_cnt), 8, "result");
+	addNode("LV7時間(味/敵)", lvuptime(cast_result[0][9], battle_cnt) + "/" + lvuptime(cast_result[0][16], battle_cnt), 9, "result");
+	/*
 	addNode("敵LV2残時間", lvuptime(cast_result[0][11], battle_cnt), 10, "result");
 	addNode("敵LV3残時間", lvuptime(cast_result[0][12], battle_cnt), 11, "result");
 	addNode("敵LV4残時間", lvuptime(cast_result[0][13], battle_cnt), 12, "result");
 	addNode("敵LV5残時間", lvuptime(cast_result[0][14], battle_cnt), 13, "result");
 	addNode("敵LV6残時間", lvuptime(cast_result[0][15], battle_cnt), 14, "result");
 	addNode("敵LV7残時間", lvuptime(cast_result[0][16], battle_cnt), 15, "result");
-	
+	*/
 	// スキル使用回数のタイトルを作成
 	skillNode = document.createElement("div");
 	skillNode.className = "frame02_1";
@@ -1107,6 +1111,13 @@ function changesum(getcast){
 	node_ary[1].innerHTML = cast_result[getcast][2];
 	node_ary[2].innerHTML = cast_result[getcast][3];
 	node_ary[3].innerHTML = (cast_result[getcast][2]*100/cast_result[getcast][1]).toFixed() + "%";
+	node_ary[4].innerHTML = lvuptime(cast_result[getcast][4], cast_result[getcast][1]) + "/" + lvuptime(cast_result[getcast][11], cast_result[getcast][1]);
+	node_ary[5].innerHTML = lvuptime(cast_result[getcast][5], cast_result[getcast][1]) + "/" + lvuptime(cast_result[getcast][12], cast_result[getcast][1]);
+	node_ary[6].innerHTML = lvuptime(cast_result[getcast][6], cast_result[getcast][1]) + "/" + lvuptime(cast_result[getcast][13], cast_result[getcast][1]);
+	node_ary[7].innerHTML = lvuptime(cast_result[getcast][7], cast_result[getcast][1]) + "/" + lvuptime(cast_result[getcast][14], cast_result[getcast][1]);
+	node_ary[8].innerHTML = lvuptime(cast_result[getcast][8], cast_result[getcast][1]) + "/" + lvuptime(cast_result[getcast][15], cast_result[getcast][1]);
+	node_ary[9].innerHTML = lvuptime(cast_result[getcast][9], cast_result[getcast][1]) + "/" + lvuptime(cast_result[getcast][16], cast_result[getcast][1]);
+	/*
 	node_ary[4].innerHTML = lvuptime(cast_result[getcast][4], cast_result[getcast][1]);
 	node_ary[5].innerHTML = lvuptime(cast_result[getcast][5], cast_result[getcast][1]);
 	node_ary[6].innerHTML = lvuptime(cast_result[getcast][6], cast_result[getcast][1]);
@@ -1119,9 +1130,10 @@ function changesum(getcast){
 	node_ary[13].innerHTML = lvuptime(cast_result[getcast][14], cast_result[getcast][1]);
 	node_ary[14].innerHTML = lvuptime(cast_result[getcast][15], cast_result[getcast][1]);
 	node_ary[15].innerHTML = lvuptime(cast_result[getcast][16], cast_result[getcast][1]);
+	*/
 	node_ary[16].innerHTML = Math.floor(cast_result[getcast][18]/cast_result[getcast][1]) + "体";
 	node_ary[17].innerHTML = (Math.floor((cast_result[getcast][19]/cast_result[getcast][1])*100))/100 + "体";
-	node_ary[18].innerHTML = (Math.floor((cast_result[getcast][20]/cast_result[getcast][1])*100))/100 + "体";
+	//node_ary[18].innerHTML = (Math.floor((cast_result[getcast][20]/cast_result[getcast][1])*100))/100 + "体";
 	node_ary[19].innerHTML = (Math.floor((cast_result[getcast][21]/cast_result[getcast][1])*100))/100 + "回";
 	// キルレのゼロ阻止
 	if(cast_result[getcast][21] != 0){
@@ -1129,18 +1141,22 @@ function changesum(getcast){
 	} else {
 		node_ary[20].innerHTML = "撤退数0！";
 	}
+	node_ary[21].innerHTML = (Math.floor((cast_result[getcast][22]/cast_result[getcast][1])*100))/100 + "回" + "/" + (Math.floor((cast_result[getcast][23]/cast_result[getcast][1])*100))/100 + "回";
+	node_ary[23].innerHTML = (Math.floor((cast_result[getcast][24]/cast_result[getcast][1])*100))/100 + "回" + "/" + (Math.floor((cast_result[getcast][25]/cast_result[getcast][1])*100))/100 + "回";
+	/*
 	node_ary[21].innerHTML = (Math.floor((cast_result[getcast][22]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[22].innerHTML = (Math.floor((cast_result[getcast][23]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[23].innerHTML = (Math.floor((cast_result[getcast][24]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[24].innerHTML = (Math.floor((cast_result[getcast][25]/cast_result[getcast][1])*100))/100 + "回";
+	*/
 	node_ary[25].innerHTML = (Math.floor((cast_result[getcast][26]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[26].innerHTML = (Math.floor((cast_result[getcast][27]/cast_result[getcast][1])*100))/100 + "回";
 	node_ary[27].innerHTML = (Math.floor((cast_result[getcast][28]/cast_result[getcast][1])*100))/100 + "回";
-	node_ary[28].innerHTML = (Math.floor((cast_result[getcast][29]/cast_result[getcast][1])*100))/100 + "個";
-	node_ary[29].innerHTML = (Math.floor((cast_result[getcast][30]/cast_result[getcast][1])*100))/100;
+	//node_ary[28].innerHTML = (Math.floor((cast_result[getcast][29]/cast_result[getcast][1])*100))/100 + "個";
+	//node_ary[29].innerHTML = (Math.floor((cast_result[getcast][30]/cast_result[getcast][1])*100))/100;
 	
 	skill_ary[0].innerHTML = cast_result[getcast][1];
-	skill_ary[1].innerHTML = node_ary[23].innerHTML;
+	skill_ary[1].innerHTML = (Math.floor((cast_result[getcast][24]/cast_result[getcast][1])*100))/100 + "回";
 	skillimg_ary[0].src = cast_result[getcast][31][0];
 	skillcnt_ary[0].innerHTML = (Math.floor((cast_result[getcast][32][0]/cast_result[getcast][1])*10))/10 + "回";
 	skillimg_ary[1].src = cast_result[getcast][31][1];
@@ -1466,7 +1482,7 @@ function select_fun(getno){
 			return;
 		}
 		// ローカルストレージに保存する処理
-		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n\n-----使用前に必ずお読みください-----\n・保存と同時にデータを読み込み、20件以上の集計データを表示するための機能です。\n・集計データに異常が見られた場合や、リセットを行いたい場合は保存データ初期化を実行してください。\n・.netのレイアウト変更による取得失敗がいつ起こるかわからないため、バージョン毎リセットのカジュアルな使い方をおすすめします。\n・複数のAimeやブラウザを切り替えての保存には対応していません。"))
+		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n\n-----使用前に必ずお読みください-----\n・対戦履歴データを「ブラウザ」に保存すると同時に、保存済みデータを読み込み、20件以上の集計データを表示するための機能です。\n・集計データに異常が見られた場合や、リセットを行いたい場合は保存データ初期化を実行してください。\n・.NETのレイアウト変更による取得失敗がいつ起こるかわからないため、バージョン毎リセットのカジュアルな使い方をおすすめします。\n・複数のAimeやブラウザを切り替えての保存には対応していません。"))
 		{
 			var lsdata_getcnt = null;
 			var lsdata_getidx = null;

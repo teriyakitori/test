@@ -503,6 +503,16 @@ function syukei(strdata, mode){
 			}
 		}
 		
+		// マップ名指定のチェック
+		if(mode == 2){
+			if(result_battle[cnt][4].toString().match(strdata.toString()) ){
+				// マップが一致した場合の処理（今はなし）
+			} else {
+				skip_cnt++;
+				continue;
+			}
+		}
+		
 		// 初回は集計データの初期化
 		if(suminichk_flg == 0){
 			cast_result_ini(cnt);
@@ -560,8 +570,13 @@ function hyouji(){
 	option_now.innerHTML = "わかったよー！(最新日のみ集計)";
 	selecttest.appendChild(option_now);
 	
+	var option_map = document.createElement("option");
+	option_map.value = 2;
+	option_map.innerHTML = "そっちね！(未実装)";
+	selecttest.appendChild(option_map);
+	
 	var option_lv5 = document.createElement("option");
-	option_lv5.value = 2;
+	option_lv5.value = 3;
 	option_lv5.innerHTML = "いえい！(LV5先行勝率計算)";
 	selecttest.appendChild(option_lv5);
 	
@@ -1422,6 +1437,7 @@ function select_fun(getno){
 	var lsnew_name = "honkide_new";
 	var lscnt_name = "honkide_cnt";
 	var lsidx_name = "honkide_idx";
+	var lsmap_name = "honkide_map";
 	var lsdata_name = "honkide_data";
 	
 	if(getno == 0){
@@ -1446,12 +1462,16 @@ function select_fun(getno){
 			return;
 		}
 	} else if(getno == 2){
+		alert("あーん、ごめんね！");
+	} else if(getno == 3){
 		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\nLv5先行有利を確認するための機能です。\nデータの都合上、レベルアップ時間は最大8秒ほどの誤差がありえます")){
 			var saki_win = 0;
 			var saki_lose = 0;
 			var ato_win = 0;
 			var ato_lose = 0;
 			var draw_cnt = 0;
+			var saki_per = 0;
+			var ato_per = 0;
 			
 			for(var cnt = 0; cnt < battle_cnt; cnt++){
 				if(result_battle[cnt][10][3] == result_battle[cnt][11][3]){
@@ -1470,8 +1490,18 @@ function select_fun(getno){
 					}
 				}
 			}
-			alert("対象試合数：" + battle_cnt + "\n自軍Lv5先行時\n勝率：" + Math.round((saki_win / (saki_win + saki_lose))*100) + "%　勝利数：" + saki_win + "　敗北数：" + saki_lose + "\n敵軍Lv5先行時\n勝率：" + Math.round((ato_win / (ato_win + ato_lose))*100) + "%　勝利数：" + ato_win + "　敗北数：" + ato_lose + "\nレベルアップ（ほぼ）同時試合数：" + draw_cnt);
-			betatest_flg = 1;
+			if(saki_win + saki_lose != 0){
+				saki_per = Math.round((saki_win / (saki_win + saki_lose))*100);
+			} else {
+				saki_per = 0;
+			}
+			
+			if(ato_win + ato_lose != 0){
+				ato_per = Math.round((ato_win / (ato_win + ato_lose))*100);
+			} else {
+				ato_per = 0;
+			}
+			alert("対象試合数：" + battle_cnt + "\n自軍Lv5先行時\n勝率：" + saki_per + "%　勝利数：" + saki_win + "　敗北数：" + saki_lose + "\n敵軍Lv5先行時\n勝率：" + ato_per + "%　勝利数：" + ato_win + "　敗北数：" + ato_lose + "\nレベルアップ（ほぼ）同時試合数：" + draw_cnt);
 		} else {
 			return;
 		}
@@ -1490,8 +1520,10 @@ function select_fun(getno){
 			var lsdata_getnew = null;
 			var lsadd_cnt = 0;
 			var lschk_new = battle_cnt;
-			var data_max = 500;
+			var map_ary = [];
+			var data_max = 300;
 			var maxchk_flg = 0;
+			var mapadd_flg = 1;
 			
 			// ローカルストレージ機能のチェック
 			if(("localStorage" in window) && window["localStorage"] != null){
@@ -1501,21 +1533,32 @@ function select_fun(getno){
 					lsdata_getidx = parseInt(localStorage.getItem(lsidx_name));
 					lsdata_getold = localStorage.getItem(lsold_name);
 					lsdata_getnew = localStorage.getItem(lsnew_name);
+					map_ary = JSON.parse(localStorage.getItem(lsmap_name));
 				} else {
 					// 無かったら0で
 					lsdata_getcnt = 0;
 					lsdata_getidx = 0;
 					lsdata_getnew = "0";
 				}
-				
 				// データの追加
 				for(var cnt = 0; cnt < battle_cnt; cnt++){
+					for(var mapcnt = 0; mapcnt < map_ary.length; mapcnt++){
+						if( map_ary[mapcnt].toString() == result_battle[cnt][4].toString() ){
+							mapadd_flg = 0;
+							break;
+						}
+					}
+					if(mapadd_flg == 1){
+						map_ary.push(result_battle[cnt][4].toString());
+					}
+					mapadd_flg = 1;
 					// 最新日時の一致する場所を探す
 					if(lsdata_getnew == result_battle[cnt][0].toString()){
 						lschk_new = cnt;
-						break;
 					}
 				}
+				// マップ一覧の更新処理
+				localStorage.setItem(lsmap_name, JSON.stringify(map_ary));
 				
 				// 削除の都合上古い順からどうしても入れたい
 				for(cnt = 0; cnt < lschk_new; cnt++){

@@ -1533,7 +1533,9 @@ function select_fun(getno){
 					lsdata_getidx = parseInt(localStorage.getItem(lsidx_name));
 					lsdata_getold = localStorage.getItem(lsold_name);
 					lsdata_getnew = localStorage.getItem(lsnew_name);
-					map_ary = JSON.parse(localStorage.getItem(lsmap_name));
+					if(JSON.parse(localStorage.getItem(lsmap_name) != null){
+						map_ary = JSON.parse(localStorage.getItem(lsmap_name);
+					}
 				} else {
 					// 無かったら0で
 					lsdata_getcnt = 0;

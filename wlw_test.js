@@ -160,7 +160,7 @@ var errmsg = [
 // 本処理
 // 開始URLをチェックし、対戦履歴ページなら処理を開始する
 if( urlchk() ){
-	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性があります。\n最終更新日 2016/1/1");
+	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性があります。\n最終更新日 2016/1/01");
 	// 対戦履歴のページ数だけ処理する
 	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
 		urlstr = document.links[linkcnt].toString();
@@ -1426,8 +1426,8 @@ function addCard(imgurl, usecnt, node_no, mode){
 	var tmpImg1 = document.createElement("img");
 	tmpImg1.src = imgurl;
 	
-	fixNode.width = 60;
-	fixNode.height = 84;
+	fixNode.setAttribute("width", 60);
+	fixNode.setAttribute("height", 84;
 	//tmpImg1.width = 60;
 	//tmpImg1.height = 84;
 	

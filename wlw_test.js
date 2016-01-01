@@ -4,6 +4,11 @@ javascript:
 var starturl1 = "https://wonderland-wars.net/matchlog.html";
 var starturl2 = "https://wonderland-wars.net/matchlog.html?type=all";
 
+// カード名取得用URL
+var cardlisturl = "https://wonderland-wars.net/cardlist.html";
+// カードリスト格納用配列
+var cardlist_ary = null;
+
 // 空欄カード用URL
 var nocard_img = "common/img_card_thum/deck_nocard.png";
 var com_img = "582e3423a336042b335de96584d116e2.png";
@@ -185,6 +190,11 @@ if( urlchk() ){
 	if(battle_cnt == 0 && errnum == 0){
 		errnum = 2;
 	}
+	
+	// カードリストの取得
+	request.open("GET", cardlisturl, false);
+	request.onreadystatechange=cardlistget;
+	request.send(null);
 	
 	// エラーが無ければ集計＆表示処理
 	if(errnum == 0){
@@ -489,6 +499,17 @@ function sorceget(){
 		result_ary[26] = other_member;
 		// 結果を格納
 		result_battle[battle_cnt] = result_ary;
+	}
+}
+
+// カードリスト取得処理
+function cardlistget(){
+	var src_txt = null;
+	
+	if (request.readyState == 4 && request.status == 200){
+		// ソースをテキストに
+		src_txt = request.responseText;
+		cardlist_ary = src_txt.split("<tr>");
 	}
 }
 
@@ -1189,6 +1210,16 @@ function changesum(getcast){
 	skillcnt_ary[3].innerHTML = (Math.floor((cast_result[getcast][32][3]/cast_result_skillset[getcast][3])*10))/10 + "回";
 	skillimg_ary[4].src = cast_result[getcast][31][4];
 	skillcnt_ary[4].innerHTML = (Math.floor((cast_result[getcast][32][4]/cast_result_skillset[getcast][4])*10))/10 + "回";
+	
+	
+	for(var cnt = 0; cnt < cardlist_ary.length; cnt++){
+		if(cardlist_ary[cnt].match(cast_result[getcast][31][0])){
+			var getcastname = cardlist_ary[cnt].match(/alt=.*>/);
+			getcastname = teststr[0].replace(/.*\="/, "").replace(/\".*/, "");
+			break;
+		}
+	}
+	skill_ary[2].innerHTML = getcastname;
 }
 
 // マッチングキャスト表示

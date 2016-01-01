@@ -1425,9 +1425,9 @@ function addCard(imgurl, usecnt, node_no, mode){
 	
 	var tmpImg1 = document.createElement("img");
 	tmpImg1.src = imgurl;
+	tmpImg1.setAttribute("width", 60);
+	tmpImg1.setAttribute("height", 84);
 	
-	fixNode.setAttribute("width", 60);
-	fixNode.setAttribute("height", 84);
 	//tmpImg1.width = 60;
 	//tmpImg1.height = 84;
 	

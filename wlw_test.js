@@ -1211,12 +1211,14 @@ function changesum(getcast){
 	skillimg_ary[4].src = cast_result[getcast][31][4];
 	skillcnt_ary[4].innerHTML = (Math.floor((cast_result[getcast][32][4]/cast_result_skillset[getcast][4])*10))/10 + "回";
 	
-	
-	for(var cnt = 0; cnt < cardlist_ary.length; cnt++){
-		if(cardlist_ary[cnt].match(cast_result[getcast][31][0])){
-			var getcastname = cardlist_ary[cnt].match(/alt=.*>/);
-			getcastname = teststr[0].replace(/.*\="/, "").replace(/\".*/, "");
-			break;
+	var getcastname = "";
+	if(getcast != 0){
+		for(var cnt = 0; cnt < cardlist_ary.length; cnt++){
+			if(cardlist_ary[cnt].match(cast_result[getcast][31][0])){
+				getcastname = cardlist_ary[cnt].match(/alt=.*>/);
+				getcastname = teststr[0].replace(/.*\="/, "").replace(/\".*/, "");
+				break;
+			}
 		}
 	}
 	skill_ary[2].innerHTML = getcastname;

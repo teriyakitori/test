@@ -1216,7 +1216,7 @@ function changesum(getcast){
 		for(var cnt = 0; cnt < cardlist_ary.length; cnt++){
 			if(cardlist_ary[cnt].match(cast_result[getcast][31][0])){
 				getcastname = cardlist_ary[cnt].match(/alt=.*>/);
-				getcastname = teststr[0].replace(/.*\="/, "").replace(/\".*/, "");
+				getcastname = getcastname[0].replace(/.*\="/, "").replace(/\".*/, "");
 				break;
 			}
 		}

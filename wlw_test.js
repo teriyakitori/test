@@ -1427,7 +1427,7 @@ function addCard(imgurl, usecnt, node_no, mode){
 	tmpImg1.src = imgurl;
 	
 	fixNode.setAttribute("width", 60);
-	fixNode.setAttribute("height", 84;
+	fixNode.setAttribute("height", 84);
 	//tmpImg1.width = 60;
 	//tmpImg1.height = 84;
 	

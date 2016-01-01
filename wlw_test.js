@@ -193,11 +193,15 @@ if( urlchk() ){
 			//表示領域が小さい時の処理
 			icon_width = 30;
 			icon_height = 35;
+			card_width = 31;
+			card_height = 44;
 			margin_bot ="10px";
 		} else {
 			//表示領域が大きい時の処理
 			icon_width = 60;
 			icon_height = 70;
+			card_width = 62;
+			card_height = 87;
 			margin_bot ="20px";
 		}
 		syukei();
@@ -1425,8 +1429,14 @@ function addCard(imgurl, usecnt, node_no, mode){
 	
 	var tmpImg1 = document.createElement("img");
 	tmpImg1.src = imgurl;
-	tmpImg1.setAttribute("width", 60);
-	tmpImg1.setAttribute("height", 84);
+	
+	if(imgurl.match(cast_url_plus)){
+		tmpImg1.setAttribute("width", icon_width);
+		tmpImg1.setAttribute("height", icon_height);
+	} else {
+		tmpImg1.setAttribute("width", card_width);
+		tmpImg1.setAttribute("height", card_height);
+	}
 	
 	//tmpImg1.width = 60;
 	//tmpImg1.height = 84;

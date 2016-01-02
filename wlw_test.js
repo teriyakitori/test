@@ -4,10 +4,12 @@ javascript:
 var starturl1 = "https://wonderland-wars.net/matchlog.html";
 var starturl2 = "https://wonderland-wars.net/matchlog.html?type=all";
 
-// カード名取得用URL
-var cardlisturl = "https://wonderland-wars.net/cardlist.html";
+// カード名取得用URL(ver=の部分は公式のタイミングによっては古いかも)
+var skill_listurl = "https://wonderland-wars.net/cardlist.html?ver=19&type=1";
+var assist_listurl = "https://wonderland-wars.net/cardlist.html?ver=19&type=2";
 // カードリスト格納用配列
-var cardlist_ary = null;
+var skill_listary = null;
+var assist_listary = null;
 
 // 空欄カード用URL
 var nocard_img = "common/img_card_thum/deck_nocard.png";
@@ -160,13 +162,16 @@ var errmsg = [
 "正常に処理されました。"
 ,"ブックマークレットが既に実行済みです。\n複数回起動した場合、読み込み処理に異常が発生します。\n再度表示したい場合は、一度ページを更新してからブックマークレットを再実行してください。\nまた、この状態で保存は行わないでください。"
 ,"対戦履歴の取得件数が0件でした。\n対戦履歴が存在していないか、\n対戦履歴詳細のURLが変更されて読み込めなくなった可能性があります。"
+,"カード名呼び出しエラーです。"
+,"通信エラーが発生しました。\nログインが有効ではなくなっています、トップページからログインし直してください。"
 ]
 
 // 本処理
 // 開始URLをチェックし、対戦履歴ページなら処理を開始する
 if( urlchk() ){
-	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性があります。\n最終更新日 2016/1/1");
+	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\n通信エラーが発生した可能性もあります。\n最終更新日 2016/1/1");
 	// 対戦履歴のページ数だけ処理する
+	//for(var linkcnt=0; linkcnt < 14; linkcnt++){
 	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
 		urlstr = document.links[linkcnt].toString();
 		// 起動済みでないかのチェック
@@ -178,11 +183,12 @@ if( urlchk() ){
 		if( urlstr.match(/matchlogdetail/i) ){
 			request.open("GET", urlstr, false);
 			request.onreadystatechange=sorceget;
-			request.send(null);
+			var teststa = request.send(null);
 			battle_cnt++;
 		}
 		
 		if(errnum != 0){
+			request.abort();
 			break;
 		}
 	}
@@ -191,10 +197,18 @@ if( urlchk() ){
 		errnum = 2;
 	}
 	
-	// カードリストの取得
-	request.open("GET", cardlisturl, false);
-	request.onreadystatechange=cardlistget;
-	request.send(null);
+	if(errnum == 0){
+		// カードリストの取得
+		urlstr = skill_listurl;
+		request.open("GET", urlstr, false);
+		request.onreadystatechange=cardlistget;
+		request.send(null);
+		
+		urlstr = assist_listurl;
+		request.open("GET", urlstr, false);
+		request.onreadystatechange=cardlistget;
+		request.send(null);
+	}
 	
 	// エラーが無ければ集計＆表示処理
 	if(errnum == 0){
@@ -242,6 +256,12 @@ function sorceget(){
 		
 		// ソースをテキストに
 		src_txt = request.responseText;
+		
+		// ログイン済みかのチェック
+		if(src_txt.match("ログインフォーム")){
+			errnum = 4;
+			return;
+		}
 		
 		// ソースを2分割
 		src_ary = src_txt.split("mtc_detail_member clearfix");
@@ -509,7 +529,13 @@ function cardlistget(){
 	if (request.readyState == 4 && request.status == 200){
 		// ソースをテキストに
 		src_txt = request.responseText;
-		cardlist_ary = src_txt.split("<tr>");
+		if(urlstr == skill_listurl){
+			skill_listary = src_txt.split("<tr>");
+		} else if(urlstr == assist_listurl){
+			assist_listary = src_txt.split("<tr>");
+		} else {
+			errnum = 3;
+		}
 	}
 }
 
@@ -1212,11 +1238,20 @@ function changesum(getcast){
 	skillcnt_ary[4].innerHTML = (Math.floor((cast_result[getcast][32][4]/cast_result_skillset[getcast][4])*10))/10 + "回";
 	
 	var getcastname = "";
+	var getasilv = "";
 	if(getcast != 0){
-		for(var cnt = 0; cnt < cardlist_ary.length; cnt++){
-			if(cardlist_ary[cnt].match(cast_result[getcast][31][0])){
-				getcastname = cardlist_ary[cnt].match(/alt=.*>/);
+		for(var cnt = 0; cnt < skill_listary.length; cnt++){
+			if(skill_listary[cnt].match(cast_result[getcast][31][0])){
+				getcastname = skill_listary[cnt].match(/alt=.*>/);
 				getcastname = getcastname[0].replace(/.*\="/, "").replace(/\".*/, "");
+				break;
+			}
+		}
+		
+		for(var cnt = 0; cnt < assist_listary.length; cnt++){
+			if(assist_listary[cnt].match("common/img_card_thum/assist/fa706a37022760c5ff6b66f215a6c548.png")){
+				getasilv = assist_listary[cnt].match(/<td class="level".*<\/td>/);
+				console.log(getasilv);
 				break;
 			}
 		}
@@ -1470,9 +1505,6 @@ function addCard(imgurl, usecnt, node_no, mode){
 		tmpImg1.setAttribute("width", card_width);
 		tmpImg1.setAttribute("height", card_height);
 	}
-	
-	//tmpImg1.width = 60;
-	//tmpImg1.height = 84;
 	
 	var tmpNode1 = document.createElement("div");
 	tmpNode1.className = "mtc_detail_skill_count";

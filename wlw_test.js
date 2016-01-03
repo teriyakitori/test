@@ -161,6 +161,7 @@ var castcardcnt_ary = [];
 
 // テスト処理用
 var betatest_flg = 0;
+var daymap_flg = 0;
 
 // エラー用変数
 var errstr = "";

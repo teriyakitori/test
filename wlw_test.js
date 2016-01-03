@@ -113,9 +113,12 @@ var cast_cnt = 0;
 // キャスト重複チェック
 var cast_chkflg = -1;
 // マッチングキャスト累計
-match_cast_sum = 0;
+var match_cast_sum = 0;
 // マッチングキャストカウンタ
-match_cast_cnt = 0;
+var match_cast_cnt = 0;
+
+// マップ名格納用配列
+var map_list = [];
 
 // 結果を配列で格納する
 var result_battle = [];
@@ -139,6 +142,7 @@ var imgNode_skill = [];
 var imgNode_other = [];
 var innerNode = null;
 var selecttest = null;
+var selectmap = null;
 var inspos  = null;
 var textNode = document.createElement("h2");
 var gameNode = document.createElement("h2");
@@ -197,7 +201,7 @@ if( urlchk() ){
 				request.send(null);
 			} catch(e) {
 				request.abort();
-				errstr = "対象ページ:\n" + urlstr + "\n\n" + e;
+				errstr += "\n対象ページ:\n" + urlstr + "\n\n" + e;
 				errnum = 5;
 				break;
 			}
@@ -253,11 +257,11 @@ if( urlchk() ){
 	// 終了メッセージ
 	if(skip_battle != 0 && battle_cnt != 0 && errnum == 0){
 		errnum = 10;
-		alert("処理終了　エラー番号:" + errnum + "\n" + "取得試合数:" + battle_cnt + "\n" + "取得失敗試合数:" + skip_battle + "\n" + errmsg[errnum]);
+		alert("処理終了　エラー番号:" + errnum + "\n" + "取得試合数:" + battle_cnt + "\n" + "取得失敗試合数:" + skip_battle + "\n" + errmsg[errnum] + "\n" + errstr);
 	} else if(battle_cnt != 0 && errnum == 0){
 		alert("処理終了　エラー番号:" + errnum + "\n" + "取得試合数:" + battle_cnt + "\n" + errmsg[errnum]);
 	} else {
-		alert("処理終了　エラー番号:" + errnum + "\n" + errmsg[errnum] + "\n\n" + errstr);
+		alert("処理終了　エラー番号:" + errnum + "\n" + errmsg[errnum] + "\n" + errstr);
 	}
 } else {
 	alert("ﾅﾝﾃﾞｯ!!");
@@ -549,6 +553,7 @@ function sorceget(){
 			battle_cnt++;
 			
 		} catch(e) {
+			errstr = "\n" + e;
 			skip_battle++;
 			return;
 		}
@@ -578,8 +583,10 @@ function cardlistget(){
 */
 // 集計処理
 function syukei(strdata, mode){
+	var mapadd_flg = 0;
 	var skip_cnt = 0;
 	var suminichk_flg = 0;
+	map_list = [];
 	
 	// 試合数だけ集計処理を行う
 	for(cnt = 0; cnt < battle_cnt; cnt++){
@@ -601,6 +608,18 @@ function syukei(strdata, mode){
 				skip_cnt++;
 				continue;
 			}
+		}
+		
+		// マップ取得
+		mapadd_flg = 1;
+		for(var mapcnt = 0; mapcnt < map_list.length; mapcnt++){
+			if(map_list[mapcnt].toString() == result_battle[cnt][4].toString()){
+				mapadd_flg = 0;
+				break;
+			}
+		}
+		if(mapadd_flg == 1){
+			map_list.push(result_battle[cnt][4].toString());
 		}
 		
 		// 初回は使用キャスト集計データの初期化
@@ -679,7 +698,7 @@ function hyouji(){
 		
 		var option_map = document.createElement("option");
 		option_map.value = 2;
-		option_map.innerHTML = "そっちね！(未実装)";
+		option_map.innerHTML = "そっちね！(マップ別集計)";
 		selecttest.appendChild(option_map);
 		
 		var option_lv5 = document.createElement("option");
@@ -915,7 +934,7 @@ function hyouji(){
 		inspos.parentNode.insertBefore(skillNode, inspos);
 		inspos.parentNode.insertBefore(castNode, inspos);
 	} catch(e) {
-		errstr = e;
+		errstr = "\n" + e;
 		errnum = 9;
 	}
 }
@@ -1025,7 +1044,7 @@ function cast_result_ini(ary_no){
 		cast_result[cast_cnt] = cast_tmp;
 		cast_cnt++;
 	} catch(e) {
-		errstr = "試合番号:" + ary_no + "\n\n" + e;
+		errstr = "\n試合番号:" + ary_no + "\n\n" + e;
 		errnum = 6;
 	}
 }
@@ -1127,7 +1146,7 @@ function cast_result_add(cast_no, ary_no){
 			}
 		}
 	} catch(e) {
-		errstr = "処理番号:" + ary_no + "\n\n" + e;
+		errstr = "\n処理番号:" + ary_no + "\n\n" + e;
 		errnum = 7;
 	}
 }
@@ -1253,7 +1272,7 @@ function match_cast_add(ary_no){
 			}
 		}
 	} catch(e) {
-		errstr = "処理番号:" + ary_no + "\n\n" + e;
+		errstr = "\n処理番号:" + ary_no + "\n\n" + e;
 		errnum = 8;
 	}
 }
@@ -1574,6 +1593,36 @@ function addCard(imgurl, usecnt, node_no, mode){
 	}
 }
 
+// マップ選択のメニュー
+function select_map(getno){
+	if(getno == ""){
+		return;
+	}
+	if(map_list.length < 2){
+		alert("集計マップが1種類のため、マップごとの集計処理は行えません。");
+	} else {
+		alert("マップ名「" + map_list[getno].toString() + "」で再集計処理を行います。");
+		// 表示の削除処理
+		inspos.parentNode.removeChild(textNode);
+		inspos.parentNode.removeChild(gameNode);
+		inspos.parentNode.removeChild(skillNode);
+		inspos.parentNode.removeChild(castNode);
+		inspos.parentNode.removeChild(selecttest);
+		try{
+			inspos.parentNode.removeChild(selectmap);
+		} catch(e) {
+		}
+		cast_cnt = 0;
+		match_cast_cnt = 0;
+		match_cast_sum = 0;
+		syukei(map_list[getno].toString(), 2);
+		hyouji();
+		alert(map_list[getno].toString() + "の試合は" + battle_cnt + "件です。");
+		betatest_flg = 1;
+		daymap_flg = 1;
+	}
+}
+
 // テスト版機能のメニュー
 function select_fun(getno){
 	// ローカルストレージに保存する処理
@@ -1598,6 +1647,10 @@ function select_fun(getno){
 			inspos.parentNode.removeChild(skillNode);
 			inspos.parentNode.removeChild(castNode);
 			inspos.parentNode.removeChild(selecttest);
+			try{
+				inspos.parentNode.removeChild(selectmap);
+			} catch(e) {
+			}
 			cast_cnt = 0;
 			match_cast_cnt = 0;
 			match_cast_sum = 0;
@@ -1610,7 +1663,25 @@ function select_fun(getno){
 			return;
 		}
 	} else if(getno == 2){
-		alert("あーん、ごめんね！");
+		alert("マップ集計用メニューを表示します。");
+		// マップ選択項目
+		selectmap = document.createElement("select");
+		selectmap.className = "select02";
+		selectmap.setAttribute("onchange", "select_map(this.value)");
+		
+		var option_mapmenu = document.createElement("option");
+		option_mapmenu.value = "";
+		option_mapmenu.innerHTML = "マップごとの集計処理";
+		selectmap.appendChild(option_mapmenu);
+		
+		for(var mapcnt = 0; mapcnt < map_list.length; mapcnt++){
+			var option_map = document.createElement("option");
+			option_map.value = mapcnt;
+			option_map.innerHTML = map_list[mapcnt];
+			selectmap.appendChild(option_map);
+		}
+		inspos.parentNode.insertBefore(selectmap, selecttest);
+		
 	} else if(getno == 3){
 		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\nLv5先行有利を確認するための機能です。\nデータの都合上、レベルアップ時間は最大8秒ほどの誤差がありえます")){
 			var saki_win = 0;
@@ -1759,7 +1830,10 @@ function select_fun(getno){
 				inspos.parentNode.removeChild(skillNode);
 				inspos.parentNode.removeChild(castNode);
 				inspos.parentNode.removeChild(selecttest);
-				
+				try{
+					inspos.parentNode.removeChild(selectmap);
+				} catch(e) {
+				}
 				cast_cnt = 0;
 				match_cast_cnt = 0;
 				match_cast_sum = 0;

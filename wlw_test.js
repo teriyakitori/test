@@ -182,7 +182,7 @@ var errmsg = [
 // 本処理
 // 開始URLをチェックし、対戦履歴ページなら処理を開始する
 if( urlchk() ){
-	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性もあります。\n最終更新日 2016/1/3");
+	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性もあります。\n最終更新日 2016/1/4");
 	// 対戦履歴のページ数だけ処理する
 	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
 		urlstr = document.links[linkcnt].toString();
@@ -1601,6 +1601,10 @@ function select_map(getno){
 	if(map_list.length < 2){
 		alert("集計マップが1種類のため、マップごとの集計処理は行えません。");
 	} else {
+		if(daymap_flg == 1) {
+			alert("マップ選択集計処理と最新日集計処理は、複数回もしくは同時に利用することはできません。");
+			return;
+		}
 		var mapname_tmp = map_list[getno].toString();
 		alert("マップ名「" + map_list[getno].toString() + "」で再集計処理を行います。");
 		// 表示の削除処理
@@ -1640,6 +1644,9 @@ function select_fun(getno){
 		if(errnum != 0){
 			alert("実行時にエラーが発生しています。\nエラー発生時にこの機能は使用できません。\nエラーメッセージ:\n" + errmsg[errnum]);
 			return;
+		} else if(daymap_flg == 1) {
+			alert("マップ選択集計処理と最新日集計処理は、複数回もしくは同時に利用することはできません。");
+			return;
 		}
 		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n最新の入国した日を対象に集計処理します。\n一日に20戦以上した場合は変わりません。")){
 			// 表示の削除処理
@@ -1660,6 +1667,7 @@ function select_fun(getno){
 			hyouji();
 			alert(get_date[0] + "の試合は" + battle_cnt + "件です。");
 			betatest_flg = 1;
+			daymap_flg = 1;
 		} else {
 			return;
 		}
@@ -1873,7 +1881,7 @@ function select_fun(getno){
 			alert(lsdata_getcnt + "件のデータを削除しました。");
 		}
 	} else if(getno == 10){
-		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2016/1/3です。\nエラー発生時の処理を追加しました。\n詳しくはtwitterアカウント「@wlw_honkideya」をご覧ください。");
+		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2016/1/4です。\nオプション機能に、マップ別の集計処理を追加しました。\n詳しくはtwitterアカウント「@wlw_honkideya」をご覧ください。");
 	}
 }
 

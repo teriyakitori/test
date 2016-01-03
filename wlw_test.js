@@ -119,6 +119,7 @@ var match_cast_cnt = 0;
 
 // マップ名格納用配列
 var map_list = [];
+var mapmenu_flg = 0;
 
 // 結果を配列で格納する
 var result_battle = [];
@@ -676,6 +677,7 @@ function syukei(strdata, mode){
 // 表示処理
 function hyouji(){
 	try{
+		mapmenu_flg = 0;
 		inspos = document.getElementById("page_title");
 		
 		// タイトルを表示
@@ -1603,7 +1605,7 @@ function select_map(getno){
 		alert("集計マップが1種類のため、マップごとの集計処理は行えません。");
 	} else {
 		if(daymap_flg == 1) {
-			alert("マップ選択集計処理と最新日集計処理は、複数回もしくは同時に利用することはできません。");
+			alert("マップ選択集計処理と最新日集計処理は、\n複数回もしくは併用することはできません。");
 			return;
 		}
 		var mapname_tmp = map_list[getno].toString();
@@ -1646,7 +1648,7 @@ function select_fun(getno){
 			alert("実行時にエラーが発生しています。\nエラー発生時にこの機能は使用できません。\nエラーメッセージ:\n" + errmsg[errnum]);
 			return;
 		} else if(daymap_flg == 1) {
-			alert("マップ選択集計処理と最新日集計処理は、複数回もしくは同時に利用することはできません。");
+			alert("マップ選択集計処理と最新日集計処理は、\n複数回もしくは併用することはできません。");
 			return;
 		}
 		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n最新の入国した日を対象に集計処理します。\n一日に20戦以上した場合は変わりません。")){
@@ -1673,6 +1675,9 @@ function select_fun(getno){
 			return;
 		}
 	} else if(getno == 2){
+		if(mapmenu_flg != 0){
+			return;
+		}
 		alert("マップ集計用メニューを表示します。");
 		// マップ選択項目
 		selectmap = document.createElement("select");
@@ -1691,6 +1696,7 @@ function select_fun(getno){
 			selectmap.appendChild(option_map);
 		}
 		inspos.parentNode.insertBefore(selectmap, selecttest);
+		mapmenu_flg = 1;
 		
 	} else if(getno == 3){
 		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\nLv5先行有利を確認するための機能です。\nデータの都合上、レベルアップ時間は最大8秒ほどの誤差がありえます")){

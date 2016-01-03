@@ -1601,6 +1601,7 @@ function select_map(getno){
 	if(map_list.length < 2){
 		alert("集計マップが1種類のため、マップごとの集計処理は行えません。");
 	} else {
+		var mapname_tmp = map_list[getno].toString();
 		alert("マップ名「" + map_list[getno].toString() + "」で再集計処理を行います。");
 		// 表示の削除処理
 		inspos.parentNode.removeChild(textNode);
@@ -1617,7 +1618,7 @@ function select_map(getno){
 		match_cast_sum = 0;
 		syukei(map_list[getno].toString(), 2);
 		hyouji();
-		alert(map_list[getno].toString() + "の試合は" + battle_cnt + "件です。");
+		alert(mapname_tmp + "の試合は" + battle_cnt + "件です。");
 		betatest_flg = 1;
 		daymap_flg = 1;
 	}

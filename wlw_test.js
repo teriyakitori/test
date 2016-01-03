@@ -1605,7 +1605,7 @@ function select_map(getno){
 		alert("集計マップが1種類のため、マップごとの集計処理は行えません。");
 	} else {
 		if(daymap_flg == 1) {
-			alert("マップ選択集計処理と最新日集計処理は、\n複数回もしくは併用することはできません。");
+			alert("マップ別集計処理と最新日集計処理は、\n複数回の実行、もしくは併用することはできません。");
 			return;
 		}
 		var mapname_tmp = map_list[getno].toString();
@@ -1648,7 +1648,7 @@ function select_fun(getno){
 			alert("実行時にエラーが発生しています。\nエラー発生時にこの機能は使用できません。\nエラーメッセージ:\n" + errmsg[errnum]);
 			return;
 		} else if(daymap_flg == 1) {
-			alert("マップ選択集計処理と最新日集計処理は、\n複数回もしくは併用することはできません。");
+			alert("マップ別集計処理と最新日集計処理は、\n複数回の実行、もしくは併用することはできません。");
 			return;
 		}
 		if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\n最新の入国した日を対象に集計処理します。\n一日に20戦以上した場合は変わりません。")){
@@ -1676,9 +1676,10 @@ function select_fun(getno){
 		}
 	} else if(getno == 2){
 		if(mapmenu_flg != 0){
+			alert("マップ別集計用メニューを表示済みです。");
 			return;
 		}
-		alert("マップ集計用メニューを表示します。");
+		alert("マップ別集計用メニューを表示します。");
 		// マップ選択項目
 		selectmap = document.createElement("select");
 		selectmap.className = "select02";

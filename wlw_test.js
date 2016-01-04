@@ -689,7 +689,7 @@ function hyouji(){
 		
 		var option_asi = document.createElement("option");
 		option_asi.value = 4;
-		option_asi.innerHTML = "呼び覚ます、月輪(がちりん)";
+		option_asi.innerHTML = "月に叢雲(ファイターに蓬莱)";
 		selecttest.appendChild(option_asi);
 		
 		var option_sal = document.createElement("option");
@@ -1665,7 +1665,7 @@ function select_fun(getno){
 		asi_cnt = 0;
 		assist_name = "40fccec8d9cb07df38aa92bff5cc286f.png";
 		
-		alert("注意：テスト機能のため、結果や動作のチェックが甘いです。\n\n 蓬莱の玉の枝の数による、Lv5アップ平均時間比較です。\n味方や敵を区別しないチーム単位での平均値です。");
+		alert("注意：テスト機能のため、結果や動作のチェックが甘いです。\n\n 蓬莱の玉の枝の数による、Lv5アップ平均時間比較です。\n味方や敵を区別しないチーム単位での平均値です。\n本当にファイターが装備しているのかは考慮していません。");
 		try{
 			for(var cnt = 0; cnt < battle_cnt; cnt++){
 				// プレイヤーを集計

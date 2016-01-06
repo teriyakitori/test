@@ -1668,7 +1668,7 @@ function select_fun(getno){
 		
 		if(asi_ary1 != false && asi_ary2 != false){
 			// 結果表示
-			alert("蓬莱の玉の枝本数別、Lv5到達の平均残り時間\n" +
+			alert("蓬莱の玉の枝、青い羽のイヤリング\n装備数別のLv5到達平均残り時間比較\n" +
 			"\n0蓬莱 チーム数:" + asi_ary1[0][0] + " | Lv5残り時間:" + asi_ary1[1][0] + 
 			"\n1蓬莱 チーム数:" + asi_ary1[0][1] + " | Lv5残り時間:" + asi_ary1[1][1] + 
 			"\n2蓬莱 チーム数:" + asi_ary1[0][2] + " | Lv5残り時間:" + asi_ary1[1][2] + 

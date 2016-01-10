@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -284,14 +278,14 @@
 			<!--味方チーム-->
 			<div class="mtc_detail_myteam">
 				
-				<div class="mtc_detail_member_block" id="friend_0" com="false">
-					<img src="common/img_cast/e8dc8eb3197e15b4316b8335be52affd.png">
-					<div class="mtc_detail_member_name">アーニャ♪</div>
+				<div class="mtc_detail_member_block" id="friend_0" com="true">
+					<img src="common/img_cast/582e3423a336042b335de96584d116e2.png">
+					<div class="mtc_detail_member_name">COM</div>
 				</div>
 				
-				<div class="mtc_detail_member_block" id="friend_1" com="false">
-					<img src="common/img_cast/fa15357d7a216b6379be8c89d372fb54.png">
-					<div class="mtc_detail_member_name">夕凪</div>
+				<div class="mtc_detail_member_block" id="friend_1" com="true">
+					<img src="common/img_cast/582e3423a336042b335de96584d116e2.png">
+					<div class="mtc_detail_member_name">COM</div>
 				</div>
 				
 				<div class="mtc_detail_member_block" id="friend_2" com="true">
@@ -308,14 +302,14 @@
 					<div class="mtc_detail_member_name">せら</div>
 				</div>
 				
-				<div class="mtc_detail_member_block" id="enemy_1"  com="false">
-					<img src="common/img_cast/5acb907d67da314ea02615d1075b87ce.png">
-					<div class="mtc_detail_member_name">きつね＠４６</div>
+				<div class="mtc_detail_member_block" id="enemy_1"  com="true"com="false">
+					<img src="common/img_cast/582e3423a336042b335de96584d116e2.png">
+					<div class="mtc_detail_member_name">COM</div>
 				</div>
 				
-				<div class="mtc_detail_member_block" id="enemy_2"  com="false">
-					<img src="common/img_cast/c5d8f689aa782a307a3fdd6097433313.png">
-					<div class="mtc_detail_member_name">ＡＷＡＣＳ</div>
+				<div class="mtc_detail_member_block" id="enemy_2"  com="true"com="false">
+					<img src="common/img_cast/582e3423a336042b335de96584d116e2.png">
+					<div class="mtc_detail_member_name">COM</div>
 				</div>
 				
 				<div class="mtc_detail_member_block" id="enemy_3"  com="true"com="false">
@@ -336,201 +330,6 @@
 	</div>
 	<!--▲フッタ-->
 
-	
-	
-	<div id="match_detail_member_pop" class="match_pop_window" type="friend" index="0" >
-		<div class="mp_mydata_name">アーニャ♪</div>
-		<div class="mp_mydata_location">大　阪</div>
-		
-		
-			<div class="mtc_detail_m_cast"><img src="common/img_cast/e8dc8eb3197e15b4316b8335be52affd.png"></div>
-			
-			
-			<div class="mtc_detail_m_with" style="background-image:url(common/images/bg_march_detail_with1.png);">
-				<div class="mtc_detail_m_with_num"><script>partner_num("39",1);</script></div>
-			</div>
-			
-		
-		<div class="mtc_detail_m_skill">
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+6</div>
-				
-			
-			<img src="common/img_card_thum/skill/7b9753735241e99fb46b951c256f2015.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+4</div>
-				
-			
-			<img src="common/img_card_thum/skill/2ab360f83be1c0f046b2d1d82064b99a.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+3</div>
-				
-			
-			<img src="common/img_card_thum/skill/6f2bf1a1963f68eb40d74b9ca36f2925.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+4</div>
-				
-			
-			<img src="common/img_card_thum/skill/1915c83d9ba1891310b71c45d22217db.png">
-			
-			</div>
-		
-		</div>
-		<div class="mtc_detail_m_assist">
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				<div class="mtc_detail_cardblock_lv lv_max">MAX</div>
-			
-			<img src="common/img_card_thum/assist/871185edc840d6525220b3664a9341de.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				<div class="mtc_detail_cardblock_lv lv_max">MAX</div>
-			
-			<img src="common/img_card_thum/assist/c7807d414d34c86cb8eb67fdaaf9abb1.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+1</div>
-				
-			
-			<img src="common/img_card_thum/assist/990f538dbe8c3e4f5a17e4ae2a5a213e.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+9</div>
-				
-			
-			<img src="common/img_card_thum/soul/f50f160c2de99d28c050d178b7404ad4.png">
-			
-			</div>
-		
-		</div>
-		<div id="btn_popup_close" class="match_pop_close">閉じる</div>
-	</div>
-	
-	
-	
-	<div id="match_detail_member_pop" class="match_pop_window" type="friend" index="1" >
-		<div class="mp_mydata_name">夕凪</div>
-		<div class="mp_mydata_location">兵　庫</div>
-		
-		
-			<div class="mtc_detail_m_cast"><img src="common/img_cast/fa15357d7a216b6379be8c89d372fb54.png"></div>
-			
-			
-			<div class="mtc_detail_m_with" style="background-image:url(common/images/bg_march_detail_with1.png);">
-				<div class="mtc_detail_m_with_num"><script>partner_num("42",1);</script></div>
-			</div>
-			
-		
-		<div class="mtc_detail_m_skill">
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+8</div>
-				
-			
-			<img src="common/img_card_thum/skill/9bf4180e533dace29ced6058fb981bcd.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				<div class="mtc_detail_cardblock_lv lv_max">MAX</div>
-			
-			<img src="common/img_card_thum/skill/23ea86f19e0da55f42f8a8b1f6da6b2c.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				<div class="mtc_detail_cardblock_lv lv_max">MAX</div>
-			
-			<img src="common/img_card_thum/skill/48e66987b4682fbe53e76af3ef792b2e.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				<div class="mtc_detail_cardblock_lv lv_max">MAX</div>
-			
-			<img src="common/img_card_thum/skill/a3d99243c8bb4da6b6bd336fb3f747bd.png">
-			
-			</div>
-		
-		</div>
-		<div class="mtc_detail_m_assist">
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+6</div>
-				
-			
-			<img src="common/img_card_thum/assist/8dde9a2ecbafcc270628ef6487c06d92.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+1</div>
-				
-			
-			<img src="common/img_card_thum/assist/38c9063fd5d62cdfda3023085b79490e.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				<div class="mtc_detail_cardblock_lv lv_max">MAX</div>
-			
-			<img src="common/img_card_thum/assist/25a003b0badbd9e537daedc2a78decbd.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				
-			
-			<img src="common/img_card_thum/soul/c31d6b9b57ba5b1d2e1c77594603bd95.png">
-			
-			</div>
-		
-		</div>
-		<div id="btn_popup_close" class="match_pop_close">閉じる</div>
-	</div>
-	
-	
-	
-	
 	
 	
 	<div id="match_detail_member_pop" class="match_pop_window" type="enemy" index="0">
@@ -623,187 +422,9 @@
 	
 	
 	
-	<div id="match_detail_member_pop" class="match_pop_window" type="enemy" index="1">
-		<div class="mp_mydata_name">きつね＠４６</div>
-		<div class="mp_mydata_location">埼　玉</div>
-		
-		
-			<div class="mtc_detail_m_cast2"><img src="common/img_cast/5acb907d67da314ea02615d1075b87ce.png"></div>
-		
-		<div class="mtc_detail_m_skill">
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+9</div>
-				
-			
-			<img src="common/img_card_thum/skill/ac17021ecf26d42bee1b6e3bd2186f76.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				<div class="mtc_detail_cardblock_lv lv_max">MAX</div>
-			
-			<img src="common/img_card_thum/skill/300849f32e815731407c96c349435300.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				<div class="mtc_detail_cardblock_lv lv_max">MAX</div>
-			
-			<img src="common/img_card_thum/skill/ace8eb50112158354be074296f025cbb.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				<div class="mtc_detail_cardblock_lv lv_max">MAX</div>
-			
-			<img src="common/img_card_thum/skill/90a0120e337282b0fdd98a83c0847503.png">
-			
-			</div>
-		
-		</div>
-		<div class="mtc_detail_m_assist">
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				
-			
-			<img src="common/img_card_thum/assist/40fccec8d9cb07df38aa92bff5cc286f.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+3</div>
-				
-			
-			<img src="common/img_card_thum/assist/871185edc840d6525220b3664a9341de.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+6</div>
-				
-			
-			<img src="common/img_card_thum/assist/916d4881c3116f09fab4624331210ceb.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+8</div>
-				
-			
-			<img src="common/img_card_thum/soul/08fa00aaea36cb46146bf52b7f019057.png">
-			
-			</div>
-		
-		</div>
-		<div id="btn_popup_close" class="match_pop_close">閉じる</div>
-	</div>
-	
-	
-	
-	<div id="match_detail_member_pop" class="match_pop_window" type="enemy" index="2">
-		<div class="mp_mydata_name">ＡＷＡＣＳ</div>
-		<div class="mp_mydata_location">静　岡</div>
-		
-		
-			<div class="mtc_detail_m_cast2"><img src="common/img_cast/c5d8f689aa782a307a3fdd6097433313.png"></div>
-		
-		<div class="mtc_detail_m_skill">
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+2</div>
-				
-			
-			<img src="common/img_card_thum/skill/b7ea71a62807917eff5c051cddbadc51.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+4</div>
-				
-			
-			<img src="common/img_card_thum/skill/83f30b41eba63e916518810386627954.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				<div class="mtc_detail_cardblock_lv lv_max">MAX</div>
-			
-			<img src="common/img_card_thum/skill/7b4e0107343a163aa890f6e6edd0cb48.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+1</div>
-				
-			
-			<img src="common/img_card_thum/skill/d4289d42844231b76fdbdac00a38473e.png">
-			
-			</div>
-		
-		</div>
-		<div class="mtc_detail_m_assist">
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+5</div>
-				
-			
-			<img src="common/img_card_thum/assist/38c9063fd5d62cdfda3023085b79490e.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+1</div>
-				
-			
-			<img src="common/img_card_thum/assist/0a2c285cb163507810d63e39c8330cc6.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+1</div>
-				
-			
-			<img src="common/img_card_thum/assist/a926941dd68187162841005480998058.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+1</div>
-				
-			
-			<img src="common/img_card_thum/soul/3d27cb557870e57307c5768b2fca559f.png">
-			
-			</div>
-		
-		</div>
-		<div id="btn_popup_close" class="match_pop_close">閉じる</div>
-	</div>
-	
-	
 	
 	
 </div>
 </body>
 </html>
+

@@ -186,7 +186,6 @@ if( urlchk() ){
 	
 	// エラー表示用の日付取得
 	try{
-		console.log(matchdate_ary[100][100].toString());
 		if(butou_flg == 1){
 			matchdate_ary = document.getElementsByClassName("ball_date");
 		} else {
@@ -195,8 +194,7 @@ if( urlchk() ){
 	}catch(e){
 		matchdate_ary = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 	}
-	console.log(matchdate_ary.length);
-	console.log(matchdate_ary);
+	
 	// 対戦履歴のページ数だけ処理する
 	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
 		urlstr = document.links[linkcnt].toString();

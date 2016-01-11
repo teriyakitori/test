@@ -192,7 +192,7 @@ if( urlchk() ){
 		} else {
 			matchdate_ary = document.getElementsByClassName("match_date");
 		}
-	}catch{
+	}catch(e){
 		matchdate_ary = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 	}
 	console.log(matchdate_ary.length);

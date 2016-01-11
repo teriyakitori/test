@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	
+
 <meta charset="UTF-8" />
 <meta name="viewport" id="viewport" content="width=320,user-scalable=yes" />
 <meta name="format-detection" content="telephone=no">
@@ -31,7 +31,7 @@
   ga('send', 'pageview');
 
 </script>
-	
+
 
 
 
@@ -43,388 +43,964 @@
 <link rel="stylesheet" href="/common/css/common.css?20160108" type="text/css" />
 <link rel="stylesheet" href="/common/css/contents.css?20160108" type="text/css" />
 <script type="text/javascript" src="/common/js/menu.js?20160108"></script>
-	<script type="text/javascript" src="common/js/matchlogdetail.js?20160108"></script>
+        <script type="text/javascript" src="common/js/matchlogdetail.js?20160108"></script>
 </head>
 <body>
 <div id="background_for_pad"></div>
 <div id="wrap">
-	<!--▼ヘッダ-->
-	
-	<h1 id="header">
-		<a href="/index.html">WONDER.NET</a>
-	</h1>
-	
-	<div id="menu_block">
-		<div id="btn_menu" class="menu_open">MENU</div>
-		<div id="menu_box">
-			<ul>
-				<li class="menu_toppage"><a href="/">トップページ</a></li>
-				<li class="menu_mypage"><a href="/mypage.html">マイページ</a></li>
-				<li class="menu_mycast"><a href="/mycast.html">マイキャスト</a></li>
-				<li class="menu_mycard"><a href="/card/index.html">マイカード</a></li>
-				<li class="menu_customize"><a href="/customizelist.html">カスタマイズ</a></li>
-				<li class="menu_training"><a href="/training.html">修練場</a></li>
-				<li class="menu_record"><a href="/matchlog.html">対戦履歴</a></li>
-				<li class="menu_ballroom"><a href="/bb/index.html">舞闘会</a></li>
-				<li class="menu_campaign"><a href="/campaignlist.html">キャンペーン</a></li>
-				<li class="menu_logout"><a href="/logout.html">ログアウト</a></li>
-				<div class="menu_line">
-					<img src="/common/images/line_02.png" /><br>
-				</div>
-				<li class="menu_official"><a href="http://wonder.sega.jp/player/" target="_blank">公式サイトへ</a></li>
-			</ul>
-		</div>
-	</div>
-	<!--▲ヘッダ-->
+        <!--▼ヘッダ-->
 
-	<!--▼コンテンツ-->
-	<div id="inner">
-		<h2 id="page_title">対戦履歴詳細　<span class="font_small">2015-12-31 13:06</span></h2>
-		<!--▽マイデータ-->
-		<div id="match_detail">
-			<!--●プレーヤー名-->
-			<div class="mp_mydata_name">やきとり</div>
-			<!--●都道府県-->
-			<div class="mp_mydata_location">埼　玉</div>
-			<!--●店舗名-->
-			<div class="mtc_detail_store">キャロム大宮店</div>
-			<!--●マップ名-->
-			<div class="mtc_detail_map"><p>龍宮の園Ⅴ</p></div>
-			<!--●使用キャスト-->
-			<div class="mtc_detail_cast"><a href="castdetail.html?cast=3"><img src="common/img_cast/768d19b1fcbdd5a0e3273065d7563ae8.png"></a></div>
-			<!--●タイム-->
-			<div class="mtc_detail_time">0:00</div>
-			<!--●味方ゲージ-->
-			<div class="mtc_detail_mygage"><div class="mtc_detail_mygage_inner" style="width: 47%;"></div></div>
-			<!--●敵ゲージ-->
-			<div class="mtc_detail_enemygage"><div class="mtc_detail_enemygage_inner" style="width: 35%;"></div></div>
-			<!--●勝敗-->
-			<div class="mtc_detail_result"><img src="common/images/icon_win.png"></div>
-			<!--●カードデッキ　スキルカード-->
-			<div class="mtc_detail_skill">
-				
-				<div class="mtc_detail_cardblock">
-					
-						<div class="mtc_detail_cardblock_lv">+1</div>
-						
-					
-					<img src="common/img_card_thum/skill/d39561e63c9be8a084c9d0693b21b159.png">
-					
-					
-						<div class="mtc_detail_skill_count">
-							1
-							
-							回</div>
-					
-				</div>
-				
-				<div class="mtc_detail_cardblock">
-					
-						<div class="mtc_detail_cardblock_lv">+4</div>
-						
-					
-					<img src="common/img_card_thum/skill/0164442ba6f82432b6ba7521974a7e33.png">
-					
-					
-						<div class="mtc_detail_skill_count">
-							
-							8
-							回</div>
-					
-				</div>
-				
-				<div class="mtc_detail_cardblock">
-					
-						<div class="mtc_detail_cardblock_lv">+2</div>
-						
-					
-					<img src="common/img_card_thum/skill/f1c9a17f62bba5c83d1d8dd140f16ad9.png">
-					
-					
-						<div class="mtc_detail_skill_count">
-							
-							1
-							回</div>
-					
-				</div>
-				
-				<div class="mtc_detail_cardblock">
-					
-						<div class="mtc_detail_cardblock_lv">+2</div>
-						
-					
-					<img src="common/img_card_thum/skill/aedc4ffe75a7a4fed4bc085f91af612d.png">
-					
-					
-						<div class="mtc_detail_skill_count">
-							
-							2
-							回</div>
-					
-				</div>
-				
-			</div>
-			<!--●カードデッキ　アシストカード-->
-			<div class="mtc_detail_assist">
-				
-				<div class="mtc_detail_cardblock">
-					
-						
-						
-					
-					<img src="common/img_card_thum/assist/fc3ddc040d2c7e5954ba409342d7c5c8.png">
-					
-				</div>
-				
-				<div class="mtc_detail_cardblock">
-					
-						
-						
-					
-					<img src="common/img_card_thum/assist/7fc20960dc732243e95476315a1ecd11.png">
-					
-				</div>
-				
-				<div class="mtc_detail_cardblock">
-					
-						<div class="mtc_detail_cardblock_lv">+1</div>
-						
-					
-					<img src="common/img_card_thum/assist/0a2c285cb163507810d63e39c8330cc6.png">
-					
-				</div>
-				
-				<div class="mtc_detail_cardblock">
-					
-						
-						
-					
-					<img src="common/img_card_thum/soul/cc5e3344c4e9be8a3bee3dc3093456b7.png">
-					
-				</div>
-				
-			</div>
-			<!--●レベルアップ経過時間　ゲージ-->
-			<div class="levelup_time_gage_block">
-				<div class="levelup_time_gage" style="width:100%;">
-					<img src="common/images/icon_lv_win.png">
-					
-				</div>
-			</div>
-			
-			<div class="levelup_timeblock_my clearfix">
-				
-				<div class="levelup_my_lv" style="width:10%;" ><img src="common/images/icon_lv2_p.png"></div>
-				
-				<div class="levelup_my_lv" style="width:28%;" ><img src="common/images/icon_lv3_p.png"></div>
-				
-				<div class="levelup_my_lv" style="width:41%;" ><img src="common/images/icon_lv4_p.png"></div>
-				
-				<div class="levelup_my_lv" style="width:54%;" ><img src="common/images/icon_lv5_p.png"></div>
-				
-				<div class="levelup_my_lv" style="width:66%;" ><img src="common/images/icon_lv6_p.png"></div>
-				
-				<div class="levelup_my_lv" style="width:90%;" ><img src="common/images/icon_lv7_p.png"></div>
-				
-			</div>
-			
-			
-			<div class="levelup_timeblock_enemy">
-				
-				<div class="levelup_enemy_lv" style="width:10%;" ><img src="common/images/icon_lv2_b.png"></div>
-				
-				<div class="levelup_enemy_lv" style="width:16%;" ><img src="common/images/icon_lv3_b.png"></div>
-				
-				<div class="levelup_enemy_lv" style="width:27%;" ><img src="common/images/icon_lv4_b.png"></div>
-				
-				<div class="levelup_enemy_lv" style="width:46%;" ><img src="common/images/icon_lv5_b.png"></div>
-				
-				<div class="levelup_enemy_lv" style="width:70%;" ><img src="common/images/icon_lv6_b.png"></div>
-				
-				<div class="levelup_enemy_lv" style="width:91%;" ><img src="common/images/icon_lv7_b.png"></div>
-				
-			</div>
-			
-			<!--●兵士撃破数-->
-			<div class="mtc_detail_data_heishi">39体</div>
-			<!--●キャスト撃破数-->
-			<div class="mtc_detail_data_cast">0体</div>
-			<!--●巨人撃破数-->
-			<div class="mtc_detail_data_titan">0体</div>
-			<!--●撤退数-->
-			<div class="mtc_detail_data_tettai">0回</div>
-			<!--●ストレートショット-->
-			<div class="mtc_detail_data_sts">26回</div>
-			<!--●ストレートショットHIT-->
-			<div class="mtc_detail_data_stshit">7回</div>
-			<!--●ドローショット-->
-			<div class="mtc_detail_data_drs">21回</div>
-			<!--●ドローショットHIT-->
-			<div class="mtc_detail_data_drshit">1回</div>
-			<!--●帰城-->
-			<div class="mtc_detail_data_backhome">4回</div>
-			<!--●ストレートショット被HIT-->
-			<div class="mtc_detail_data_sts2hit">4回</div>
-			<!--●ドローショット被HIT-->
-			<div class="mtc_detail_data_drs2hit">10回</div>
-			<!--●拠点破壊数-->
-			<div class="mtc_detail_data2_kyoten">4個</div>
-			<!--●入手経験値-->
-			<div class="mtc_detail_data2_exp">56</div>
-		</div>
-		<!--△マイデータ-->
+        <h1 id="header">
+                <a href="/index.html">WONDER.NET</a>
+        </h1>
 
-		<div class="mtc_detail_member clearfix">
-			<!--味方チーム-->
-			<div class="mtc_detail_myteam">
-				
-				<div class="mtc_detail_member_block" id="friend_0" com="true">
-					<img src="common/img_cast/582e3423a336042b335de96584d116e2.png">
-					<div class="mtc_detail_member_name">COM</div>
-				</div>
-				
-				<div class="mtc_detail_member_block" id="friend_1" com="true">
-					<img src="common/img_cast/582e3423a336042b335de96584d116e2.png">
-					<div class="mtc_detail_member_name">COM</div>
-				</div>
-				
-				<div class="mtc_detail_member_block" id="friend_2" com="true">
-					<img src="common/img_cast/582e3423a336042b335de96584d116e2.png">
-					<div class="mtc_detail_member_name">COM</div>
-				</div>
-				
-			</div>
-			<!--敵チーム-->
-			<div class="mtc_detail_enemy">
-				
-				<div class="mtc_detail_member_block" id="enemy_0"  com="false">
-					<img src="common/img_cast/768d19b1fcbdd5a0e3273065d7563ae8.png">
-					<div class="mtc_detail_member_name">せら</div>
-				</div>
-				
-				<div class="mtc_detail_member_block" id="enemy_1"  com="true"com="false">
-					<img src="common/img_cast/582e3423a336042b335de96584d116e2.png">
-					<div class="mtc_detail_member_name">COM</div>
-				</div>
-				
-				<div class="mtc_detail_member_block" id="enemy_2"  com="true"com="false">
-					<img src="common/img_cast/582e3423a336042b335de96584d116e2.png">
-					<div class="mtc_detail_member_name">COM</div>
-				</div>
-				
-				<div class="mtc_detail_member_block" id="enemy_3"  com="true"com="false">
-					<img src="common/img_cast/582e3423a336042b335de96584d116e2.png">
-					<div class="mtc_detail_member_name">COM</div>
-				</div>
-				
-			</div>
-		</div>
-		<div class="pageback"><a href="matchlog.html">対戦履歴一覧に戻る</a></div>
-	</div>
-	<!--▲コンテンツ-->
-	
-	<!--▼フッタ-->
-	<div id="footer">
-		<div class="footer_attention">本サイトで使用されている画像、文章、情報、動画等の無断転載を禁じます。</div>
-		<div id="copyright">&copy;SEGA</div>
-	</div>
-	<!--▲フッタ-->
+        <div id="menu_block">
+                <div id="btn_menu" class="menu_open">MENU</div>
+                <div id="menu_box">
+                        <ul>
+                                <li class="menu_toppage"><a href="/">トップページ</a></li>
+                                <li class="menu_mypage"><a href="/mypage.html">マイページ</a></li>
+                                <li class="menu_mycast"><a href="/mycast.html">マイキャスト</a></li>
+                                <li class="menu_mycard"><a href="/card/index.html">マイカード</a></li>
+                                <li class="menu_customize"><a href="/customizelist.html">カスタマイズ</a></li>
+                                <li class="menu_training"><a href="/training.html">修練場</a></li>
+                                <li class="menu_record"><a href="/matchlog.html">対戦履歴</a></li>
+                                <li class="menu_ballroom"><a href="/bb/index.html">舞闘会</a></li>
+                                <li class="menu_campaign"><a href="/campaignlist.html">キャンペーン</a></li>
+                                <li class="menu_logout"><a href="/logout.html">ログアウト</a></li>
+                                <div class="menu_line">
+                                        <img src="/common/images/line_02.png" /><br>
+                                </div>
+                                <li class="menu_official"><a href="http://wonder.sega.jp/player/" target="_blank">公式サイトへ</a></li>
+                        </ul>
+                </div>
+        </div>
+        <!--▲ヘッダ-->
 
-	
-	
-	<div id="match_detail_member_pop" class="match_pop_window" type="enemy" index="0">
-		<div class="mp_mydata_name">せら</div>
-		<div class="mp_mydata_location">長　野</div>
-		
-		
-			<div class="mtc_detail_m_cast2"><img src="common/img_cast/768d19b1fcbdd5a0e3273065d7563ae8.png"></div>
-		
-		<div class="mtc_detail_m_skill">
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+9</div>
-				
-			
-			<img src="common/img_card_thum/skill/d39561e63c9be8a084c9d0693b21b159.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				<div class="mtc_detail_cardblock_lv lv_max">MAX</div>
-			
-			<img src="common/img_card_thum/skill/0164442ba6f82432b6ba7521974a7e33.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+7</div>
-				
-			
-			<img src="common/img_card_thum/skill/f1c9a17f62bba5c83d1d8dd140f16ad9.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				<div class="mtc_detail_cardblock_lv lv_max">MAX</div>
-			
-			<img src="common/img_card_thum/skill/aedc4ffe75a7a4fed4bc085f91af612d.png">
-			
-			</div>
-		
-		</div>
-		<div class="mtc_detail_m_assist">
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+4</div>
-				
-			
-			<img src="common/img_card_thum/assist/7e274d754a706bf35a0e73d74a510308.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				
-				
-			
-			<img src="common/img_card_thum/assist/a011a3e3393e878c050ff2cda3562bc7.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+5</div>
-				
-			
-			<img src="common/img_card_thum/assist/916d4881c3116f09fab4624331210ceb.png">
-			
-			</div>
-		
-			<div class="mtc_detail_m_cardblock">
-			
-				<div class="mtc_detail_cardblock_lv">+3</div>
-				
-			
-			<img src="common/img_card_thum/soul/c31dc835232cb5e9060088436ad72c5d.png">
-			
-			</div>
-		
-		</div>
-		<div id="btn_popup_close" class="match_pop_close">閉じる</div>
-	</div>
-	
-	
-	
-	
-	
+        <!--▼コンテンツ-->
+        <div id="inner">
+                <h2 id="page_title">対戦履歴詳細　<span class="font_small">2016-01-08 17:22</span></h2>
+                <!--▽マイデータ-->
+                <div id="match_detail">
+                        <!--●プレーヤー名-->
+                        <div class="mp_mydata_name">Ｊｕｎｋ</div>
+                        <!--●都道府県-->
+                        <div class="mp_mydata_location">埼　玉</div>
+                        <!--●店舗名-->
+                        <div class="mtc_detail_store">キャロム大宮店</div>
+                        <!--●マップ名-->
+                        <div class="mtc_detail_map"><p>月下の舞台</p></div>
+                        <!--●使用キャスト-->
+                        <div class="mtc_detail_cast"><a href="castdetail.html?cast=2"><img src="common/img_cast/215b1f54c6876610342c096147210d6e.png"></a></div>
+                        <!--●タイム-->
+                        <div class="mtc_detail_time">0:00</div>
+                        <!--●味方ゲージ-->
+                        <div class="mtc_detail_mygage"><div class="mtc_detail_mygage_inner" style="width: 50%;"></div></div>
+                        <!--●敵ゲージ-->
+                        <div class="mtc_detail_enemygage"><div class="mtc_detail_enemygage_inner" style="width: 26%;"></div></div>
+                        <!--●勝敗-->
+                        <div class="mtc_detail_result"><img src="common/images/icon_win.png"></div>
+                        <!--●カードデッキ　スキルカード-->
+                        <div class="mtc_detail_skill">
+
+                                <div class="mtc_detail_cardblock">
+
+                                                <div class="mtc_detail_cardblock_lv">+4</div>
+
+
+                                        <img src="common/img_card_thum/skill/a83f49d48c48d087381d716d018926c9.png">
+
+
+                                                <div class="mtc_detail_skill_count">
+                                                        1
+
+                                                        回</div>
+
+                                </div>
+
+                                <div class="mtc_detail_cardblock">
+
+                                                <div class="mtc_detail_cardblock_lv">+7</div>
+
+
+                                        <img src="common/img_card_thum/skill/7a84ca75d7cea67d1a62988fb0e6f646.png">
+
+
+                                                <div class="mtc_detail_skill_count">
+
+                                                        1
+                                                        回</div>
+
+                                </div>
+
+                                <div class="mtc_detail_cardblock">
+
+
+                                                <div class="mtc_detail_cardblock_lv lv_max">MAX</div>
+
+                                        <img src="common/img_card_thum/skill/28618156e292495b4f68502349c336a6.png">
+
+
+                                                <div class="mtc_detail_skill_count">
+
+                                                        2
+                                                        回</div>
+
+                                </div>
+
+                                <div class="mtc_detail_cardblock">
+
+
+                                                <div class="mtc_detail_cardblock_lv lv_max">MAX</div>
+
+                                        <img src="common/img_card_thum/skill/ac06a057e56b3c36087dc025e6a1ce25.png">
+
+
+                                                <div class="mtc_detail_skill_count">
+
+                                                        15
+                                                        回</div>
+
+                                </div>
+
+                        </div>
+                        <!--●カードデッキ　アシストカード-->
+                        <div class="mtc_detail_assist">
+
+                                <div class="mtc_detail_cardblock">
+
+
+                                                <div class="mtc_detail_cardblock_lv lv_max">MAX</div>
+
+                                        <img src="common/img_card_thum/assist/8dde9a2ecbafcc270628ef6487c06d92.png">
+
+                                </div>
+
+                                <div class="mtc_detail_cardblock">
+
+
+                                                <div class="mtc_detail_cardblock_lv lv_max">MAX</div>
+
+                                        <img src="common/img_card_thum/assist/25a003b0badbd9e537daedc2a78decbd.png">
+
+                                </div>
+
+                                <div class="mtc_detail_cardblock">
+
+                                                <div class="mtc_detail_cardblock_lv">+1</div>
+
+
+                                        <img src="common/img_card_thum/assist/00e983c5eaaab37aa8c861e8bc9a8658.png">
+
+                                </div>
+
+                                <div class="mtc_detail_cardblock">
+
+
+                                                <div class="mtc_detail_cardblock_lv lv_max">MAX</div>
+
+                                        <img src="common/img_card_thum/soul/2d188461bc326b211660c9cedd091df5.png">
+
+                                </div>
+
+                        </div>
+                        <!--●レベルアップ経過時間　ゲージ-->
+                        <div class="levelup_time_gage_block">
+                                <div class="levelup_time_gage" style="width:100%;">
+                                        <img src="common/images/icon_lv_win.png">
+
+                                </div>
+                        </div>
+
+                        <div class="levelup_timeblock_my clearfix">
+
+                                <div class="levelup_my_lv" style="width:8%;" ><img src="common/images/icon_lv2_p.png"></div>
+
+                                <div class="levelup_my_lv" style="width:15%;" ><img src="common/images/icon_lv3_p.png"></div>
+
+                                <div class="levelup_my_lv" style="width:33%;" ><img src="common/images/icon_lv4_p.png"></div>
+
+                                <div class="levelup_my_lv" style="width:47%;" ><img src="common/images/icon_lv5_p.png"></div>
+
+                                <div class="levelup_my_lv" style="width:55%;" ><img src="common/images/icon_lv6_p.png"></div>
+
+                                <div class="levelup_my_lv" style="width:65%;" ><img src="common/images/icon_lv7_p.png"></div>
+
+                        </div>
+
+
+                        <div class="levelup_timeblock_enemy">
+
+                                <div class="levelup_enemy_lv" style="width:12%;" ><img src="common/images/icon_lv2_b.png"></div>
+
+                                <div class="levelup_enemy_lv" style="width:21%;" ><img src="common/images/icon_lv3_b.png"></div>
+
+                                <div class="levelup_enemy_lv" style="width:33%;" ><img src="common/images/icon_lv4_b.png"></div>
+
+                                <div class="levelup_enemy_lv" style="width:51%;" ><img src="common/images/icon_lv5_b.png"></div>
+
+                                <div class="levelup_enemy_lv" style="width:58%;" ><img src="common/images/icon_lv6_b.png"></div>
+
+                                <div class="levelup_enemy_lv" style="width:74%;" ><img src="common/images/icon_lv7_b.png"></div>
+
+                        </div>
+
+                        <!--●兵士撃破数-->
+                        <div class="mtc_detail_data_heishi">69体</div>
+                        <!--●キャスト撃破数-->
+                        <div class="mtc_detail_data_cast">3体</div>
+                        <!--●巨人撃破数-->
+                        <div class="mtc_detail_data_titan">1体</div>
+                        <!--●撤退数-->
+                        <div class="mtc_detail_data_tettai">1回</div>
+                        <!--●ストレートショット-->
+                        <div class="mtc_detail_data_sts">257回</div>
+                        <!--●ストレートショットHIT-->
+                        <div class="mtc_detail_data_stshit">38回</div>
+                        <!--●ドローショット-->
+                        <div class="mtc_detail_data_drs">6回</div>
+                        <!--●ドローショットHIT-->
+                        <div class="mtc_detail_data_drshit">3回</div>
+                        <!--●帰城-->
+                        <div class="mtc_detail_data_backhome">0回</div>
+                        <!--●ストレートショット被HIT-->
+                        <div class="mtc_detail_data_sts2hit">17回</div>
+                        <!--●ドローショット被HIT-->
+                        <div class="mtc_detail_data_drs2hit">7回</div>
+                        <!--●拠点破壊数-->
+                        <div class="mtc_detail_data2_kyoten">4個</div>
+                        <!--●入手経験値-->
+                        <div class="mtc_detail_data2_exp">61</div>
+                </div>
+                <!--△マイデータ-->
+
+                <div class="mtc_detail_member clearfix">
+                        <!--味方チーム-->
+                        <div class="mtc_detail_myteam">
+
+                                <div class="mtc_detail_member_block" id="friend_0" com="false">
+                                        <img src="common/img_cast/d64471e81223d8ecd0bdb952f5e1b4c4.png">
+                                        <div class="mtc_detail_member_name">ＭａＲｕ</div>
+                                </div>
+
+                                <div class="mtc_detail_member_block" id="friend_1" com="false">
+                                        <img src="common/img_cast/204e0c23b7125c0a98f3177edba10d34.png">
+                                        <div class="mtc_detail_member_name">しんしあ</div>
+                                </div>
+
+                                <div class="mtc_detail_member_block" id="friend_2" com="false">
+                                        <img src="common/img_cast/97ad11bfcaa92585cdd3fbb402701f52.png">
+                                        <div class="mtc_detail_member_name">黒マメ</div>
+                                </div>
+
+                        </div>
+                        <!--敵チーム-->
+                        <div class="mtc_detail_enemy">
+
+                                <div class="mtc_detail_member_block" id="enemy_0"  com="false">
+                                        <img src="common/img_cast/97ad11bfcaa92585cdd3fbb402701f52.png">
+                                        <div class="mtc_detail_member_name">Ｋｒｕｓ</div>
+                                </div>
+
+                                <div class="mtc_detail_member_block" id="enemy_1"  com="false">
+                                        <img src="common/img_cast/215b1f54c6876610342c096147210d6e.png">
+                                        <div class="mtc_detail_member_name">ｈａｗａｒｏ</div>
+                                </div>
+
+                                <div class="mtc_detail_member_block" id="enemy_2"  com="false">
+                                        <img src="common/img_cast/ef85f1880111fb4822b0a995dfec5d69.png">
+                                        <div class="mtc_detail_member_name">マタドガス新衛隊</div>
+                                </div>
+
+                                <div class="mtc_detail_member_block" id="enemy_3"  com="false">
+                                        <img src="common/img_cast/e8dc8eb3197e15b4316b8335be52affd.png">
+                                        <div class="mtc_detail_member_name">ＨＩＥＮ</div>
+                                </div>
+
+                        </div>
+                </div>
+                <div class="pageback"><a href="matchlog.html?type=bb">対戦履歴一覧に戻る</a></div>
+        </div>
+        <!--▲コンテンツ-->
+
+        <!--▼フッタ-->
+        <div id="footer">
+                <div class="footer_attention">本サイトで使用されている画像、文章、情報、動画等の無断転載を禁じます。</div>
+                <div id="copyright">&copy;SEGA</div>
+        </div>
+        <!--▲フッタ-->
+
+
+
+        <div id="match_detail_member_pop" class="match_pop_window" type="friend" index="0" >
+                <div class="mp_mydata_name">ＭａＲｕ</div>
+                <div class="mp_mydata_location">滋　賀</div>
+
+                <div class="ball_detail_upperblock">
+
+
+
+                        <div class="ball_detail_m_with" style="background-image:url(common/images/bg_march_detail_with1.png);">
+                                <div class="ball_detail_m_with_num"><script>partner_num("17",1);</script></div>
+                        </div>
+
+                        <div class="ball_detail_m_cast"><img src="common/img_cast/d64471e81223d8ecd0bdb952f5e1b4c4.png"></div>
+                </div>
+
+
+                <div class="mtc_detail_m_skill">
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+                        <img src="common/img_card_thum/skill/3b4627601e11dce6663ef96353a197ad.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+                        <img src="common/img_card_thum/skill/b691e23f5a0e6bf4891824b63f756a00.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+2</div>
+
+
+                        <img src="common/img_card_thum/skill/923747f4c0a0c32e91076aca9b82b133.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+                        <img src="common/img_card_thum/skill/9624332b5059af08ed394d8c4ca0efcc.png">
+
+                        </div>
+
+                </div>
+                <div class="mtc_detail_m_assist">
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+                        <img src="common/img_card_thum/assist/916d4881c3116f09fab4624331210ceb.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+                        <img src="common/img_card_thum/assist/03ee802603df03a961cff05fc0dcacc5.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+                        <img src="common/img_card_thum/assist/5f37bf488c8aeacdccbda1e91cd8913e.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+2</div>
+
+
+                        <img src="common/img_card_thum/soul/75ea5775981e2126d165cfa38f9f0708.png">
+
+                        </div>
+
+                </div>
+                <div id="btn_popup_close" class="match_pop_close">閉じる</div>
+        </div>
+
+
+
+        <div id="match_detail_member_pop" class="match_pop_window" type="friend" index="1" >
+                <div class="mp_mydata_name">しんしあ</div>
+                <div class="mp_mydata_location">大　阪</div>
+
+                <div class="ball_detail_upperblock">
+
+
+                        <div class="ball_detail_m_with" style="background-image:url(common/images/bg_march_detail_with2.png);">
+                                <div class="ball_detail_m_with_num"><script>partner_num("100",0);</script></div>
+                        </div>
+
+
+                        <div class="ball_detail_m_cast"><img src="common/img_cast/204e0c23b7125c0a98f3177edba10d34.png"></div>
+                </div>
+
+
+                <div class="mtc_detail_m_skill">
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+2</div>
+
+
+                        <img src="common/img_card_thum/skill/757cdbb8295889eee10fa2a826eba0c6.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+                                <div class="mtc_detail_cardblock_lv lv_max">MAX</div>
+
+                        <img src="common/img_card_thum/skill/4e267e600695445d89bf55bcc4c621ed.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+                                <div class="mtc_detail_cardblock_lv lv_max">MAX</div>
+
+                        <img src="common/img_card_thum/skill/4083f078feb1206ff84e4e0b07433be5.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+                                <div class="mtc_detail_cardblock_lv lv_max">MAX</div>
+
+                        <img src="common/img_card_thum/skill/f35ad52cd1f07d21a25dc191f20b2d08.png">
+
+                        </div>
+
+                </div>
+                <div class="mtc_detail_m_assist">
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+8</div>
+
+
+                        <img src="common/img_card_thum/assist/a90faec808e8f10c14724bce312217b3.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+1</div>
+
+
+                        <img src="common/img_card_thum/assist/177be60cb1690a6a7c13a6d4db166a17.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+5</div>
+
+
+                        <img src="common/img_card_thum/assist/25a003b0badbd9e537daedc2a78decbd.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+7</div>
+
+
+                        <img src="common/img_card_thum/soul/b3cce0ea37ede0a697a571bccce4ae88.png">
+
+                        </div>
+
+                </div>
+                <div id="btn_popup_close" class="match_pop_close">閉じる</div>
+        </div>
+
+
+
+        <div id="match_detail_member_pop" class="match_pop_window" type="friend" index="2" >
+                <div class="mp_mydata_name">黒マメ</div>
+                <div class="mp_mydata_location">静　岡</div>
+
+                <div class="ball_detail_upperblock">
+
+
+
+                        <div class="ball_detail_m_with" style="background-image:url(common/images/bg_march_detail_with1.png);">
+                                <div class="ball_detail_m_with_num"><script>partner_num("45",1);</script></div>
+                        </div>
+
+                        <div class="ball_detail_m_cast"><img src="common/img_cast/97ad11bfcaa92585cdd3fbb402701f52.png"></div>
+                </div>
+
+
+                <div class="mtc_detail_m_skill">
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+5</div>
+
+
+                        <img src="common/img_card_thum/skill/81e141dafb61ac9d88df69446184309e.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+                                <div class="mtc_detail_cardblock_lv lv_max">MAX</div>
+
+                        <img src="common/img_card_thum/skill/bcaa7b85c5dca7ead2bb7cd05bc0ea32.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+6</div>
+
+
+                        <img src="common/img_card_thum/skill/c7b624d8e0f015d3640f523c58f72148.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+                                <div class="mtc_detail_cardblock_lv lv_max">MAX</div>
+
+                        <img src="common/img_card_thum/skill/94193ecfdaf320a861da0084bc529ed0.png">
+
+                        </div>
+
+                </div>
+                <div class="mtc_detail_m_assist">
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+4</div>
+
+
+                        <img src="common/img_card_thum/assist/5f37bf488c8aeacdccbda1e91cd8913e.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+                                <div class="mtc_detail_cardblock_lv lv_max">MAX</div>
+
+                        <img src="common/img_card_thum/assist/38c9063fd5d62cdfda3023085b79490e.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+2</div>
+
+
+                        <img src="common/img_card_thum/assist/175c6daa1d28a32dd7282c9c6132c16d.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+5</div>
+
+
+                        <img src="common/img_card_thum/soul/866fa39c60de0c4595d1cf1fefe02721.png">
+
+                        </div>
+
+                </div>
+                <div id="btn_popup_close" class="match_pop_close">閉じる</div>
+        </div>
+
+
+
+
+        <div id="match_detail_member_pop" class="match_pop_window" type="enemy" index="0">
+                <div class="mp_mydata_name">Ｋｒｕｓ</div>
+                <div class="mp_mydata_location">東　京</div>
+
+                <div class="ball_detail_upperblock">
+
+                        <div class="ball_detail_m_cast2"><img src="common/img_cast/97ad11bfcaa92585cdd3fbb402701f52.png"></div>
+                </div>
+
+
+                <div class="mtc_detail_m_skill">
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+1</div>
+
+
+                        <img src="common/img_card_thum/skill/81e141dafb61ac9d88df69446184309e.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+                        <img src="common/img_card_thum/skill/94193ecfdaf320a861da0084bc529ed0.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+
+                        <img src="common/img_card_thum/deck_nocard.png">
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+
+                        <img src="common/img_card_thum/deck_nocard.png">
+                        </div>
+
+                </div>
+                <div class="mtc_detail_m_assist">
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+
+                        <img src="common/img_card_thum/deck_nocard.png">
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+
+                        <img src="common/img_card_thum/deck_nocard.png">
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+
+                        <img src="common/img_card_thum/deck_nocard.png">
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+
+                        <img src="common/img_card_thum/deck_nocard.png">
+                        </div>
+
+                </div>
+                <div id="btn_popup_close" class="match_pop_close">閉じる</div>
+        </div>
+
+
+
+        <div id="match_detail_member_pop" class="match_pop_window" type="enemy" index="1">
+                <div class="mp_mydata_name">ｈａｗａｒｏ</div>
+                <div class="mp_mydata_location">大　阪</div>
+
+                <div class="ball_detail_upperblock">
+
+                        <div class="ball_detail_m_cast2"><img src="common/img_cast/215b1f54c6876610342c096147210d6e.png"></div>
+                </div>
+
+
+                <div class="mtc_detail_m_skill">
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+3</div>
+
+
+                        <img src="common/img_card_thum/skill/a83f49d48c48d087381d716d018926c9.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+1</div>
+
+
+                        <img src="common/img_card_thum/skill/ac06a057e56b3c36087dc025e6a1ce25.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+4</div>
+
+
+                        <img src="common/img_card_thum/skill/28618156e292495b4f68502349c336a6.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+3</div>
+
+
+                        <img src="common/img_card_thum/skill/a3aed9e8ed16ce28dc636d6476fb79be.png">
+
+                        </div>
+
+                </div>
+                <div class="mtc_detail_m_assist">
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+3</div>
+
+
+                        <img src="common/img_card_thum/assist/8dde9a2ecbafcc270628ef6487c06d92.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+2</div>
+
+
+                        <img src="common/img_card_thum/assist/0a2c285cb163507810d63e39c8330cc6.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+5</div>
+
+
+                        <img src="common/img_card_thum/assist/7e274d754a706bf35a0e73d74a510308.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+                        <img src="common/img_card_thum/soul/b3cce0ea37ede0a697a571bccce4ae88.png">
+
+                        </div>
+
+                </div>
+                <div id="btn_popup_close" class="match_pop_close">閉じる</div>
+        </div>
+
+
+
+        <div id="match_detail_member_pop" class="match_pop_window" type="enemy" index="2">
+                <div class="mp_mydata_name">マタドガス新衛隊</div>
+                <div class="mp_mydata_location">大　阪</div>
+
+                <div class="ball_detail_upperblock">
+
+                        <div class="ball_detail_m_cast2"><img src="common/img_cast/ef85f1880111fb4822b0a995dfec5d69.png"></div>
+                </div>
+
+
+                <div class="mtc_detail_m_skill">
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+                        <img src="common/img_card_thum/skill/13e2e4cf0021ef1d513161bab1288cb8.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+                        <img src="common/img_card_thum/skill/ad1bf10a1a4a905b13575f5553b40864.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+                        <img src="common/img_card_thum/skill/02d52e24f666178c1eed83792bcde4d1.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+3</div>
+
+
+                        <img src="common/img_card_thum/skill/ead1fb7a328c9dee60fff55fca5a11eb.png">
+
+                        </div>
+
+                </div>
+                <div class="mtc_detail_m_assist">
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+8</div>
+
+
+                        <img src="common/img_card_thum/assist/0a2c285cb163507810d63e39c8330cc6.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+2</div>
+
+
+                        <img src="common/img_card_thum/assist/01c2419e719d5fbbf76d1950db1dc02b.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+2</div>
+
+
+                        <img src="common/img_card_thum/assist/6a0c6636c4005c8e6f59e342ecab93bd.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+1</div>
+
+
+                        <img src="common/img_card_thum/soul/b3cce0ea37ede0a697a571bccce4ae88.png">
+
+                        </div>
+
+                </div>
+                <div id="btn_popup_close" class="match_pop_close">閉じる</div>
+        </div>
+
+
+
+        <div id="match_detail_member_pop" class="match_pop_window" type="enemy" index="3">
+                <div class="mp_mydata_name">ＨＩＥＮ</div>
+                <div class="mp_mydata_location">群　馬</div>
+
+                <div class="ball_detail_upperblock">
+
+                        <div class="ball_detail_m_cast2"><img src="common/img_cast/e8dc8eb3197e15b4316b8335be52affd.png"></div>
+                </div>
+
+
+                <div class="mtc_detail_m_skill">
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+                        <img src="common/img_card_thum/skill/7b9753735241e99fb46b951c256f2015.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+
+
+                        <img src="common/img_card_thum/skill/2ab360f83be1c0f046b2d1d82064b99a.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+3</div>
+
+
+                        <img src="common/img_card_thum/skill/1915c83d9ba1891310b71c45d22217db.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+4</div>
+
+
+                        <img src="common/img_card_thum/skill/97deb872df8e7e8f618dad3b452ad0a0.png">
+
+                        </div>
+
+                </div>
+                <div class="mtc_detail_m_assist">
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+2</div>
+
+
+                        <img src="common/img_card_thum/assist/6ca43b46f4c8fd20a674416d181c206a.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+3</div>
+
+
+                        <img src="common/img_card_thum/assist/38c9063fd5d62cdfda3023085b79490e.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+                                <div class="mtc_detail_cardblock_lv">+1</div>
+
+
+                        <img src="common/img_card_thum/assist/990f538dbe8c3e4f5a17e4ae2a5a213e.png">
+
+                        </div>
+
+                        <div class="mtc_detail_m_cardblock">
+
+
+                                <div class="mtc_detail_cardblock_lv lv_max">MAX</div>
+
+                        <img src="common/img_card_thum/soul/75ea5775981e2126d165cfa38f9f0708.png">
+
+                        </div>
+
+                </div>
+                <div id="btn_popup_close" class="match_pop_close">閉じる</div>
+        </div>
+
+
 </div>
 </body>
 </html>
-

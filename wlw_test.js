@@ -1399,7 +1399,12 @@ function match_cast_add(ary_no){
 					if(match_cast_img[match_cast_cnt].complete || match_cast_img[match_cast_cnt].readyState === "complete"){
 						match_cast_role[match_cast_cnt] = img_proc(match_cast_img[match_cast_cnt], "role");
 					} else {
-						match_cast_role[match_cast_cnt] = "unknown";
+						setTimeout(console.log("setTimeout"), 0);
+						if(match_cast_img[match_cast_cnt].complete || match_cast_img[match_cast_cnt].readyState === "complete"){
+							match_cast_role[match_cast_cnt] = img_proc(match_cast_img[match_cast_cnt], "role");
+						} else {
+							match_cast_role[match_cast_cnt] = "unknown";
+						}
 					}
 					// キャストの登録番号を進める
 					match_cast_cnt++;

@@ -975,7 +975,10 @@ function hyouji(){
 		addNode("アタッカー比率", "", 12, "cast");
 		addNode("サポーター比率", "", 13, "cast");
 		
-		//addNode("サポーター比率", Math.floor(match_role_ary[2] * 1000 / match_castsum) / 10 + "%", 13, "cast");
+		// キャストロール取得
+		for(var cnt = 0; cnt < match_cast_result.length; cnt++){
+			matchcast_setimg(match_cast_result[cnt][0], cnt);
+		}
 		
 		// キャスト登場率ランキング
 		addNode("登場数ランキング", "", 15, "cast");
@@ -1342,9 +1345,6 @@ function match_cast_add(ary_no){
 				
 				// まだ登録されていないキャストの場合
 				if(chkcast_flg == 0){
-					// マッチングキャスト画像の事前読み込み
-					matchcast_setimg(cast_url_plus + result_battle[ary_no][26][match_cnt][1], match_cast_cnt);
-					
 					// キャスト画像
 					ary_tmp[0] = cast_url_plus + result_battle[ary_no][26][match_cnt][1];
 					// キャスト登場回数

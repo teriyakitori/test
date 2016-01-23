@@ -192,7 +192,7 @@ var errmsg = [
 // 本処理
 // 開始URLをチェックし、対戦履歴ページなら処理を開始する
 if( urlchk() ){
-	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性もあります。\n最終更新日 2016/1/23");
+	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性もあります。\n最終更新日 2016/1/24");
 	
 	// エラー表示用の日付取得
 	try{
@@ -729,21 +729,7 @@ function syukei(strdata, mode){
 			break;
 		}
 	}
-	/*
-	// ロール別のキャスト数集計
-	for(var cnt = 0; cnt < match_cast_result.length; cnt++){
-		if(match_cast_role[cnt] == "F"){
-			match_role_ary[0] += match_cast_result[cnt][1];
-		} else if(match_cast_role[cnt] == "A") {
-			match_role_ary[1] += match_cast_result[cnt][1];
-		} else if(match_cast_role[cnt] == "S") {
-			match_role_ary[2] += match_cast_result[cnt][1];
-		} else {
-			console.log(match_cast_result[cnt][0]);
-			match_role_ary[3] += match_cast_result[cnt][1];
-		}
-	}
-	*/
+	
 	battle_cnt -= skip_cnt;
 }
 
@@ -988,22 +974,7 @@ function hyouji(){
 		addNode("ファイター比率", "", 11, "cast");
 		addNode("アタッカー比率", "", 12, "cast");
 		addNode("サポーター比率", "", 13, "cast");
-		/*
-		for(cnt = 0; cnt < match_cast_img.length; cnt++){
-			if(match_cast_img[cnt].complete || match_cast_img[cnt].readyState === "complete"){
-				console.log("成功1:" + match_cast_img[cnt].src);
-			} else {
-				await new Promise((resolve)=>{
-			        setTimeout(resolve,2000);
-			    });
-				if(match_cast_img[cnt].complete || match_cast_img[cnt].readyState === "complete"){
-					console.log("成功2:" + match_cast_img[cnt].src);
-				} else {
-					console.log("失敗:" + match_cast_img[cnt].src);
-				}
-			}
-		}
-		*/
+		
 		//addNode("サポーター比率", Math.floor(match_role_ary[2] * 1000 / match_castsum) / 10 + "%", 13, "cast");
 		
 		// キャスト登場率ランキング
@@ -1373,13 +1344,7 @@ function match_cast_add(ary_no){
 				if(chkcast_flg == 0){
 					// マッチングキャスト画像の事前読み込み
 					matchcast_setimg(cast_url_plus + result_battle[ary_no][26][match_cnt][1], match_cast_cnt);
-					/*
-					match_cast_img[match_cast_cnt] = new Image();
-					match_cast_img[match_cast_cnt].onload = function(){
-						console.log(match_cast_img[match_cast_cnt].complete + "|" + match_cast_img[match_cast_cnt].readyState + "|" + match_cast_img[match_cast_cnt].src);
-					}
-					match_cast_img[match_cast_cnt].src = cast_url_plus + result_battle[ary_no][26][match_cnt][1];
-					*/
+					
 					// キャスト画像
 					ary_tmp[0] = cast_url_plus + result_battle[ary_no][26][match_cnt][1];
 					// キャスト登場回数
@@ -1419,12 +1384,7 @@ function match_cast_add(ary_no){
 						}
 					}
 					match_cast_result[match_cast_cnt] = ary_tmp;
-					// キャスト画像のロールを取得
-					if(match_cast_img[match_cast_cnt].complete || match_cast_img[match_cast_cnt].readyState === "complete"){
-						match_cast_role[match_cast_cnt] = img_proc(match_cast_img[match_cast_cnt], "role");
-					} else {
-						match_cast_role[match_cast_cnt] = "unknown";
-					}
+					
 					// キャストの登録番号を進める
 					match_cast_cnt++;
 				}
@@ -1440,13 +1400,40 @@ function match_cast_add(ary_no){
 	}
 }
 
+// マッチングキャストのロール取得用
 function matchcast_setimg(match_casturl, match_castno){
 	match_cast_img[match_castno] = new Image();
 	match_cast_img[match_castno].onload = function(){
-		console.log(castimg_cnt + "|" + match_cast_img[match_castno].complete + "|" + match_cast_img[match_castno].readyState + "|" + match_cast_img[match_castno].src);
 		castimg_cnt++;
 		if(match_cast_cnt == castimg_cnt){
-			console.log("in:" + match_cast_cnt + "|" + castimg_cnt);
+			// キャスト画像のロールを取得
+			for(cnt = 0; cnt < match_cast_img.length; cnt++){
+				if(match_cast_img[cnt].complete || match_cast_img[cnt].readyState === "complete"){
+					match_cast_role[cnt] = img_proc(match_cast_img[cnt], "role");
+				} else {
+					match_cast_role[cnt] = "unknown";
+				}
+			}
+			// ロール別のキャスト数集計
+			for(var cnt = 0; cnt < match_cast_role.length; cnt++){
+				if(match_cast_role[cnt] == "F"){
+					match_role_ary[0] += match_cast_result[cnt][1];
+				} else if(match_cast_role[cnt] == "A") {
+					match_role_ary[1] += match_cast_result[cnt][1];
+				} else if(match_cast_role[cnt] == "S") {
+					match_role_ary[2] += match_cast_result[cnt][1];
+				} else {
+					console.log(match_cast_result[cnt][0]);
+					match_role_ary[3] += match_cast_result[cnt][1];
+				}
+			}
+			
+			var sum_castroll = match_role_ary[0] + match_role_ary[1] + match_role_ary[2];
+			// ロールに表示
+			cast_ary[11].innerHTML = math.floor(match_role_ary[0] * 1000 / sum_castroll) / 10 + "%";
+			cast_ary[12].innerHTML = math.floor(match_role_ary[1] * 1000 / sum_castroll) / 10 + "%";
+			cast_ary[13].innerHTML = math.floor(match_role_ary[2] * 1000 / sum_castroll) / 10 + "%";
+			console.log(match_role_ary);
 		}
 	}
 	match_cast_img[match_castno].src = match_casturl;
@@ -2049,7 +2036,7 @@ function select_fun(getno){
 			alert(lsdata_getcnt + "件のデータを削除しました。");
 		}
 	} else if(getno == 10){
-		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2016/1/23です。\nマッチングキャストデータの下部に、ロールごとの割合を表示するようにしました。\n詳しくはtwitterアカウント「@wlw_honkideya」をご覧ください。");
+		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2016/1/24です。\nマッチングキャストデータの下部に、ロールごとの割合を表示するようにしました。\n詳しくはtwitterアカウント「@wlw_honkideya」をご覧ください。");
 	}
 }
 

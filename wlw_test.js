@@ -1765,8 +1765,10 @@ function img_proc(getimg, mode){
 	if(mode == "role"){
 		var canvas = document.createElement("canvas");
 		var context = canvas.getContext("2d");
-		width = getimg.naturalWidth;
-		height = getimg.naturalHeight;
+		width = getimg.width;
+		height = getimg.height;
+		//width = getimg.naturalWidth;
+		//height = getimg.naturalHeight;
 		canvas.width = width;
 		canvas.height = height;
 		context.drawImage(getimg, 0, 0);

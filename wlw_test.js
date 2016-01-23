@@ -1776,6 +1776,7 @@ function img_proc(getimg, mode){
 		var cast_pix = imgdata.data[idx+3];
 		if(getimg.src.match("456b577a7816af61171d60fb80fb71fd.png")){
 			alert(cast_pix);
+			console.log(cast_pix);
 		}
 		if(cast_pix == 255){
 			rtn = "F";

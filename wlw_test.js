@@ -130,6 +130,10 @@ var cast_result = [];
 var match_cast_result = [];
 // プレイヤーのスキルをセットしていた回数を格納
 var cast_result_skillset = [];
+// マッチングしたキャストのロールを格納する
+var match_cast_role = [];
+// マッチングしたキャストのロール数を格納する
+var match_role_ary = [0, 0, 0, 0];
 
 // 表示サイズ用
 var icon_width = 0;
@@ -184,7 +188,7 @@ var errmsg = [
 // 本処理
 // 開始URLをチェックし、対戦履歴ページなら処理を開始する
 if( urlchk() ){
-	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性もあります。\n最終更新日 2016/1/11");
+	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性もあります。\n最終更新日 2016/1/23");
 	
 	// エラー表示用の日付取得
 	try{
@@ -721,6 +725,20 @@ function syukei(strdata, mode){
 			break;
 		}
 	}
+	
+	// ロール別のキャスト数集計
+	for(var cnt = 0; cnt < match_cast_result.length; cnt++){
+		if(match_cast_role[cnt] == "F"){
+			match_role_ary[0] += match_cast_result[cnt][1];
+		} else if(match_cast_role[cnt] == "A") {
+			match_role_ary[1] += match_cast_result[cnt][1];
+		} else if(match_cast_role[cnt] == "S") {
+			match_role_ary[2] += match_cast_result[cnt][1];
+		} else {
+			console.log(match_cast_result[cnt][0]);
+			match_role_ary[3] += match_cast_result[cnt][1];
+		}
+	}
 	battle_cnt -= skip_cnt;
 }
 
@@ -960,8 +978,15 @@ function hyouji(){
 		addCard(nocard_img, "", 17, "cast");
 		castNode.appendChild(dtlNode);
 		
+		// キャストロール比率
+		var match_castsum = match_role_ary[0] + match_role_ary[1] + match_role_ary[2];
+		addNode("マッチング情報", "対象試合数:" + battle_cnt, 10, "cast");
+		addNode("ファイター比率", Math.floor(match_role_ary[0] * 1000 / match_castsum) / 10 + "%", 11, "cast");
+		addNode("アタッカー比率", Math.floor(match_role_ary[1] * 1000 / match_castsum) / 10 + "%", 12, "cast");
+		addNode("サポーター比率", Math.floor(match_role_ary[2] * 1000 / match_castsum) / 10 + "%", 13, "cast");
+		
 		// キャスト登場率ランキング
-		addNode("登場数ランキング", "対象試合数:" + battle_cnt, 5, "cast");
+		addNode("登場数ランキング", "", 15, "cast");
 		
 		dtlNode = document.createElement("div");
 		dtlNode.className = "mtc_detail_skill";
@@ -1215,6 +1240,8 @@ function cast_result_add(cast_no, ary_no){
 // マッチング相手の集計処理
 function match_cast_add(ary_no){
 	try {
+		var match_cast_img = [];
+		
 		// マッチングキャスト上限の7キャスト分ループする、COMが含まれていても7回
 		for(var match_cnt = 0; match_cnt < result_battle[ary_no][26].length; match_cnt++){
 			var ary_tmp = [];
@@ -1325,6 +1352,9 @@ function match_cast_add(ary_no){
 				
 				// まだ登録されていないキャストの場合
 				if(chkcast_flg == 0){
+					// マッチングキャスト画像の事前読み込み
+					match_cast_img[match_cast_cnt] = new Image();
+					match_cast_img[match_cast_cnt].src = cast_url_plus + result_battle[ary_no][26][match_cnt][1];
 					// キャスト画像
 					ary_tmp[0] = cast_url_plus + result_battle[ary_no][26][match_cnt][1];
 					// キャスト登場回数
@@ -1364,6 +1394,13 @@ function match_cast_add(ary_no){
 						}
 					}
 					match_cast_result[match_cast_cnt] = ary_tmp;
+					
+					// キャスト画像のロールを取得
+					if(match_cast_img[match_cast_cnt].complete || match_cast_img[match_cast_cnt].readyState === "complete"){
+						match_cast_role[match_cast_cnt] = img_proc(match_cast_img[match_cast_cnt], "role");
+					} else {
+						match_cast_role[match_cast_cnt] = "unknown";
+					}
 					// キャストの登録番号を進める
 					match_cast_cnt++;
 				}
@@ -1698,6 +1735,38 @@ function addCard(imgurl, usecnt, node_no, mode){
 	}
 }
 
+// 画像処理用関数
+function img_proc(getimg, mode){
+	var rtn = "";
+	// キャストのロール判定
+	if(mode == "role"){
+		var canvas = document.createElement("canvas");
+		var context = canvas.getContext("2d");
+		width = getimg.naturalWidth;
+		height = getimg.naturalHeight;
+		canvas.width = width;
+		canvas.height = height;
+		context.drawImage(getimg, 0, 0);
+		
+		var imgdata = context.getImageData(0, 0, 70, 65);
+		var idx = (15 + 30 * imgdata.width) * 4;
+		var cast_pix = imgdata.data[idx+3];
+		if(cast_pix == 255){
+			rtn = "F";
+		} else if(cast_pix == 0) {
+			rtn = "A";
+		} else if(cast_pix == 8) {
+			rtn = "S";
+		} else {
+			rtn = "unknown";
+		}
+	} else {
+		rtn = "";
+	}
+	
+	return rtn;
+}
+
 // テスト版機能のメニュー
 function select_fun(getno){
 	// ローカルストレージに保存する処理
@@ -1903,9 +1972,11 @@ function select_fun(getno){
 				inspos.parentNode.removeChild(castNode);
 				inspos.parentNode.removeChild(selecttest);
 				
+				// 数値の初期化
 				cast_cnt = 0;
 				match_cast_cnt = 0;
 				match_cast_sum = 0;
+				match_role_ary = [0, 0, 0, 0];
 				
 				// データの再構成、同じ形にするために最新データから入れる
 				battle_cnt = lsdata_getcnt;
@@ -1941,7 +2012,7 @@ function select_fun(getno){
 			alert(lsdata_getcnt + "件のデータを削除しました。");
 		}
 	} else if(getno == 10){
-		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2016/1/11です。\n舞闘会モードを追加しました。\n全国対戦との違いは、オプション機能での保存ができるかどうかのみです。\n詳しくはtwitterアカウント「@wlw_honkideya」をご覧ください。");
+		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2016/1/23です。\nマッチングキャストデータの下部に、ロールごとの割合を表示するようにしました。\n詳しくはtwitterアカウント「@wlw_honkideya」をご覧ください。");
 	}
 }
 

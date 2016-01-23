@@ -136,6 +136,8 @@ var match_cast_img = [];
 var match_cast_role = [];
 // マッチングしたキャストのロール数を格納する
 var match_role_ary = [0, 0, 0, 0];
+// マッチングしたキャスト種類をカウント
+var castimg_cnt = 0;
 
 // 表示サイズ用
 var icon_width = 0;
@@ -1441,7 +1443,11 @@ function match_cast_add(ary_no){
 function matchcast_setimg(match_casturl, match_castno){
 	match_cast_img[match_castno] = new Image();
 	match_cast_img[match_castno].onload = function(){
-		console.log(match_cast_img[match_castno].complete + "|" + match_cast_img[match_castno].readyState + "|" + match_cast_img[match_castno].src);
+		console.log(castimg_cnt + "|" + match_cast_img[match_castno].complete + "|" + match_cast_img[match_castno].readyState + "|" + match_cast_img[match_castno].src);
+		castimg_cnt++;
+		if(match_cast_cnt == castimg_cnt){
+			console.log("in:" + match_cast_cnt + "|" + castimg_cnt);
+		}
 	}
 	match_cast_img[match_castno].src = match_casturl;
 }
@@ -2006,6 +2012,7 @@ function select_fun(getno){
 				cast_cnt = 0;
 				match_cast_cnt = 0;
 				match_cast_sum = 0;
+				castimg_cnt = 0;
 				match_role_ary = [0, 0, 0, 0];
 				
 				// データの再構成、同じ形にするために最新データから入れる

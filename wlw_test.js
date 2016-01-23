@@ -1433,7 +1433,7 @@ function matchcast_setimg(match_casturl, match_castno){
 			cast_ary[11].innerHTML = Math.floor(match_role_ary[0] * 1000 / sum_castroll) / 10 + "%";
 			cast_ary[12].innerHTML = Math.floor(match_role_ary[1] * 1000 / sum_castroll) / 10 + "%";
 			cast_ary[13].innerHTML = Math.floor(match_role_ary[2] * 1000 / sum_castroll) / 10 + "%";
-			console.log(match_role_ary);
+			alert(sum_castroll + "|" + match_role_ary[0] + "|" + match_role_ary[1] + "|" + match_role_ary[2] + "|" + match_role_ary[3]);
 		}
 	}
 	match_cast_img[match_castno].src = match_casturl;

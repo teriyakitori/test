@@ -1430,9 +1430,9 @@ function matchcast_setimg(match_casturl, match_castno){
 			
 			var sum_castroll = match_role_ary[0] + match_role_ary[1] + match_role_ary[2];
 			// ロールに表示
-			cast_ary[11].innerHTML = math.floor(match_role_ary[0] * 1000 / sum_castroll) / 10 + "%";
-			cast_ary[12].innerHTML = math.floor(match_role_ary[1] * 1000 / sum_castroll) / 10 + "%";
-			cast_ary[13].innerHTML = math.floor(match_role_ary[2] * 1000 / sum_castroll) / 10 + "%";
+			cast_ary[11].innerHTML = Math.floor(match_role_ary[0] * 1000 / sum_castroll) / 10 + "%";
+			cast_ary[12].innerHTML = Math.floor(match_role_ary[1] * 1000 / sum_castroll) / 10 + "%";
+			cast_ary[13].innerHTML = Math.floor(match_role_ary[2] * 1000 / sum_castroll) / 10 + "%";
 			console.log(match_role_ary);
 		}
 	}

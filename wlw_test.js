@@ -130,6 +130,8 @@ var cast_result = [];
 var match_cast_result = [];
 // プレイヤーのスキルをセットしていた回数を格納
 var cast_result_skillset = [];
+// マッチングしたキャスト画像を格納する
+var match_cast_img = [];
 // マッチングしたキャストのロールを格納する
 var match_cast_role = [];
 // マッチングしたキャストのロール数を格納する
@@ -725,7 +727,7 @@ function syukei(strdata, mode){
 			break;
 		}
 	}
-	
+	/*
 	// ロール別のキャスト数集計
 	for(var cnt = 0; cnt < match_cast_result.length; cnt++){
 		if(match_cast_role[cnt] == "F"){
@@ -739,6 +741,7 @@ function syukei(strdata, mode){
 			match_role_ary[3] += match_cast_result[cnt][1];
 		}
 	}
+	*/
 	battle_cnt -= skip_cnt;
 }
 
@@ -979,11 +982,27 @@ function hyouji(){
 		castNode.appendChild(dtlNode);
 		
 		// キャストロール比率
-		var match_castsum = match_role_ary[0] + match_role_ary[1] + match_role_ary[2];
 		addNode("マッチング情報", "対象試合数:" + battle_cnt, 10, "cast");
-		addNode("ファイター比率", Math.floor(match_role_ary[0] * 1000 / match_castsum) / 10 + "%", 11, "cast");
-		addNode("アタッカー比率", Math.floor(match_role_ary[1] * 1000 / match_castsum) / 10 + "%", 12, "cast");
-		addNode("サポーター比率", Math.floor(match_role_ary[2] * 1000 / match_castsum) / 10 + "%", 13, "cast");
+		addNode("ファイター比率", "", 11, "cast");
+		addNode("アタッカー比率", "", 12, "cast");
+		addNode("サポーター比率", "", 13, "cast");
+		/*
+		for(cnt = 0; cnt < match_cast_img.length; cnt++){
+			if(match_cast_img[cnt].complete || match_cast_img[cnt].readyState === "complete"){
+				console.log("成功1:" + match_cast_img[cnt].src);
+			} else {
+				await new Promise((resolve)=>{
+			        setTimeout(resolve,2000);
+			    });
+				if(match_cast_img[cnt].complete || match_cast_img[cnt].readyState === "complete"){
+					console.log("成功2:" + match_cast_img[cnt].src);
+				} else {
+					console.log("失敗:" + match_cast_img[cnt].src);
+				}
+			}
+		}
+		*/
+		//addNode("サポーター比率", Math.floor(match_role_ary[2] * 1000 / match_castsum) / 10 + "%", 13, "cast");
 		
 		// キャスト登場率ランキング
 		addNode("登場数ランキング", "", 15, "cast");
@@ -1240,8 +1259,6 @@ function cast_result_add(cast_no, ary_no){
 // マッチング相手の集計処理
 function match_cast_add(ary_no){
 	try {
-		var match_cast_img = [];
-		
 		// マッチングキャスト上限の7キャスト分ループする、COMが含まれていても7回
 		for(var match_cnt = 0; match_cnt < result_battle[ary_no][26].length; match_cnt++){
 			var ary_tmp = [];
@@ -1353,8 +1370,14 @@ function match_cast_add(ary_no){
 				// まだ登録されていないキャストの場合
 				if(chkcast_flg == 0){
 					// マッチングキャスト画像の事前読み込み
+					matchcast_setimg(cast_url_plus + result_battle[ary_no][26][match_cnt][1], match_cast_cnt);
+					/*
 					match_cast_img[match_cast_cnt] = new Image();
+					match_cast_img[match_cast_cnt].onload = function(){
+						console.log(match_cast_img[match_cast_cnt].complete + "|" + match_cast_img[match_cast_cnt].readyState + "|" + match_cast_img[match_cast_cnt].src);
+					}
 					match_cast_img[match_cast_cnt].src = cast_url_plus + result_battle[ary_no][26][match_cnt][1];
+					*/
 					// キャスト画像
 					ary_tmp[0] = cast_url_plus + result_battle[ary_no][26][match_cnt][1];
 					// キャスト登場回数
@@ -1394,17 +1417,11 @@ function match_cast_add(ary_no){
 						}
 					}
 					match_cast_result[match_cast_cnt] = ary_tmp;
-					
 					// キャスト画像のロールを取得
 					if(match_cast_img[match_cast_cnt].complete || match_cast_img[match_cast_cnt].readyState === "complete"){
 						match_cast_role[match_cast_cnt] = img_proc(match_cast_img[match_cast_cnt], "role");
 					} else {
-						setTimeout(console.log("setTimeout"), 0);
-						if(match_cast_img[match_cast_cnt].complete || match_cast_img[match_cast_cnt].readyState === "complete"){
-							match_cast_role[match_cast_cnt] = img_proc(match_cast_img[match_cast_cnt], "role");
-						} else {
-							match_cast_role[match_cast_cnt] = "unknown";
-						}
+						match_cast_role[match_cast_cnt] = "unknown";
 					}
 					// キャストの登録番号を進める
 					match_cast_cnt++;
@@ -1419,6 +1436,14 @@ function match_cast_add(ary_no){
 		errstr = "処理番号:" + ary_no + "\n\n" + e;
 		errnum = 8;
 	}
+}
+
+function matchcast_setimg(match_casturl, match_castno){
+	match_cast_img[match_castno] = new Image();
+	match_cast_img[match_castno].onload = function(){
+		console.log(match_cast_img[match_castno].complete + "|" + match_cast_img[match_castno].readyState + "|" + match_cast_img[match_castno].src);
+	}
+	match_cast_img[match_castno].src = match_casturl;
 }
 
 // キャストをクリックした時の処理。試合結果とスキル使用回数は連動。マッチングキャストは別

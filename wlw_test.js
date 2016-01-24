@@ -1414,6 +1414,7 @@ function matchcast_setimg(match_casturl, match_castno){
 					match_cast_role[cnt] = "unknown";
 				}
 			}
+			console.log(match_cast_role);
 			// ロール別のキャスト数集計
 			for(var cnt = 0; cnt < match_cast_role.length; cnt++){
 				if(match_cast_role[cnt] == "F"){
@@ -1765,10 +1766,8 @@ function img_proc(getimg, mode){
 	if(mode == "role"){
 		var canvas = document.createElement("canvas");
 		var context = canvas.getContext("2d");
-		width = getimg.width;
-		height = getimg.height;
-		//width = getimg.naturalWidth;
-		//height = getimg.naturalHeight;
+		width = getimg.naturalWidth;
+		height = getimg.naturalHeight;
 		canvas.width = width;
 		canvas.height = height;
 		context.drawImage(getimg, 0, 0);

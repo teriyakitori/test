@@ -1414,7 +1414,6 @@ function matchcast_setimg(match_casturl, match_castno){
 					match_cast_role[cnt] = "unknown";
 				}
 			}
-			console.log(match_cast_role);
 			// ロール別のキャスト数集計
 			for(var cnt = 0; cnt < match_cast_role.length; cnt++){
 				if(match_cast_role[cnt] == "F"){
@@ -1773,17 +1772,21 @@ function img_proc(getimg, mode){
 		context.drawImage(getimg, 0, 0);
 		
 		var imgdata = context.getImageData(0, 0, 70, 65);
-		var idx = (20 + 30 * imgdata.width) * 4;
-		var cast_pix = imgdata.data[idx];
+		var idx1 = (18 + 30 * imgdata.width) * 4;
+		var idx2 = (19 + 30 * imgdata.width) * 4;
+		var idx3 = (20 + 30 * imgdata.width) * 4;
+		var cast_pix1 = imgdata.data[idx1];
+		var cast_pix2 = imgdata.data[idx2];
+		var cast_pix3 = imgdata.data[idx3];
 		if(getimg.src.match("456b577a7816af61171d60fb80fb71fd.png")){
-			alert(width + "/" + height + "/" + cast_pix);
-			console.log(width + "/" + height + "/" + cast_pix);
+			alert(cast_pix1 + "/" + cast_pix2 + "/" + cast_pix3);
+			console.log(cast_pix1 + "/" + cast_pix2 + "/" + cast_pix3);
 		}
-		if(cast_pix == 32){
+		if(cast_pix1 > 100 && cast_pix2 < 100 && cast_pix3 < 100){
 			rtn = "F";
-		} else if(cast_pix == 30) {
+		} else if(cast_pix1 < 100 && cast_pix2 < 100 && cast_pix3 < 100) {
 			rtn = "A";
-		} else if(cast_pix == 207) {
+		} else if(cast_pix1 < 100 && cast_pix2 < 100 && cast_pix3 > 100) {
 			rtn = "S";
 		} else {
 			rtn = "unknown";

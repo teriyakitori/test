@@ -192,7 +192,7 @@ var errmsg = [
 // 本処理
 // 開始URLをチェックし、対戦履歴ページなら処理を開始する
 if( urlchk() ){
-	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性もあります。\n最終更新日 2016/1/24b");
+	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性もあります。\n最終更新日 2016/1/24");
 	
 	// エラー表示用の日付取得
 	try{
@@ -1774,17 +1774,17 @@ function img_proc(getimg, mode){
 		context.drawImage(getimg, 0, 0);
 		
 		var imgdata = context.getImageData(0, 0, 70, 65);
-		var idx = (15 + 30 * imgdata.width) * 4;
-		var cast_pix = imgdata.data[idx+3];
+		var idx = (20 + 30 * imgdata.width) * 4;
+		var cast_pix = imgdata.data[idx];
 		if(getimg.src.match("456b577a7816af61171d60fb80fb71fd.png")){
 			alert(width + "/" + height + "/" + cast_pix);
 			console.log(width + "/" + height + "/" + cast_pix);
 		}
-		if(cast_pix == 255){
+		if(cast_pix == 32){
 			rtn = "F";
-		} else if(cast_pix == 0) {
+		} else if(cast_pix == 30) {
 			rtn = "A";
-		} else if(cast_pix == 8) {
+		} else if(cast_pix == 207) {
 			rtn = "S";
 		} else {
 			rtn = "unknown";

@@ -1423,7 +1423,6 @@ function matchcast_setimg(match_casturl, match_castno){
 				} else if(match_cast_role[cnt] == "S") {
 					match_role_ary[2] += match_cast_result[cnt][1];
 				} else {
-					console.log(match_cast_result[cnt][0]);
 					match_role_ary[3] += match_cast_result[cnt][1];
 				}
 			}
@@ -1433,7 +1432,6 @@ function matchcast_setimg(match_casturl, match_castno){
 			cast_ary[11].innerHTML = Math.floor(match_role_ary[0] * 1000 / sum_castroll) / 10 + "%";
 			cast_ary[12].innerHTML = Math.floor(match_role_ary[1] * 1000 / sum_castroll) / 10 + "%";
 			cast_ary[13].innerHTML = Math.floor(match_role_ary[2] * 1000 / sum_castroll) / 10 + "%";
-			alert(sum_castroll + "|" + match_role_ary[0] + "|" + match_role_ary[1] + "|" + match_role_ary[2] + "|" + match_role_ary[3]);
 		}
 	}
 	match_cast_img[match_castno].src = match_casturl;
@@ -1778,10 +1776,7 @@ function img_proc(getimg, mode){
 		var cast_pix1 = imgdata.data[idx1];
 		var cast_pix2 = imgdata.data[idx2];
 		var cast_pix3 = imgdata.data[idx3];
-		if(getimg.src.match("456b577a7816af61171d60fb80fb71fd.png")){
-			alert(cast_pix1 + "/" + cast_pix2 + "/" + cast_pix3);
-			console.log(cast_pix1 + "/" + cast_pix2 + "/" + cast_pix3);
-		}
+		
 		if(cast_pix1 > 100 && cast_pix2 < 100 && cast_pix3 < 100){
 			rtn = "F";
 		} else if(cast_pix1 < 100 && cast_pix2 < 100 && cast_pix3 < 100) {
@@ -1794,7 +1789,6 @@ function img_proc(getimg, mode){
 	} else {
 		rtn = "";
 	}
-	
 	return rtn;
 }
 

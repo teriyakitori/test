@@ -273,7 +273,7 @@ if( urlchk() ){
 			card_width = 31;
 			card_height = 44;
 			icon_margin_bot ="10px";
-			frame02_margin_bot = "86px";
+			frame02_margin_bot = "68px";
 		} else {
 			//表示領域が大きい時の処理
 			icon_width = 60;

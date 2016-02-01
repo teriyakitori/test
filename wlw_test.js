@@ -122,7 +122,7 @@ var match_cast_cnt = 0;
 // 舞闘会モードフラグ
 var ball_flg = 0;
 
-// 結果を配列で格納する
+// 試合結果を配列で格納する(※lengthで試合数を取らず、battle_cntを使用すること)
 var result_battle = [];
 // キャストごとの結果を配列で格納する
 var cast_result = [];
@@ -159,7 +159,7 @@ var imgNode_skill = [];
 var imgNode_other = [];
 var innerNode = null;
 var selecttest = null;
-var inspos  = null;
+var inspos = null;
 var textNode = document.createElement("h2");
 var gameNode = document.createElement("h2");
 var skillNode = document.createElement("h2");
@@ -746,10 +746,9 @@ function syukei(strdata, mode){
 // 表示処理
 function hyouji(){
 	try{
-		inspos = document.getElementById("page_title");
-		
 		// タイトルを表示
-		textNode.innerHTML = "本気でやっつけてやるんだから！"
+		inspos = document.getElementById("page_title"); 
+		textNode.innerHTML = "本気でやっつけてやるんだから！";
 		textNode.id = "page_title";
 		inspos.parentNode.insertBefore(textNode, inspos);
 		
@@ -2057,6 +2056,7 @@ function select_fun(getno){
 	}
 }
 
+// アシストカードのレベルアップ時間をチーム単位で計算
 function team_result(asiurl, mode){
 	var asicnt_ary = [0,0,0,0,0];
 	var asitime_ary = [0,0,0,0,0];
@@ -2198,4 +2198,11 @@ function syukei_reset(){
 	player_role_ary = [0, 0, 0, 0];
 	match_role_ary = [0, 0, 0, 0];
 	click_mycast = sum_img;
+	cast_result = [];
+	cast_result_skillset = [];
+	player_cast_role = [];
+	player_cast_img = [];
+	match_cast_result = [];
+	match_cast_role = [];
+	match_cast_img = [];
 }

@@ -227,7 +227,7 @@ if( urlchk() ){
 		
 		// 対象外のURLも含まれるので、アドレスチェックを行う
 		if( urlstr.match(/matchlogdetail/i) ){
-			alert("エラー番号:" + errnum + "\nURL:" + urlstr);
+			alert("試合数：" + battle_cnt + "\nエラー番号:" + errnum + "\nURL:" + urlstr);
 			try{
 				request.open("GET", urlstr, false);
 				request.onreadystatechange=sorceget;
@@ -640,6 +640,7 @@ function sorceget(){
 			battle_cnt++;
 			
 		} catch(e) {
+			alert(e + "\nスキップ試合数" + skip_battle);
 			errstr += "\n" + matchdate_ary[(battle_cnt + skip_battle)].innerHTML;
 			skip_battle++;
 			return;

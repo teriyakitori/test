@@ -202,7 +202,7 @@ var errmsg = [
 // 本処理
 // 開始URLをチェックし、対戦履歴ページなら処理を開始する
 if( urlchk() ){
-	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性もあります。\n最終更新日 2016/2/7a");
+	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性もあります。\n最終更新日 2016/2/7b");
 	
 	// エラー表示用の日付取得
 	try{
@@ -214,7 +214,7 @@ if( urlchk() ){
 	} catch(e) {
 		matchdate_ary = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 	}
-	alert("リンク数:" + document.links.length);
+	
 	// 対戦履歴のページ数だけ処理する
 	for(var linkcnt=0; linkcnt < document.links.length; linkcnt++){
 		urlstr = document.links[linkcnt].toString();
@@ -227,7 +227,6 @@ if( urlchk() ){
 		
 		// 対象外のURLも含まれるので、アドレスチェックを行う
 		if( urlstr.match(/matchlogdetail/i) ){
-			alert("試合数：" + battle_cnt + "\nエラー番号:" + errnum + "\nURL:" + urlstr);
 			try{
 				request.open("GET", urlstr, false);
 				request.onreadystatechange=sorceget;
@@ -304,6 +303,7 @@ if( urlchk() ){
 
 // 対戦履歴詳細ページの情報を取得
 function sorceget(){
+	console.log(urlstr + ":" + request.readyState + "/" + request.status);
 	if (request.readyState == 4 && request.status == 200){
 		var src_txt = null;
 		var tmpstr = null;
@@ -639,7 +639,6 @@ function sorceget(){
 			// 結果を格納
 			result_battle[battle_cnt] = result_ary;
 			battle_cnt++;
-			console.log("試合数ふえた:" + battle_cnt);
 		} catch(e) {
 			alert(e + "\nスキップ試合数" + skip_battle);
 			errstr += "\n" + matchdate_ary[(battle_cnt + skip_battle)].innerHTML;

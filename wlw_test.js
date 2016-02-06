@@ -202,7 +202,7 @@ var errmsg = [
 // 本処理
 // 開始URLをチェックし、対戦履歴ページなら処理を開始する
 if( urlchk() ){
-	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性もあります。\n最終更新日 2016/2/7");
+	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n一分以上経っても処理終了と表示されない場合は、\nエラーが発生した可能性もあります。\n最終更新日 2016/2/7a");
 	
 	// エラー表示用の日付取得
 	try{
@@ -319,6 +319,7 @@ function sorceget(){
 		var comchk = [];
 		
 		try{
+			console.log("試合入った:" + urlstr);
 			// ソースをテキストに
 			src_txt = request.responseText;
 			
@@ -638,7 +639,7 @@ function sorceget(){
 			// 結果を格納
 			result_battle[battle_cnt] = result_ary;
 			battle_cnt++;
-			
+			console.log("試合数ふえた:" + battle_cnt);
 		} catch(e) {
 			alert(e + "\nスキップ試合数" + skip_battle);
 			errstr += "\n" + matchdate_ary[(battle_cnt + skip_battle)].innerHTML;

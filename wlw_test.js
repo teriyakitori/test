@@ -227,6 +227,7 @@ if( urlchk() ){
 		
 		// 対象外のURLも含まれるので、アドレスチェックを行う
 		if( urlstr.match(/matchlogdetail/i) ){
+			alert("エラー番号:" + errnum + "\nURL:" + urlstr);
 			try{
 				request.open("GET", urlstr, false);
 				request.onreadystatechange=sorceget;

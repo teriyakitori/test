@@ -616,6 +616,8 @@ function compload(){
 			}
 		}
 	}
+	alert(result_battle[0][0]);
+	alert(result_battle[result_battle.length][0]);
 	/*
 	if(errnum == 0){
 		// カードリストの取得

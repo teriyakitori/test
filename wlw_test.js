@@ -277,6 +277,11 @@ function getbattle(src_txt, ary_no){
 			errnum = 4;
 			return;
 		}
+		// サーバーメンテナンス中でないかのチェック
+		if(src_txt.match("現在サーバーメンテナンス中です。")){
+			errnum = 3;
+			return;
+		}
 		
 		// ソースを2分割
 		src_ary = src_txt.split("mtc_detail_member clearfix");
@@ -593,6 +598,10 @@ function getbattle(src_txt, ary_no){
 		errstr += "\n" + matchdate_ary[(battle_cnt + skip_battle)].innerHTML;
 		skip_battle++;
 	} finally {
+		// エラーチェック
+		if(errnum != 0){
+			end_msg();
+		}
 		// 全件読み込みが終了したら後続処理へ
 		if(matchurl_cnt == battle_cnt + skip_battle){
 			compload();
@@ -658,6 +667,10 @@ function compload(){
 		hyouji();
 	}
 	
+	end_msg();
+}
+
+function end_msg(){
 	// 終了メッセージ
 	if(skip_battle != 0 && battle_cnt != 0 && errnum == 0){
 		errnum = 10;
@@ -668,6 +681,7 @@ function compload(){
 		alert("処理終了　エラー番号:" + errnum + "\n" + errmsg[errnum] + "\n\n" + errstr);
 	}
 }
+
 /*
 // カードリスト取得処理
 function cardlistget(){

@@ -202,7 +202,7 @@ var errmsg = [
 // 本処理
 // 開始URLをチェックし、対戦履歴ページなら処理を開始する
 if( urlchk() ){
-	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n2/7に読み込み処理を変更した影響で動かなくなった場合は、\nお手数ですがtwitterアカウント「@wlw_honkideya」かメールフォームへご連絡お願いします。\n最終更新日 2016/2/7");
+	alert("このアラートを閉じるとデータ取得を開始します。\n読み込みには時間がかかりますのでしばらくお待ちください。\n2/7に読み込み処理を変更した影響で動かなくなった場合は、\nお手数ですがtwitterアカウント「@wlw_honkideya」かメールフォームへご連絡お願いします。\n最終更新日 2016/2/7a");
 	
 	// エラー表示用の日付取得
 	try{
@@ -275,11 +275,13 @@ function getbattle(src_txt, ary_no){
 		// ログイン済みかのチェック
 		if(src_txt.match("ログインフォーム")){
 			errnum = 4;
+			skip_battle++;
 			return;
 		}
 		// サーバーメンテナンス中でないかのチェック
 		if(src_txt.match("現在サーバーメンテナンス中です。")){
 			errnum = 3;
+			skip_battle++;
 			return;
 		}
 		
@@ -598,13 +600,14 @@ function getbattle(src_txt, ary_no){
 		errstr += "\n" + matchdate_ary[(battle_cnt + skip_battle)].innerHTML;
 		skip_battle++;
 	} finally {
-		// エラーチェック
-		if(errnum != 0){
-			end_msg();
-		}
 		// 全件読み込みが終了したら後続処理へ
 		if(matchurl_cnt == battle_cnt + skip_battle){
-			compload();
+			// エラーチェック
+			if(errnum != 0){
+				end_msg();
+			} else {
+				compload();
+			}
 		}
 	}
 }

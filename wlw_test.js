@@ -235,6 +235,12 @@ if( urlchk() ){
 			break;
 		}
 	}
+	
+	// 試合が取得できなかった場合
+	if(matchurl_cnt == 0){
+		errnum = 2;
+		end_msg();
+	}
 } else {
 	alert("ﾅﾝﾃﾞｯ!!");
 }

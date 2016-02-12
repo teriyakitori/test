@@ -674,7 +674,7 @@ function compload(){
 			frame02_margin_bot = "68px";
 			num_icon_width = "12";
 			num_icon_height = "16";
-			num_icon_hspace = "6px";
+			num_icon_margin = "6px";
 		} else {
 			//表示領域が大きい時の処理
 			icon_width = 60;
@@ -685,7 +685,7 @@ function compload(){
 			frame02_margin_bot = "136px";
 			num_icon_width = "24";
 			num_icon_height = "32";
-			num_icon_hspace = "12px";
+			num_icon_margin = "12px";
 		}
 		hyouji();
 	}
@@ -2282,7 +2282,8 @@ function level_senkou_hyouji(){
 			imgNode_opt_num[cnt].src = "common/images/icon_lv" + cnt + "_p.png";
 			imgNode_opt_num[cnt].width = num_icon_width;
 			imgNode_opt_num[cnt].height = num_icon_height;
-			imgNode_opt_num[cnt].setAttribute("hspace", num_icon_hspace);
+			imgNode_opt_num[cnt].style.marginRight = num_icon_margin;
+			imgNode_opt_num[cnt].style.marginLeft = num_icon_margin;
 			
 			var linkNode = document.createElement("a");
 			linkNode.href = "JavaScript:setlevel(" + cnt + ")";

@@ -2293,8 +2293,8 @@ function level_senkou_hyouji(){
 		imgNode_opt_num[5].style.opacity = 0.5;
 		
 		addNode("対象試合数", level_result[7], 0, "opt");
-		addNode("自軍レベル先行", level_result[5] + "%(" + level_result[0] + "勝/" + level_result[1] + "敗)", 10, "opt");
-		addNode("敵軍レベル先行", level_result[6] + "%(" + level_result[2] + "勝/" + level_result[3] + "敗)", 11, "opt");
+		addNode("自軍Lv先行時", level_result[5] + "%(" + level_result[0] + "勝/" + level_result[1] + "敗)", 10, "opt");
+		addNode("敵軍Lv先行時", level_result[6] + "%(" + level_result[2] + "勝/" + level_result[3] + "敗)", 11, "opt");
 		addNode("Lvアップ僅差", level_result[4] + "試合", 12, "opt");
 		
 		optNode.appendChild(optInner);

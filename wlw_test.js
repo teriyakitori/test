@@ -170,6 +170,23 @@ var optInner = null;
 var dtlNode = null;
 var matchdate_ary = null;
 var click_mycast = sum_img;
+var loading_text_ary = [
+"読み込み中:"
+,"Now Loading..."
+,"なうろ～でぃんぐ　"
+,"ﾍｱｯ!!　"
+,"拠点を破壊した！　"
+,"唸れ..."
+,"空の彼方へ！　"
+,"グッド！　"
+,"炎が、私を呼んでる..."
+,"眠くなってきちゃった..."
+,"粉微塵にするのだ！　"
+,"よかったわね:"
+,"良きことです:"
+,"よーし、よしよし..."
+];
+var loading_text = "";
 
 // 表示ノード用配列
 var node_ary = [];
@@ -255,9 +272,15 @@ if( urlchk() ){
 		errnum = 2;
 		end_msg();
 	} else {
+		// ローディングメッセージを決定
+		try{
+			loading_text = loading_text_ary[Math.floor( Math.random() * loading_text_ary.length )];
+		} catch(e) {
+			loading_text = "読込中:";
+		}
 		// タイトルを表示
 		inspos = document.getElementById("page_title"); 
-		tipsNode.innerHTML = "読み込み中：0%";
+		tipsNode.innerHTML = loading_text.toString() + "0%";
 		tipsNode.id = "page_title";
 		inspos.parentNode.insertBefore(tipsNode, inspos);
 	}
@@ -626,7 +649,7 @@ function getbattle(src_txt, ary_no){
 		errstr += "\n" + matchdate_ary[(battle_cnt + skip_battle)].innerHTML;
 		skip_battle++;
 	} finally {
-		tipsNode.innerHTML = "読み込み中：" + Math.floor(95 * ((battle_cnt + skip_battle) / matchurl_cnt)) + "%";
+		tipsNode.innerHTML = loading_text.toString() + (Math.floor(95 * ((battle_cnt + skip_battle) / matchurl_cnt))) + "%";
 		// 全件読み込みが終了したら後続処理へ
 		if(matchurl_cnt == battle_cnt + skip_battle){
 			// エラーチェック

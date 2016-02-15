@@ -186,7 +186,7 @@ var loading_text_ary = [
 ,"良きことです:"
 ,"よーし、よしよし..."
 ];
-var loading_text = "";
+var loading_text = "読み込み中:";
 
 // 表示ノード用配列
 var node_ary = [];

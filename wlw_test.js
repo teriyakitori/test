@@ -2231,7 +2231,7 @@ function select_fun(getno){
 			alert(lsdata_getcnt + "件のデータを削除しました。");
 		}
 	} else if(getno == 10){
-		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2016/2/16です。\nマップ別集計機能を追加しました。\n起動アラートの表示タイミングを変更しました。\n詳しくはtwitterアカウント「@wlw_honkideya」をご覧ください。");
+		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2016/2/16です。\nマップ別集計機能を追加しました。\n保存＆読込機能を使用して、20件以上の試合数を処理する場合向けです。\n詳しくはtwitterアカウント「@wlw_honkideya」をご覧ください。");
 	} else if(getno == 11){
 		role_win("F");
 	}

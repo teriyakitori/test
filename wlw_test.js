@@ -164,29 +164,11 @@ var textNode = document.createElement("h2");
 var gameNode = document.createElement("h2");
 var skillNode = document.createElement("h2");
 var castNode = document.createElement("h2");
-var tipsNode = document.createElement("h2");
 var optNode = null;
 var optInner = null;
 var dtlNode = null;
 var matchdate_ary = null;
 var click_mycast = sum_img;
-var loading_text_ary = [
-"読み込み中:"
-,"Now Loading..."
-,"なうろ～でぃんぐ　"
-,"ﾍｱｯ!!　"
-,"拠点を破壊した！　"
-,"唸れ..."
-,"空の彼方へ！　"
-,"グッド！　"
-,"炎が、私を呼んでる..."
-,"眠くなってきちゃった..."
-,"粉微塵にするのだ！　"
-,"よかったわね:"
-,"良きことです:"
-,"よーし、よしよし..."
-];
-var loading_text = "読み込み中:";
 
 // 表示ノード用配列
 var node_ary = [];
@@ -230,9 +212,6 @@ var errmsg = [
 // 本処理
 // 開始URLをチェックし、対戦履歴ページなら処理を開始する
 if( urlchk() ){
-	// 実行前のアラート
-	alert("このアラートを閉じるとデータ取得を開始します。\nお知らせ：\n・舞踏会履歴でも実行できます(保存は不可)\n・2/7に読み込み処理を変更した影響で動かなくなった場合は、\nお手数ですがtwitterアカウント「@wlw_honkideya」かメールフォームへご連絡お願いします。\n最終更新日 2016/2/16");
-	
 	// エラー表示用の日付取得
 	try{
 		if(ball_flg == 1){
@@ -264,25 +243,14 @@ if( urlchk() ){
 			break;
 		}
 	}
-	
+	// 実行前のアラート
+	alert("このアラートを閉じるとデータ取得を開始します。\n　///お知らせ///\n・舞踏会履歴でも実行できます(保存は不可)\n・2/7に読み込み処理を変更した影響で動かなくなった場合は、\nお手数ですがtwitterアカウント「@wlw_honkideya」かメールフォームへご連絡お願いします。\n・最終更新日 2016/2/16");
 	if(errnum != 0){
 		end_msg();
 	} else if(matchurl_cnt == 0){
 		// 試合が取得できなかった場合
 		errnum = 2;
 		end_msg();
-	} else {
-		// ローディングメッセージを決定
-		try{
-			loading_text = loading_text_ary[Math.floor( Math.random() * loading_text_ary.length )];
-		} catch(e) {
-			loading_text = "読込中:";
-		}
-		// タイトルを表示
-		inspos = document.getElementById("page_title"); 
-		tipsNode.innerHTML = loading_text.toString() + "0%";
-		tipsNode.id = "page_title";
-		inspos.parentNode.insertBefore(tipsNode, inspos);
 	}
 } else {
 	alert("ﾅﾝﾃﾞｯ!!");
@@ -649,14 +617,12 @@ function getbattle(src_txt, ary_no){
 		errstr += "\n" + matchdate_ary[(battle_cnt + skip_battle)].innerHTML;
 		skip_battle++;
 	} finally {
-		tipsNode.innerHTML = loading_text.toString() + (Math.floor(95 * ((battle_cnt + skip_battle) / matchurl_cnt))) + "%";
 		// 全件読み込みが終了したら後続処理へ
 		if(matchurl_cnt == battle_cnt + skip_battle){
 			// エラーチェック
 			if(errnum != 0){
 				end_msg();
 			} else {
-				inspos.parentNode.removeChild(tipsNode);
 				compload();
 			}
 		}
@@ -2263,7 +2229,7 @@ function select_fun(getno){
 			alert(lsdata_getcnt + "件のデータを削除しました。");
 		}
 	} else if(getno == 10){
-		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2016/2/16です。\nマップ別集計機能を追加しました。\n読み込みの進捗を表示しました。\n詳しくはtwitterアカウント「@wlw_honkideya」をご覧ください。");
+		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2016/2/16です。\nマップ別集計機能を追加しました。\n詳しくはtwitterアカウント「@wlw_honkideya」をご覧ください。");
 	} else if(getno == 11){
 		role_win("F");
 	}

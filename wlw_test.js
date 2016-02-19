@@ -6,11 +6,9 @@ var starturl2 = "https://wonderland-wars.net/matchlog.html?type=all";
 var ballurl1 = "https://wonderland-wars.net/matchlog.html?type=bb";
 
 // カード名取得用URL(ver=の部分は公式のタイミングによっては古いかも)
-var skill_listurl = "https://wonderland-wars.net/cardlist.html?ver=19&type=1";
-var assist_listurl = "https://wonderland-wars.net/cardlist.html?ver=19&type=2";
+var cardlist_url = "/card/mycard.json?type=skill&sort=ALLO";
 // カードリスト格納用配列
-var skill_listary = null;
-var assist_listary = null;
+var skill_list = null;
 
 // 空欄カード用URL
 var nocard_img = "common/img_card_thum/deck_nocard.png";
@@ -246,6 +244,9 @@ if( urlchk() ){
 			break;
 		}
 	}
+	// スキルデータの習得
+	getskillList();
+	
 	if(errnum != 0){
 		end_msg();
 	} else if(matchurl_cnt == 0){
@@ -648,20 +649,6 @@ function compload(getstr, getmode){
 	}
 	battle_cnt = result_battle.length;
 	
-	/*
-	if(errnum == 0){
-		// カードリストの取得
-		urlstr = skill_listurl;
-		request.open("GET", urlstr, false);
-		request.onreadystatechange=cardlistget;
-		request.send(null);
-		
-		urlstr = assist_listurl;
-		request.open("GET", urlstr, false);
-		request.onreadystatechange=cardlistget;
-		request.send(null);
-	}
-	*/
 	if(errnum == 0){
 		syukei(getstr, getmode);
 	}
@@ -709,28 +696,6 @@ function end_msg(){
 	}
 }
 
-/*
-// カードリスト取得処理
-function cardlistget(){
-	var src_txt = null;
-	
-	if (request.readyState == 4 && request.status == 200){
-		// ソースをテキストに
-		src_txt = request.responseText;
-		if(src_txt.match("現在サーバーメンテナンス中です。")){
-			errnum = 3;
-		} else {
-			if(urlstr == skill_listurl){
-				skill_listary = src_txt.split("<tr>");
-			} else if(urlstr == assist_listurl){
-				assist_listary = src_txt.split("<tr>");
-			} else {
-				errnum = 3;
-			}
-		}
-	}
-}
-*/
 // 集計処理
 function syukei(strdata, mode){
 	var skip_cnt = 0;
@@ -978,7 +943,10 @@ function hyouji(){
 		imgNode_skill[0].style.opacity = 0.5;
 		
 		addNode("対象試合数", "キャストを選択してください", 0, "skill");
-		addNode("DS使用数（平均）", "", 1, "skill");
+		addNode("使用MP(平均)", "", 3, "skill");
+		addNode("使用MP(最高記録)", "", 4, "skill");
+		//addNode("使用MP(最小記録)", "", 5, "skill");
+		addNode("DS使用数", "", 1, "skill");
 		addNode("↓スキル使用回数", "", 2, "skill");
 		
 		// スキル枠初期化
@@ -1635,6 +1603,22 @@ function changesum(getcast){
 	
 	skill_ary[0].innerHTML = cast_result[getcast][1];
 	skill_ary[1].innerHTML = (Math.floor((cast_result[getcast][24]/cast_result[getcast][1])*10))/10 + "回";
+	// 使用MP表示
+	var getmpdata = [];
+	if(getcast != 0){
+		getmpdata = getbattle_mp(cast_result[getcast][0]);
+	} else {
+		getmpdata[0] = "err";
+	}
+	if(getmpdata[0] == "err"){
+		skill_ary[3].innerHTML = "";
+		skill_ary[4].innerHTML = "";
+		//skill_ary[5].innerHTML = "";
+	} else {
+		skill_ary[3].innerHTML = getmpdata[0];
+		skill_ary[4].innerHTML = getmpdata[1];
+		//skill_ary[5].innerHTML = getmpdata[3];
+	}
 	skillimg_ary[0].src = cast_result[getcast][31][0];
 	skillcnt_ary[0].innerHTML = (Math.floor((cast_result[getcast][32][0]/cast_result_skillset[getcast][0])*10))/10 + "回";
 	skillimg_ary[1].src = cast_result[getcast][31][1];
@@ -2227,6 +2211,7 @@ function select_fun(getno){
 			localStorage.removeItem(lsnew_name);
 			localStorage.removeItem(lsidx_name);
 			localStorage.removeItem(lscnt_name);
+			localStorage.removeItem(lsmap_name);
 			
 			alert(lsdata_getcnt + "件のデータを削除しました。");
 		}
@@ -2303,8 +2288,11 @@ function team_result(asiurl, mode){
 // レベル先行勝率表示
 function level_senkou_hyouji(){
 	if(window.confirm("注意：テスト機能のため、結果や動作のチェックが甘いです。\nLv先行有利を確認するための機能です。\nデータの都合上、レベルアップ時間は最大8秒ほどの誤差がありえます")){
+		clickimg_opt = 0;
+		clickimg_opt_num = 5;
 		set_level_opt = 5;
 		set_cast_opt = sum_img;
+		imgNode_opt = [];
 		var level_result = [];
 		
 		level_result = level_senkou(set_level_opt, set_cast_opt);
@@ -2369,7 +2357,7 @@ function level_senkou_hyouji(){
 	}
 }
 
-
+// キャスト別のレベル先行勝率集計
 function setcast(get_cast){
 	var level_result = [];
 	
@@ -2386,6 +2374,7 @@ function setcast(get_cast){
 	opt_ary[12].innerHTML = level_result[4] + "試合";
 }
 
+// レベル別のレベル先行勝率集計
 function setlevel(get_level){
 	var level_result = [];
 	
@@ -2612,6 +2601,8 @@ function syukei_reset(gettext){
 	castimg_cnt = 0;
 	player_role_ary = [0, 0, 0, 0];
 	match_role_ary = [0, 0, 0, 0];
+	getcast_sum = 0;
+	getcast_other = 0;
 	click_mycast = sum_img;
 	cast_result = [];
 	cast_result_skillset = [];
@@ -2624,3 +2615,89 @@ function syukei_reset(gettext){
 	
 	betatest_flg = 1;
 }
+
+// スキルカードリストの取得
+function getskillList(){
+	$.ajax({
+		type: "GET",
+		url: cardlist_url,
+		async: false,
+		success: function(data){
+			skill_list = data;
+		},
+		error: function() {
+			skill_list = "err";
+		}
+	});
+}
+
+// 使用MPの計算
+function getbattle_mp(getcast){
+	try{
+		var usemp = [0, "MAX", "", "MIN", ""];
+		var getcnt = 0;
+		for(var cnt=0; cnt < battle_cnt; cnt++){
+			var mpary = [];
+			var battle_usemp = 0;
+			// 指定キャストの場合のみ取得する。
+			if(getcast.match(result_battle[cnt][5])){
+				// 消費MPを取得
+				for(var arycnt=0; arycnt < result_battle[cnt][25][0].length; arycnt++){
+					var mp_keisu = 0.01;
+					var mp_hosei = 0;
+					
+					mpary[arycnt] = getskilldata(result_battle[cnt][25][0][arycnt], "MP");
+					
+					// レベルによる減少値を計算
+					if(result_battle[cnt][25][4][arycnt] == "MAX"){
+						mp_hosei = 1 - 10 * mp_keisu;
+					} else {
+						mp_hosei = 1 - parseInt(result_battle[cnt][25][4][arycnt]) * mp_keisu;
+					}
+					battle_usemp += Math.floor(mpary[arycnt] * mp_hosei * 100) / 100 * result_battle[cnt][25][1][arycnt];
+				}
+				// ドローショット加算
+				battle_usemp += parseInt(result_battle[cnt][18]) * 10;
+				usemp[0] += battle_usemp;
+				getcnt++;
+				// 最高値更新
+				if(usemp[1] == "MAX" || usemp[1] < battle_usemp){
+					usemp[1] = battle_usemp;
+					usemp[2] = result_battle[cnt][0];
+				}
+				
+				// 最低値更新
+				if(usemp[3] == "MIN" || usemp[3] > battle_usemp){
+					usemp[3] = battle_usemp;
+					usemp[4] = result_battle[cnt][0];
+				}
+			}
+		}
+		usemp[0] = Math.floor(usemp[0] / getcnt * 10) / 10;
+		usemp[1] = Math.floor(usemp[1] * 10) / 10;
+		usemp[3] = Math.floor(usemp[3] * 10) / 10;
+		return usemp;
+	} catch(e) {
+		return ["err"];
+	}
+}
+
+// スキルのデータ取得
+function getskilldata(getimg, mode){
+	var rtn = 0;
+	try{
+		if(getimg == nocard_img){
+			return 0;
+		}
+		for(var cnt=0; cnt < skill_list.card.length; cnt++){
+			if(skill_list.card[cnt].cardimg.match(getimg)){
+				rtn = parseInt(skill_list.card[cnt].usemp);
+				break;
+			}
+		}
+		return rtn;
+	}catch(e){
+		return 0;
+	}
+}
+

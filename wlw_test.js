@@ -5,7 +5,7 @@ var starturl1 = "https://wonderland-wars.net/matchlog.html";
 var starturl2 = "https://wonderland-wars.net/matchlog.html?type=all";
 var ballurl1 = "https://wonderland-wars.net/matchlog.html?type=bb";
 
-// カード名取得用URL(ver=の部分は公式のタイミングによっては古いかも)
+// カード名取得用URL
 var cardlist_url = "/card/mycard.json?type=skill&sort=ALLO";
 // カードリスト格納用配列
 var skill_list = null;
@@ -944,7 +944,7 @@ function hyouji(){
 		
 		addNode("対象試合数", "キャストを選択してください", 0, "skill");
 		addNode("MP使用量(平均)", "", 3, "skill");
-		addNode("(最高記録)", "", 4, "skill");
+		addNode("MP使用量(最高)", "", 4, "skill");
 		//addNode("使用MP(最小記録)", "", 5, "skill");
 		addNode("DS使用数", "", 1, "skill");
 		addNode("↓スキル使用回数", "", 2, "skill");

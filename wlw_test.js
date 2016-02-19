@@ -943,8 +943,8 @@ function hyouji(){
 		imgNode_skill[0].style.opacity = 0.5;
 		
 		addNode("対象試合数", "キャストを選択してください", 0, "skill");
-		addNode("使用MP(平均)", "", 3, "skill");
-		addNode("使用MP(最高記録)", "", 4, "skill");
+		addNode("MP使用(平均)", "", 3, "skill");
+		addNode("MP使用(最高記録)", "", 4, "skill");
 		//addNode("使用MP(最小記録)", "", 5, "skill");
 		addNode("DS使用数", "", 1, "skill");
 		addNode("↓スキル使用回数", "", 2, "skill");

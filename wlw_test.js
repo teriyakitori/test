@@ -944,7 +944,7 @@ function hyouji(){
 		
 		addNode("対象試合数", "キャストを選択してください", 0, "skill");
 		addNode("MP使用量(平均)", "", 3, "skill");
-		addNode("MP使用量(最高)", "", 4, "skill");
+		addNode("MP使用量(最大)", "", 4, "skill");
 		//addNode("使用MP(最小記録)", "", 5, "skill");
 		addNode("DS使用数", "", 1, "skill");
 		addNode("↓スキル使用回数", "", 2, "skill");

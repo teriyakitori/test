@@ -2710,7 +2710,7 @@ function getskilldata(getimg, mode){
 
 // 戦闘履歴詳細での実行
 function urldetail(){
-	alert("戦闘履歴詳細の以下のデータを隠します。\n・プレイヤーの店舗名と都道府県\n・マッチングプレイヤーの名前と都道府県\nプレイヤー名と一部の隠されたデータは、クリックorタップで表示切り替えできます。\n\n集計処理を行いたい場合は詳細ページではなく、対戦履歴ページで実行してください。");
+	alert("対戦履歴詳細の以下のデータを隠します。\n・プレイヤーの店舗名と都道府県\n・マッチングプレイヤーの名前と都道府県\nプレイヤー名と一部の隠されたデータは、クリックorタップで表示切り替えできます。\n\n集計処理を行いたい場合は詳細ページではなく、対戦履歴ページで実行してください。");
 	try{
 		var mtc_member_ary = document.getElementsByClassName("mtc_detail_member_name");
 		var mp_location_ary = document.getElementsByClassName("mp_mydata_location");

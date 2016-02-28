@@ -120,8 +120,10 @@ var ball_flg = 0;
 // 戦闘履歴詳細フラグ
 var detail_flg = 0;
 
-// 試合結果を配列で格納する(※lengthで試合数を取らず、battle_cntを使用すること)
+// 試合結果を配列で格納する(※lengthと下記battle_chkで試合数をとること)
 var result_battle = [];
+// result_battleが集計対象であるかを格納する配列
+var battle_chk = [];
 // キャストごとの結果を配列で格納する
 var cast_result = [];
 // マッチングしたキャストの結果を格納する
@@ -728,6 +730,7 @@ function syukei(strdata, mode){
 			if(result_battle[cnt][0].toString().match(strdata.toString()) ){
 				// 日が一致した場合の処理（今はなし）
 			} else {
+				battle_chk[cnt] = 0;
 				skip_cnt++;
 				continue;
 			}
@@ -738,10 +741,23 @@ function syukei(strdata, mode){
 			if(result_battle[cnt][4].toString().match(strdata.toString()) ){
 				// マップが一致した場合の処理（今はなし）
 			} else {
+				battle_chk[cnt] = 0;
 				skip_cnt++;
 				continue;
 			}
 		}
+		
+		// 勝敗指定のチェック
+		if(mode == 3){
+			if(result_battle[cnt][9].toString().match(strdata.toString())){
+				// 勝敗が一致した場合の処理（今はなし）
+			} else {
+				battle_chk[cnt] = 0;
+				skip_cnt++;
+				continue;
+			}
+		}
+		battle_chk[cnt] = 1;
 		
 		// 初回は使用キャスト集計データの初期化
 		if(suminichk_flg == 0){
@@ -806,55 +822,22 @@ function hyouji(){
 		selecttest.className = "select02";
 		selecttest.setAttribute("onchange", "select_fun(this.value)");
 		
-		var option_def = document.createElement("option");
-		option_def.value = 0;
-		option_def.innerHTML = "オプション機能(テスト中の機能)";
-		selecttest.appendChild(option_def);
-		
-		var option_now = document.createElement("option");
-		option_now.value = 1;
-		option_now.innerHTML = "わかったよー！(最新日のみ集計)";
-		selecttest.appendChild(option_now);
-		
+		// オプション項目の表示
+		addopt(0, "オプション機能(テスト中の機能)");
+		addopt(1, "わかったよー！(最新日のみ集計)");
 		if(ball_flg == 0){
-			var option_map = document.createElement("option");
-			option_map.value = 2;
-			option_map.innerHTML = "そっちね！(マップ別集計)";
-			selecttest.appendChild(option_map);
+			addopt(2, "そっちね！(マップ別集計)");
 		}
-		
-		var option_lv5 = document.createElement("option");
-		option_lv5.value = 3;
-		option_lv5.innerHTML = "いえい！(Lv先行時勝率計算)";
-		selecttest.appendChild(option_lv5);
-		
-		var option_asi = document.createElement("option");
-		option_asi.value = 4;
-		option_asi.innerHTML = "月に叢雲(ファイターに蓬莱)";
-		selecttest.appendChild(option_asi);
-		
-		var option_role = document.createElement("option");
-		option_role.value = 11;
-		option_role.innerHTML = "ｱﾀｰｯｸ!!(ファイター数別勝率)";
-		selecttest.appendChild(option_role);
-		
+		addopt(3, "いえい！(Lv先行時勝率計算)");
+		addopt(4, "月に叢雲(ファイターに蓬莱)");
+		addopt(5, "ｱﾀｰｯｸ!!(ファイター数別勝率)");
+		addopt(6, "かった");
+		addopt(7, "かなしいよー");
 		if(ball_flg == 0){
-			var option_sal = document.createElement("option");
-			option_sal.value = 8;
-			option_sal.innerHTML = "ｼｭｰﾃｨﾝ!!(対戦履歴保存&読込)";
-			selecttest.appendChild(option_sal);
-			
-			var option_del = document.createElement("option");
-			option_del.value = 9;
-			option_del.innerHTML = "ﾖｯｹﾛｰ!!(保存データ初期化)";
-			selecttest.appendChild(option_del);
+			addopt(8, "ｼｭｰﾃｨﾝ!!(対戦履歴保存&読込)");
+			addopt(9, "ﾖｯｹﾛｰ!!(保存データ初期化)");
 		}
-		
-		var option_nan = document.createElement("option");
-		option_nan.value = 10;
-		option_nan.innerHTML = "ﾅﾝﾃﾞｯ!!(更新情報)";
-		selecttest.appendChild(option_nan);
-		
+		addopt(10, "ﾅﾝﾃﾞｯ!!(更新情報)");
 		inspos.parentNode.insertBefore(selecttest, inspos);
 		
 		if(battle_cnt < 1){
@@ -2086,6 +2069,14 @@ function select_fun(getno){
 		} else {
 			alert("取得に失敗しました。");
 		}
+	} else if(getno == 5){
+		role_win("F");
+	} else if(getno == 6){
+		syukei_reset("試合結果(勝利時)");
+		compload("win", 3);
+	} else if(getno == 7){
+		syukei_reset("試合結果(敗北時)");
+		compload("lose", 3);
 	} else if(getno == 8){
 		// 絞った状態で保存は止める
 		if(betatest_flg != 0){
@@ -2128,7 +2119,7 @@ function select_fun(getno){
 					lsdata_getnew = "0";
 				}
 				// データの追加
-				for(var cnt = 0; cnt < battle_cnt; cnt++){
+				for(var cnt = 0; cnt < result_battle.length; cnt++){
 					for(var mapcnt = 0; mapcnt < map_ary.length; mapcnt++){
 						if( map_ary[mapcnt].toString() == result_battle[cnt][4].toString() ){
 							mapadd_flg = 0;
@@ -2194,7 +2185,6 @@ function select_fun(getno){
 				for(cnt = 0; cnt < battle_cnt; cnt++){
 					result_battle[battle_cnt - cnt - 1] = JSON.parse(localStorage.getItem(lsdata_name + cnt));
 				}
-				
 				syukei();
 				hyouji();
 				
@@ -2224,8 +2214,6 @@ function select_fun(getno){
 		}
 	} else if(getno == 10){
 		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2016/2/21です。\n対戦履歴詳細ページでの、名前隠し機能を追加しました。\n名前を隠してスクリーンショットを撮りたい際などにお使いください。\n詳しくはtwitterアカウント「@wlw_honkideya」をご覧ください。");
-	} else if(getno == 11){
-		role_win("F");
 	}
 }
 
@@ -2237,7 +2225,10 @@ function team_result(asiurl, mode){
 	asi_cnt = 0;
 	
 	try{
-		for(var cnt = 0; cnt < battle_cnt; cnt++){
+		for(var cnt = 0; cnt < result_battle.length; cnt++){
+			if(battle_chk[cnt] == 0){
+				continue;
+			}
 			// プレイヤーを集計
 			for(var card_pos = 0; card_pos < 3; card_pos++){
 				if(result_battle[cnt][25][2][card_pos].toString().match(asiurl)){
@@ -2423,7 +2414,10 @@ function level_senkou(get_level, get_cast){
 	}
 	// レベルを配列の位置に合わせる
 	var level_num = get_level - 2;
-	for(var cnt = 0; cnt < battle_cnt; cnt++){
+	for(var cnt = 0; cnt < resule_battle.length; cnt++){
+		if(battle_chk[cnt] == 0){
+			continue;
+		}
 		if(hyouji_cast.match(sum_img) || hyouji_cast.match(result_battle[cnt][5])){
 			if(result_battle[cnt][10][level_num] == result_battle[cnt][11][level_num]){
 				draw_cnt++;
@@ -2478,7 +2472,10 @@ function role_win(select_role){
 	}
 	alert("注意：テスト機能のため、結果や動作のチェックが甘いです。\n" + role_name + "の人数別勝率を表示します。\n舞闘会履歴向けの機能です。");
 	
-	for(var cnt = 0; cnt < battle_cnt; cnt++){
+	for(var cnt = 0; cnt < result_battle.length; cnt++){
+		if(battle_chk[cnt] == 0){
+			continue;
+		}
 		var role_cnt_team = 0;
 		var role_cnt_enemy = 0;
 		// プレイヤーを集計
@@ -2618,6 +2615,7 @@ function syukei_reset(gettext){
 	match_cast_result = [];
 	match_cast_role = [];
 	match_cast_img = [];
+	battle_chk = [];
 	nodetitle_text = gettext;
 	
 	betatest_flg = 1;
@@ -2643,7 +2641,10 @@ function getbattle_mp(getcast){
 	try{
 		var usemp = [0, "MAX", "", "MIN", ""];
 		var getcnt = 0;
-		for(var cnt=0; cnt < battle_cnt; cnt++){
+		for(var cnt=0; cnt < result_battle.length; cnt++){
+			if(battle_chk[cnt] == 0){
+				continue;
+			}
 			var mpary = [];
 			var battle_usemp = 0;
 			// 指定キャストの場合のみ取得する。
@@ -2737,7 +2738,6 @@ function urldetail(){
 			mp_location_ary[cnt].style.opacity = 0;
 		}
 	} catch(e) {
-		console.log(e);
 		alert("非表示処理に失敗しました。");
 	}
 }
@@ -2776,8 +2776,13 @@ function detailclick(getno, cate){
 			}
 		}
 	} catch(e) {
-		console.log(e);
 		alert("切り替え処理に失敗しました。");
 	}
 }
 
+function addopt(getno, getstr){
+	var option_def = document.createElement("option");
+	option_def.value = getno;
+	option_def.innerHTML = getstr;
+	selecttest.appendChild(option_def);
+}

@@ -832,11 +832,13 @@ function hyouji(){
 		if(ball_flg == 0){
 			addopt(2, "そっちね！(マップ別集計)");
 		}
+		//addopt(6, "やったね！(勝利試合集計)");
+		//addopt(7, "かなしいよー(敗北試合集計)");
 		addopt(3, "いえい！(Lv先行時勝率計算)");
 		addopt(4, "月に叢雲(ファイターに蓬莱)");
-		addopt(5, "ｱﾀｰｯｸ!!(ファイター数別勝率)");
-		addopt(6, "かった");
-		addopt(7, "かなしいよー");
+		if(ball_flg == 1){
+			addopt(5, "ｱﾀｰｯｸ!!(ファイター数別勝率)");
+		}
 		if(ball_flg == 0){
 			addopt(8, "ｼｭｰﾃｨﾝ!!(対戦履歴保存&読込)");
 			addopt(9, "ﾖｯｹﾛｰ!!(保存データ初期化)");
@@ -2099,7 +2101,7 @@ function select_fun(getno){
 			var lsdata_getold = null;
 			var lsdata_getnew = null;
 			var lsadd_cnt = 0;
-			var lschk_new = battle_cnt;
+			var lschk_new = result_battle.length;
 			var map_ary = [];
 			var data_max = 300;
 			var maxchk_flg = 0;

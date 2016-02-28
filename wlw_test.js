@@ -1,5 +1,9 @@
 javascript:
 
+// インフォメーションテキスト
+var alert_info = "このアラートを閉じるとデータ取得を開始します。\n　///お知らせ///\n・舞踏会履歴でも実行できます(保存は不可)\n・2/7に読み込み処理を変更した影響で動かなくなった場合は、\nお手数ですがtwitterアカウント「@wlw_honkideya」かメールフォームへご連絡お願いします。\n・最終更新日 2016/2/28";
+var kousin_info = "ﾅﾝﾃﾞｯ!!\n最新の修正は2016/2/28です。\nマップ別集計実行時、オプション機能のデータ表示と、MP使用量が正しくない不具合を修正しました。\n詳しくはtwitterアカウント「@wlw_honkideya」をご覧ください。";
+
 // 実行するURL
 var starturl1 = "https://wonderland-wars.net/matchlog.html";
 var starturl2 = "https://wonderland-wars.net/matchlog.html?type=all";
@@ -215,7 +219,7 @@ var errmsg = [
 // 開始URLをチェックし、対戦履歴ページなら処理を開始する
 if( urlchk() ){
 	// 実行前のアラート
-	alert("このアラートを閉じるとデータ取得を開始します。\n　///お知らせ///\n・舞踏会履歴でも実行できます(保存は不可)\n・2/7に読み込み処理を変更した影響で動かなくなった場合は、\nお手数ですがtwitterアカウント「@wlw_honkideya」かメールフォームへご連絡お願いします。\n・最終更新日 2016/2/21");
+	alert(alert_info);
 	
 	// エラー表示用の日付取得
 	try{
@@ -2213,7 +2217,7 @@ function select_fun(getno){
 			alert(lsdata_getcnt + "件のデータを削除しました。");
 		}
 	} else if(getno == 10){
-		alert("ﾅﾝﾃﾞｯ!!\n最新の修正は2016/2/21です。\n対戦履歴詳細ページでの、名前隠し機能を追加しました。\n名前を隠してスクリーンショットを撮りたい際などにお使いください。\n詳しくはtwitterアカウント「@wlw_honkideya」をご覧ください。");
+		alert(kousin_info);
 	}
 }
 
